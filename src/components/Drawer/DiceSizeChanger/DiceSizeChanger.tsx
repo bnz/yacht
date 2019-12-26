@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { i18n } from '../../../helpers/i18n'
 import { DrawerListItem } from '../DrawerListItem'
 import { DrawerListDivider } from '../DrawerListDivider'
-import { DiceSizeChangerButtonsWrapper } from './DiceSizeChangerButtonsWrapper'
+import { ButtonGroup } from './ButtonGroup'
 import Button from '@material-ui/core/Button'
 import { maxDiceSize, minDiceSize } from '../../../redux/reducers/diceSize'
 import AddIcon from '@material-ui/icons/Add'
@@ -15,14 +15,14 @@ export const DiceSizeChanger: FC<DiceSizeChangerConnectedProps> = ({ diceSize, i
     <DrawerListItem
       button={false}
       icon={
-        <DiceSizeChangerButtonsWrapper>
+        <ButtonGroup>
           <Button onClick={increaseDiceSize} disabled={diceSize === maxDiceSize}>
             <AddIcon />
           </Button>
           <Button onClick={decreaseDiceSize} disabled={diceSize === minDiceSize}>
             <RemoveIcon />
           </Button>
-        </DiceSizeChangerButtonsWrapper>
+        </ButtonGroup>
       }
     >
       {i18n('Размер костей')}

@@ -16,6 +16,8 @@ export const DrawerListItem: FC<DrawerListItemProps> = ({ icon, onClick, childre
     <ListItemIcon>
       {icon}
     </ListItemIcon>
-    <ListItemText primary={children} />
+    {children && (
+      <ListItemText primary={children} />
+    )}
   </DrawerListItemStyled>
 )
