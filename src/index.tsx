@@ -5,14 +5,14 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import * as serviceWorker from './serviceWorker'
 import { store } from './redux/createStore'
-import { AppConnected } from './components/App/AppConnected'
 import { themeProviderHOC } from './helpers/themeProviderHOC'
+import { App } from './components/App/App'
 
-const App = themeProviderHOC(AppConnected)
+const AppWithProvider = themeProviderHOC(App)
 
 render(
   <Provider store={store}>
-    <App />
+    <AppWithProvider />
   </Provider>,
   document.getElementById('root'),
 )

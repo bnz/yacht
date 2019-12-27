@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import Button, { ButtonProps } from '@material-ui/core/Button'
 import { playersDefaultState, PlayersState, resetPlayers } from '../../../redux/reducers/players'
 import { Action, compose } from 'redux'
-import { i18n } from '../../../helpers/i18n'
+import { i18n } from '../../../helpers/i18n/i18n'
 import RotateLeftIcon from '@material-ui/icons/RotateLeft'
 import { visibilityHOC, VisibilityHOCProps } from '../../../helpers/visibilityHOC'
 import { State } from '../../../redux/defaultState'
@@ -29,7 +29,7 @@ export const ResetToDefaultPlayersButtonConnected = compose(
     { resetPlayers },
     ({ players }, { resetPlayers }): ResetToDefaultPlayersButtonProps => ({
       onClick: resetPlayers,
-      children: i18n('Сбросить'),
+      children: i18n('button.reset2'),
       startIcon: <RotateLeftIcon />,
 
       hidden: equal(players, playersDefaultState),

@@ -10,6 +10,9 @@ export const ButtonGroup = styled(
   ({ size = 'small', ...props }: ButtonGroupProps) => (
     <MaterialButtonGroup variant="text" size={size} {...props} />
   ),
-)(({ theme: { spacing } }: Themed) => ({
+)(({ theme: { spacing, palette: { background: { default: def } } } }: Themed) => ({
   marginRight: spacing(2),
+  '& .Mui-disabled': {
+    backgroundColor: def,
+  },
 }))

@@ -1,7 +1,7 @@
 import { Reducer } from 'redux'
 import { ActionWithEntry } from '../../helpers/types'
 
-type Language = 'rus' | 'eng'
+export type Language = 'rus' | 'eng'
 
 export interface LanguageState {
   language: Language
@@ -15,10 +15,17 @@ type LanguageActionReturn = ActionWithEntry<Constants, Language>
 
 export const languageDefaultState: Language = 'rus'
 
-export const language: Reducer<Language, LanguageActionReturn> = (state = languageDefaultState, { type }) => {
+type ChangeLanguage = (lang: Language) => LanguageActionReturn
+
+export const changeLanguage: ChangeLanguage = (lang) => ({
+  type: Constants.CHANGE_LANGUAGE,
+  entry: lang,
+})
+
+export const language: Reducer<Language, LanguageActionReturn> = (state = languageDefaultState, { type, entry }) => {
   switch (type) {
     case Constants.CHANGE_LANGUAGE: {
-      return state
+      return entry
     }
     default:
       return state

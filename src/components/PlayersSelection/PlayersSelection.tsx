@@ -10,9 +10,9 @@ export const PlayersSelection: FC = () => (
   <>
     <PlayersListConnected />
     <ButtonsWrapper>
-      <CancelStartGameButtonConnected />
       <StartGameButtonConnected />
       <AddPlayerConnected />
+      <CancelStartGameButtonConnected />
       <ResetToDefaultPlayersButtonConnected />
     </ButtonsWrapper>
   </>

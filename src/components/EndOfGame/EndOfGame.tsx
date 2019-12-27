@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { i18n } from '../../helpers/i18n'
+import { i18n } from '../../helpers/i18n/i18n'
 import { DialogStyled } from './parts/DialogStyled'
 import { DialogContentStyled } from './parts/DialogContentStyled'
 import { DialogTitleStyled } from './parts/DialogTitleStyled'
@@ -12,13 +12,13 @@ import { DialogTipStyled } from './parts/DialogTipStyled'
 export const EndOfGame: FC = () => (
   <DialogStyled>
     <DialogTitleStyled>
-      {i18n('Игра окончена')}
+      {i18n('gameOver')}
     </DialogTitleStyled>
     <DialogContentStyled>
       <EndOfGameStats />
     </DialogContentStyled>
     <DialogTipStyled>
-      {i18n('Максимально возможное количество очков')}: {MAX_POSSIBLE_POINTS}
+      {i18n('maximumPossibleNumberOfPoints')}: {MAX_POSSIBLE_POINTS}
     </DialogTipStyled>
     <DialogActionsStyled>
       <GoHomeButton />

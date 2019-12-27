@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { i18n } from '../../../helpers/i18n'
+import { i18n } from '../../../helpers/i18n/i18n'
 import { ChangeTableSizeButtonProps } from './ChangeTableSizeButtonConnected'
 import { Checkbox } from '@material-ui/core'
 import { DrawerListItem } from '../DrawerListItem'
@@ -17,7 +17,7 @@ export const ChangeTableSizeButton: FC<ChangeTableSizeButtonProps> = ({ tableSiz
         />
       }
     >
-      {i18n('Компактная таблица')}
+      {i18n('compactTable')}
     </DrawerListItem>
   </>
 )

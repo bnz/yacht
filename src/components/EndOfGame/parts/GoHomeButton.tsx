@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import Button from '@material-ui/core/Button'
-import { i18n } from '../../../helpers/i18n'
+import { i18n } from '../../../helpers/i18n/i18n'
 import { useDispatch } from 'react-redux'
 import { ThunkAction2 } from '../../../helpers/types'
 import { restartGameThunk } from '../../../redux/actions/restartGameThunk'
@@ -17,7 +17,7 @@ export const GoHomeButton: FC = () => {
       startIcon={<HomeIcon />}
       onClick={onClick}
     >
-      {i18n('На главную')}
+      {i18n('button.goHome')}
     </Button>
   )
 }

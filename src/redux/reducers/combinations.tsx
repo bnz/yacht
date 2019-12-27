@@ -1,6 +1,7 @@
 import { Reducer } from 'redux'
 import { ActionWithEntry } from '../../helpers/types'
 import { DICES_COUNT } from './dices'
+import { i18n } from '../../helpers/i18n/i18n'
 
 export enum Combination {
   ONE = 1,
@@ -45,92 +46,92 @@ type CombinationsReturn = ActionWithEntry<{}, CombinationInfo[]>
 
 export const combinationsDefaultState: CombinationInfo[] = [
   {
-    name: 'Единицы',
-    title: 'Сумма всех костей, на которых выпали 1',
+    name: i18n('combination.ones'),
+    title: i18n('combination.ones.title'),
     combination: Combination.ONE,
     max: Combination.ONE * DICES_COUNT,
   },
   {
-    name: 'Двойки',
-    title: 'Сумма всех костей, на которых выпали 2',
+    name: i18n('combination.twos'),
+    title: i18n('combination.twos.title'),
     combination: Combination.TWO,
     max: Combination.TWO * DICES_COUNT,
   },
   {
-    name: 'Тройки',
-    title: 'Сумма всех костей, на которых выпали 3',
+    name: i18n('combination.threes'),
+    title: i18n('combination.threes.title'),
     combination: Combination.THREE,
     max: Combination.THREE * DICES_COUNT,
   },
   {
-    name: 'Четверки',
-    title: 'Сумма всех костей, на которых выпали 4',
+    name: i18n('combination.fours'),
+    title: i18n('combination.fours.title'),
     combination: Combination.FOUR,
     max: Combination.FOUR * DICES_COUNT,
   },
   {
-    name: 'Пятерки',
-    title: 'Сумма всех костей, на которых выпали 5',
+    name: i18n('combination.fives'),
+    title: i18n('combination.fives.title'),
     combination: Combination.FIVE,
     max: Combination.FIVE * DICES_COUNT,
   },
   {
-    name: 'Шестёрки',
-    title: 'Сумма всех костей, на которых выпали 6',
+    name: i18n('combination.sixes'),
+    title: i18n('combination.sixes.title'),
     combination: Combination.SIX,
     max: Combination.SIX * DICES_COUNT,
   },
   {
-    name: 'Бонус',
-    title: 'Если игрок набирает по крайней мере 63 очков (по три кости с каждым числом) в верхней секции, он получает бонус в виде 35 очков',
+    name: i18n('combination.bonus'),
+    title: i18n('combination.bonus.title'),
     combination: Combination.BONUS,
     max: BONUS_POINTS,
   },
   {
-    name: 'Сэт', // [sum]
-    title: 'Три Одинаковых: Три кости, на которых выпали одинаковые значения. В очки записывается сумма этих трёх костей',
+    name: i18n('combination.threeOfAKind'),
+    title: i18n('combination.threeOfAKind.title'),
     combination: Combination.EQUAL_3,
     max: Combination.SIX * 3,
   },
   {
-    name: 'Карэ', // [sum]
-    title: 'Четыре Одинаковых: Четыре кости, на которых выпали одинаковые значения. В очки записывается сумма этих четырёх костей',
+    name: i18n('combination.fourOfAKind'),
+    title: i18n('combination.fourOfAKind.title'),
     combination: Combination.EQUAL_4,
     max: Combination.SIX * 4,
   },
   {
-    name: 'Младший стрит', // [25]
-    title: 'Любые четыре последовательных числа (1, 2, 3, 4 или 2, 3, 4, 5 или 3, 4, 5, 6). Записывается 25 очков',
+    name: i18n('combination.smallStraight'),
+    title: i18n('combination.smallStraight.title'),
     combination: Combination.SMALL_STRAIGHT,
     max: 25,
   },
   {
-    name: 'Старший стрит', // [30]
-    title: 'Пять последовательных чисел (1, 2, 3, 4, 5 или 2, 3, 4, 5, 6). Записывается 30 очков',
+    name: i18n('combination.bigStraight'),
+    title: i18n('combination.bigStraight.title'),
     combination: Combination.BIG_STRAIGHT,
     max: 30,
   },
   {
-    name: 'Две пары', // [25]
-    title: 'Две пары любых одинаковых костей. Записывается 25 очков',
+    name: i18n('combination.twoPair'),
+    title: i18n('combination.twoPair.title'),
     combination: Combination.TWO_PAIR,
     max: 25,
   },
   {
-    name: 'Фул Хаус', // [30]
-    title: 'Пара и тройка любых одинаковых костей. Записывается 30 очков',
+    name: i18n('combination.fullHouse'),
+    title: i18n('combination.fullHouse.title'),
     combination: Combination.FULL_HOUSE,
     max: 30,
   },
   {
-    name: 'Яхта', // [50]
-    title: 'Пять костей, на которых выпали одинаковые значения. Записывается 50 очков',
+    name: i18n('combination.yacht'),
+    title: i18n('combination.yacht.title'),
     combination: Combination.THE_YACHT,
     max: 50,
   },
   {
-    name: 'Шанс', // [sum]
-    title: 'Записывается сумма всех выпавших костей',
+    name: i18n('combination.chance'),
+    title: i18n('combination.chance.title'),
     combination: Combination.CHANCE,
     max: Combination.SIX * 5,
   },

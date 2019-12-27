@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { i18n } from '../../helpers/i18n'
+import { i18n } from '../../helpers/i18n/i18n'
 import Toolbar from '@material-ui/core/Toolbar'
 import { Heading } from './Heading'
 import { AppBarStyled } from './AppBarStyled'
@@ -10,7 +10,7 @@ export const TopMenu: FC = () => (
     <Toolbar>
       <MenuButtonConnected />
       <Heading>
-        {i18n('Яхта')}
+        {i18n('yacht')}
       </Heading>
     </Toolbar>
   </AppBarStyled>

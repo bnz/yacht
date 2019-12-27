@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { i18n } from '../../../helpers/i18n'
+import { i18n } from '../../../helpers/i18n/i18n'
 import { DrawerListItem } from '../DrawerListItem'
 import { DrawerListDivider } from '../DrawerListDivider'
 import { ButtonGroup } from './ButtonGroup'
@@ -25,7 +25,7 @@ export const DiceSizeChanger: FC<DiceSizeChangerConnectedProps> = ({ diceSize, i
         </ButtonGroup>
       }
     >
-      {i18n('Размер костей')}
+      {i18n('diceSize')}
     </DrawerListItem>
   </>
 )

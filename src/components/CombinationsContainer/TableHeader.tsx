@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { i18n } from '../../helpers/i18n'
+import { i18n } from '../../helpers/i18n/i18n'
 import { TABLE_FIRST_COLUMN_WIDTH, TableCellStyled, TABLE_COLUMN_WIDTH } from './TablePartsStyled/TableCellStyled'
 import { TableRow, TableHead } from './TablePartsStyled/Table'
 import { useSelector } from 'react-redux'
@@ -16,7 +16,7 @@ export const TableHeader: FC = () => {
     <TableHead>
       <TableRow>
         <TableCellStyled heading width={TABLE_FIRST_COLUMN_WIDTH}>
-          {i18n('Комбинации')}
+          {i18n('combinations')}
         </TableCellStyled>
         {players.map(({ name, id }) => (
           <TableCellStyled

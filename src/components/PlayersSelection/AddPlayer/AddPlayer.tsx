@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FC, FormEvent, useState } from 'react'
 import Button from '@material-ui/core/Button'
 import PersonAddIcon from '@material-ui/icons/PersonAdd'
-import { i18n } from '../../../helpers/i18n'
+import { i18n } from '../../../helpers/i18n/i18n'
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -32,23 +32,23 @@ export const AddPlayer: FC<AddPlayerProps> = ({ addPlayer }) => {
   return (
     <>
       <Button variant="contained" startIcon={<PersonAddIcon />} size="small" onClick={openModal}>
-        {i18n('Добавить игрока')}
+        {i18n('button.addPlayer')}
       </Button>
       {open && (
         <Dialog open onClose={closeModal}>
           <form onSubmit={onSubmit}>
             <DialogTitle>
-              {i18n('Добавить игрока')}
+              {i18n('button.addPlayer')}
             </DialogTitle>
             <DialogContentStyled>
               <Input fullWidth autoFocus value={inputValue} onChange={onInputChange} />
             </DialogContentStyled>
             <DialogActions>
               <Button onClick={closeModal}>
-                {i18n('Отмена')}
+                {i18n('button.cancel')}
               </Button>
               <Button type="submit" variant="contained" color="primary" disabled={disabled}>
-                {i18n('Добавить')}
+                {i18n('button.add')}
               </Button>
             </DialogActions>
           </form>

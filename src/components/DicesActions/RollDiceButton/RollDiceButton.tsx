@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { RollDiceButtonStyled } from './RollDiceButtonStyled'
 import { CasinoIconStyled } from './CasinoIconStyled'
-import { i18n } from '../../../helpers/i18n'
+import { i18n } from '../../../helpers/i18n/i18n'
 import { RollDiceButtonTip } from './RollDiceButtonTip'
 import { RollDiceButtonProps } from './RollDiceButtonConnected'
 import { MAX_SHOT_COUNT } from '../../../redux/reducers/playerMove'
@@ -40,10 +40,10 @@ export const RollDiceButton: FC<RollDiceButtonProps> = ({ loading, shot, generat
       onMouseLeave={shuffleUp}
       disabled={disabled}
     >
-      {disabled ? i18n('Запишите ваши очки') : (
+      {disabled ? i18n('button.writeDownYourPoints') : (
         <>
           <CasinoIconStyled fontSize="large" />
-          {i18n('Бросить кости')}
+          {i18n('button.dropDices')}
           <RollDiceButtonTip>
             {shot}
             <span> / {MAX_SHOT_COUNT}</span>

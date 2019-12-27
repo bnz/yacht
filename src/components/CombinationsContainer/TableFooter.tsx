@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { TABLE_COLUMN_WIDTH, TABLE_FIRST_COLUMN_WIDTH, TableCellStyled } from './TablePartsStyled/TableCellStyled'
-import { i18n } from '../../helpers/i18n'
+import { i18n } from '../../helpers/i18n/i18n'
 import { TableRow, TableFooter as TableFoot } from './TablePartsStyled/Table'
 import { useSelector } from 'react-redux'
 import { makeGetTotalsSelector } from '../../redux/selectors/makeGetTotalsSelector'
@@ -19,7 +19,7 @@ export const TableFooter: FC = () => {
     <TableFoot>
       <TableRow>
         <TableCellStyled width={TABLE_FIRST_COLUMN_WIDTH}>
-          {i18n('Итог')}
+          {i18n('total')}
         </TableCellStyled>
         {players.map(({ id: playerId }) => (
           <TableCellStyled

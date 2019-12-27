@@ -1,6 +1,6 @@
 import React, { FC, Fragment } from 'react'
 import { PlayersListProps } from './PlayersListConnected'
-import { i18n } from '../../../helpers/i18n'
+import { i18n } from '../../../helpers/i18n/i18n'
 import IconButton from '@material-ui/core/IconButton'
 import ClearIcon from '@material-ui/icons/Clear'
 import PersonIcon from '@material-ui/icons/Person'
@@ -25,7 +25,7 @@ export const PlayersList: FC<PlayersListProps> = ({ players, removePlayer }) => 
               </Avatar>
             </ListItemAvatar>
             <ListItemText>
-              <span>{i18n('Игрок №')}{index + 1}:&nbsp;</span>
+              <span>{i18n('playerNo')}{index + 1}:&nbsp;</span>
               <span>{name}</span>
             </ListItemText>
             <ListItemSecondaryAction>

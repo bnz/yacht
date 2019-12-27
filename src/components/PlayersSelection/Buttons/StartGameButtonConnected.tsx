@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Button, { ButtonProps } from '@material-ui/core/Button'
-import { i18n } from '../../../helpers/i18n'
+import { i18n } from '../../../helpers/i18n/i18n'
 import { ChangeGamePhase, changeGamePhase, GamePhases } from '../../../redux/reducers/gamePhase'
 import { compose } from 'redux'
 import { visibilityHOC, VisibilityHOCProps } from '../../../helpers/visibilityHOC'
@@ -22,15 +22,15 @@ export interface StartGameButtonProps extends Pick<ButtonProps, 'size' | 'varian
 
 export const StartGameButtonConnected = compose(
   connect<MapStateToProps, MapDispatchToProps, {}, StartGameButtonProps & VisibilityHOCProps, State>(
-    ({ players }: State) => ({
+    ({ players }) => ({
       players,
     }),
     { changeGamePhase, nextTurnThunk },
     ({ players }, { changeGamePhase, nextTurnThunk }): StartGameButtonProps & VisibilityHOCProps => ({
       variant: 'contained',
       color: 'primary',
-      size: 'small',
-      children: i18n('Начать игру'),
+      size: 'large',
+      children: i18n('button.startGame'),
       onClick() {
         // TODO: refactor this to Thunk Action
         changeGamePhase(GamePhases.IN_PLAY)
