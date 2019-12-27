@@ -7,7 +7,7 @@ type Subscriptions = (store: Store<State>) => Unsubscribe
 
 export const subscriptions: Subscriptions = ({ subscribe, getState }) => subscribe(() => {
   const {
-    gamePhase, players, dices, dicesSelected, diceSize, playerMove, tableSize, drawerOpened, playerPoints,
+    gamePhase, players, dices, dicesSelected, diceSize, playerMove, tableSize, drawerOpened, playerPoints, language,
   } = getState()
 
   setItem('gamePhase', gamePhase)
@@ -19,4 +19,5 @@ export const subscriptions: Subscriptions = ({ subscribe, getState }) => subscri
   setItem('tableSize', toString(tableSize))
   setItem('drawerOpened', toString(drawerOpened))
   setItem('playerPoints', toString(playerPoints))
+  setItem('language', toString(language))
 })
