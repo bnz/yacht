@@ -61,6 +61,9 @@ export const TableCellStyled = styled(
       borderTopRightRadius: spacing(1),
       borderTopLeftRadius: spacing(1),
     }],
+    [!active && !heading, {
+      // display: 'none',
+    }],
   ])
 })
 

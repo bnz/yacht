@@ -23,9 +23,6 @@ export const MenuButtonConnected = connect(
   (
     { drawerOpened }: MapStateToProps,
     { toggleDrawerOpened }: MapDispatchToProps,
-    // stateProps: MapStateToProps,
-    // dispatchProps: MapDispatchToProps,
-    // ownProps: OwnProps,
   ): MenuButtonProps => ({
     onClick() {
       toggleDrawerOpened(!drawerOpened)

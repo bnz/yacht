@@ -5,7 +5,11 @@ import { replaceKeysInObject } from '../../helpers/replaceKeysInObject'
 import { DrawerOpenedConnectorProps } from './MainLayoutConnected'
 import { DRAWER_WIDTH } from '../Drawer/DrawerStyled'
 
-const footerHeight = 10
+const $footerHeight = 10
+
+const $innerPadding = 5
+
+const $innerPaddingMobile = 2
 
 export const Wrapper = styled(
   ({ drawer, ...props }: DrawerOpenedConnectorProps) => <div {...props} />,
@@ -20,7 +24,7 @@ export const Wrapper = styled(
 
   // Equal to height of footer
   // But also accounting for potential margin-bottom of last child
-  marginBottom: spacing(footerHeight) * -1,
+  marginBottom: spacing($footerHeight) * -1,
 
   marginLeft: drawer ? spacing(DRAWER_WIDTH) : 0,
   transition: create('margin-left', {
@@ -30,32 +34,49 @@ export const Wrapper = styled(
 }))
 
 export const Push = styled('div')(({ theme: { spacing } }: Themed) => ({
-  height: spacing(footerHeight),
+  height: spacing($footerHeight),
 }))
 
 export const Footer = styled(
   ({ drawer, ...props }: DrawerOpenedConnectorProps) => <footer {...props} />,
 )(({
-  theme: { spacing, transitions: { create, easing, duration } }, drawer,
+  theme: {
+    spacing, transitions: { create, easing, duration },
+    breakpoints: { down },
+  },
+  drawer,
 }: Themed & DrawerOpenedConnectorProps) => ({
   display: 'flex',
   alignItems: 'center',
-  height: spacing(footerHeight),
-  padding: `0 ${spacing(5)}px`,
+  height: spacing($footerHeight),
+  padding: spacing(0, $innerPadding),
   marginLeft: drawer ? spacing(DRAWER_WIDTH) : 0,
   transition: create('margin-left', {
     easing: easing.sharp,
     duration: duration.enteringScreen,
   }),
+  [down('xs')]: {
+    padding: spacing(0, $innerPaddingMobile),
+    justifyContent: 'center',
+  },
 }))
 
-export const Inner = styled('div')(({ theme: { spacing, mixins: { toolbar } } }: Themed) => ({
-  padding: `${spacing(2)}px ${spacing(5)}px`,
+export const Inner = styled('div')(({
+  theme: {
+    spacing, mixins: { toolbar },
+    breakpoints: { down },
+  },
+}: Themed) => ({
+  padding: spacing(2, $innerPadding),
   ...replaceKeysInObject(
     toolbar,
     'minHeight',
     'paddingTop',
-    (value: number) => spacing(value / 6),
+    (value: number): number => spacing(value / 6),
   ),
   maxWidth: spacing(130),
+  [down('xs')]: {
+    paddingLeft: spacing($innerPaddingMobile),
+    paddingRight: spacing($innerPaddingMobile),
+  },
 }))

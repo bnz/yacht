@@ -8,5 +8,5 @@ export const Paragraph = styled(
     <Typography paragraph {...props} />
   ),
 )(({ theme: { spacing } }: Themed) => ({
-  margin: `${spacing(1)} 0`,
+  margin: spacing(1, 0),
 }))

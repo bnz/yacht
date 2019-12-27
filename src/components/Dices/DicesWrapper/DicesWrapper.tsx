@@ -10,13 +10,17 @@ export const DicesWrapper = styled(
   ({ diceSize, ...props }: DicesWrapper) => (
     <div {...props} />
   ),
-)(({ diceSize, theme: { spacing } }: Themed & DicesWrapper) => {
+)(({ diceSize, theme: { spacing, breakpoints: { down } } }: Themed & DicesWrapper) => {
   const size = diceSize ? diceSize : diceSizeDefaultState
 
   return {
     display: 'flex',
-    flexWrap: 'wrap',
+    flexWrap: 'nowrap',
     fontSize: spacing(size),
-    paddingBottom: spacing(size / 2),
+    paddingBottom: spacing(size / 3),
+
+    [down('xs')]: {
+      justifyContent: 'center',
+    },
   }
 })

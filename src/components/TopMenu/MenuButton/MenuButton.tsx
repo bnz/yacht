@@ -13,4 +13,5 @@ export const MenuButton = styled(
 )(({ theme: { spacing, palette: { type, common: { black, white } } } }: Themed) => ({
   marginRight: spacing(1),
   color: type === 'dark' ? white : black,
+  zIndex: 1,
 }))

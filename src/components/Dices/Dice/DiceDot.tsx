@@ -1,4 +1,3 @@
-/*tslint:disable:no-magic-numbers*/
 import React from 'react'
 import styled from '@material-ui/styles/styled'
 import { $delay, $wrapWidth } from './DiceInner'

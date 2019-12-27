@@ -12,7 +12,10 @@ interface DiceInnerProps {
 
 export const DiceInner = styled(
   ({ roll, selected, ...rest }: DiceInnerProps) => <div {...rest} />,
-)(({ roll, selected, theme: { palette: { type, common: { white, black } } } }: Themed & DiceInnerProps) => ({
+)(({
+  roll, selected,
+  theme: { palette: { type, common: { white, black }, text: { disabled } } },
+}: Themed & DiceInnerProps) => ({
 
   display: 'flex',
   flexWrap: 'wrap',
@@ -28,7 +31,11 @@ export const DiceInner = styled(
 
   transform: roll ? 'rotate(359deg)' : 'none',
 
-  marginTop: roll || selected ? '-.1em' : 0,
+  // marginTop: roll || selected ? '-.1em' : 0,
 
-  boxShadow: selected ? '0 .3em 1em rgba(0, 0, 0, .6)' : '0 0 .1em rgba(0, 0, 0, .4)',
+  boxShadow: selected
+    ? type === 'dark'
+      ? `${disabled} 0 0 0 2px`
+      : '0 0 .2em rgba(0, 0, 0, 1)'
+    : '0 0 .1em rgba(0, 0, 0, .4)',
 }))

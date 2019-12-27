@@ -7,6 +7,6 @@ export const DialogContentTotalRow = styled('div')(({
   },
 }: Themed) => ({
   ...h2,
-  padding: `${spacing(2)}px 0`,
+  padding: spacing(2, 0),
   backgroundColor: paper,
 }))

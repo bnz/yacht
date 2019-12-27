@@ -1,12 +1,12 @@
 import React, { FC } from 'react'
 import { i18n } from '../../../helpers/i18n/i18n'
-import Fab from '@material-ui/core/Fab'
 import RotateLeftIcon from '@material-ui/icons/RotateLeft'
 import { ResetDicesButtonProps } from './ResetDicesButtonConnected'
+import { ResetDicesButtonStyled } from './ResetDicesButtonStyled'
 
 export const ResetDicesButton: FC<ResetDicesButtonProps> = ({ unselectAllDices }) => (
-  <Fab color="secondary" variant="extended" onClick={unselectAllDices} style={{ marginBottom: '16px' }}>
+  <ResetDicesButtonStyled onClick={unselectAllDices}>
     <RotateLeftIcon fontSize="large" />
     {i18n('button.reset')}
-  </Fab>
+  </ResetDicesButtonStyled>
 )
