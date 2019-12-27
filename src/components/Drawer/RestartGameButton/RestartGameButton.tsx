@@ -24,12 +24,12 @@ export const RestartGameButton: FC<RestartGameProps> = ({ restartGameAction }) =
     <>
       <DrawerListDivider />
       <DrawerListItem icon={<ReplayIcon style={{ marginLeft: '.5em' }} />} onClick={openModal}>
-        {i18n('restartGame')}
+        {i18n('button.restartGame')}
       </DrawerListItem>
       {open && (
         <Dialog open onClose={closeModal}>
           <DialogTitle>
-            {i18n('restartGame')}?
+            {i18n('button.restartGame')}?
           </DialogTitle>
           <DialogContentStyled>
             <WarningIconStyled />
@@ -40,7 +40,7 @@ export const RestartGameButton: FC<RestartGameProps> = ({ restartGameAction }) =
               {i18n('button.cancel')}
             </Button>
             <Button variant="contained" color="secondary" onClick={restartGame}>
-              {i18n('restartGame')}
+              {i18n('button.restartGame')}
             </Button>
           </DialogActions>
         </Dialog>
