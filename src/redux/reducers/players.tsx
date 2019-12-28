@@ -19,11 +19,7 @@ export type PlayersTotals = {
 export const playersDefaultState: Player[] = [
   {
     id: '1d777e55-8009-45e7-81b6-2651ad80399c',
-    name: 'Давид',
-  },
-  {
-    id: '7e4f7e04-6611-43b0-b847-60256f527519',
-    name: 'Варечка',
+    name: 'Numéro un',
   },
 ]
 

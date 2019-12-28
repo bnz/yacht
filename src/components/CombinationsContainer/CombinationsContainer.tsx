@@ -9,7 +9,7 @@ import { CombinationWrapper } from './Combination/CombinationWrapper'
 import { TableFooter } from './TableFooter'
 import { useSelector } from 'react-redux'
 import { combinationsSelector } from '../../redux/selectors/combinationsSelector'
-import { tableSizeSelector } from '../../redux/selectors/tableSizeSelector'
+import { makeTableSizeSelector } from '../../redux/selectors/tableSizeSelector'
 import { makePlayersSelector } from '../../redux/selectors/makePlayersSelector'
 import { isMoveAvailableSelector } from '../../redux/selectors/noMovesSelector'
 
@@ -17,22 +17,21 @@ export const CombinationsContainer: FC = () => {
   const combinations = useSelector(combinationsSelector)
   const playersSelector = makePlayersSelector()
   const players = useSelector(playersSelector)
+  const tableSizeSelector = makeTableSizeSelector()
   const tableSize = useSelector(tableSizeSelector)
   const isMoveAvailable = useSelector(isMoveAvailableSelector)
-
-  // console.log({
-  //   isMoveAvailable,
-  // })
+  const large = tableSize === 'medium'
 
   return (
     <Table size={tableSize}>
-      <TableHeader />
+      <TableHeader large={large} />
       <TableBody>
         {combinations.map(({ name, title, combination }) => (
           <TableRow key={name}>
             <TableCellStyled
               selected={combination === Combination.BONUS}
               width={TABLE_FIRST_COLUMN_WIDTH}
+              large={large}
             >
               <Tooltip title={title} placement="top-start" enterDelay={300}>
                 <span>{name}</span>
@@ -43,6 +42,7 @@ export const CombinationsContainer: FC = () => {
                 key={playerId}
                 selected={isBonus(combination)}
                 playerId={playerId}
+                large={large}
               >
                 <CombinationConnected
                   playerId={playerId}
@@ -51,11 +51,14 @@ export const CombinationsContainer: FC = () => {
                 />
               </CombinationWrapper>
             ))}
-            <TableCellStyled selected={isBonus(combination)} />
+            <TableCellStyled
+              selected={isBonus(combination)}
+              large={large}
+            />
           </TableRow>
         ))}
       </TableBody>
-      <TableFooter />
+      <TableFooter large={large} />
     </Table>
   )
 }

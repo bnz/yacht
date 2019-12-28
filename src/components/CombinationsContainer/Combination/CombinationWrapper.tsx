@@ -4,7 +4,8 @@ import { useSelector } from 'react-redux'
 import { Player } from '../../../redux/reducers/players'
 import { makePlayerMoveSelector } from '../../../redux/selectors/makePlayerMoveSelector'
 
-interface CombinationWrapperProps extends Pick<TableCellStyledProps, 'selected'> {
+interface CombinationWrapperProps
+  extends Pick<TableCellStyledProps, 'selected' | 'large'> {
   playerId: Player['id']
 }
 
@@ -12,12 +13,14 @@ export const CombinationWrapper: FC<CombinationWrapperProps> = ({
   children,
   selected,
   playerId,
+  large,
 }) => {
   const playerMoveSelector = makePlayerMoveSelector()
   const [activePlayerId] = useSelector(playerMoveSelector)
 
   return (
     <TableCellStyled
+      large={large}
       selected={selected}
       width={TABLE_COLUMN_WIDTH}
       active={activePlayerId === playerId}

@@ -11,9 +11,10 @@ export interface TableCellStyledProps {
   centered?: boolean
   width?: number
   active?: boolean
+  large?: boolean
 }
 
-export const TABLE_FIRST_COLUMN_WIDTH = 150
+export const TABLE_FIRST_COLUMN_WIDTH = 165
 export const TABLE_COLUMN_WIDTH = 170
 
 export const TableCellStyled = styled(
@@ -24,13 +25,14 @@ export const TableCellStyled = styled(
     centered,
     width,
     active,
+    large,
     ...props
   }: TableCellStyledProps) => (
     <TableCell component="div" {...props} />
   ),
 )(({
   theme: { spacing, palette: { type, grey, background: { paper } } },
-  centered, heading, selected, noPadding, width, active,
+  centered, heading, selected, noPadding, width, active, large,
 }: Themed & TableCellStyledProps) => {
   const activeColor = type === 'dark' ? paper : grey['300']
 
@@ -61,8 +63,8 @@ export const TableCellStyled = styled(
       borderTopRightRadius: spacing(1),
       borderTopLeftRadius: spacing(1),
     }],
-    [!active && !heading, {
-      // display: 'none',
+    [large, {
+      fontSize: spacing(2.2),
     }],
   ])
 })

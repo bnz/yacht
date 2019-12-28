@@ -1,5 +1,10 @@
 import React, { FC } from 'react'
-import { TABLE_COLUMN_WIDTH, TABLE_FIRST_COLUMN_WIDTH, TableCellStyled } from './TablePartsStyled/TableCellStyled'
+import {
+  TABLE_COLUMN_WIDTH,
+  TABLE_FIRST_COLUMN_WIDTH,
+  TableCellStyled,
+  TableCellStyledProps,
+} from './TablePartsStyled/TableCellStyled'
 import { i18n } from '../../helpers/i18n/i18n'
 import { TableRow, TableFooter as TableFoot } from './TablePartsStyled/Table'
 import { useSelector } from 'react-redux'
@@ -7,7 +12,7 @@ import { makeGetTotalsSelector } from '../../redux/selectors/makeGetTotalsSelect
 import { makePlayersSelector } from '../../redux/selectors/makePlayersSelector'
 import { makePlayerMoveSelector } from '../../redux/selectors/makePlayerMoveSelector'
 
-export const TableFooter: FC = () => {
+export const TableFooter: FC<Pick<TableCellStyledProps, 'large'>> = ({ large }) => {
   const playersSelector = makePlayersSelector()
   const players = useSelector(playersSelector)
   const getTotalsSelector = makeGetTotalsSelector()
@@ -18,7 +23,7 @@ export const TableFooter: FC = () => {
   return (
     <TableFoot>
       <TableRow>
-        <TableCellStyled width={TABLE_FIRST_COLUMN_WIDTH}>
+        <TableCellStyled large={large} width={TABLE_FIRST_COLUMN_WIDTH}>
           {i18n('total')}
         </TableCellStyled>
         {players.map(({ id: playerId }) => (
@@ -28,6 +33,7 @@ export const TableFooter: FC = () => {
             centered
             active={activePlayerId === playerId}
             noPadding
+            large={large}
           >
             {totals[playerId]}
           </TableCellStyled>

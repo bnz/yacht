@@ -22,10 +22,11 @@ export const TableBody = styled(AsDiv(MaterialTableBody))({})
 export const TableFooter = styled(AsDiv(MaterialTableFooter))(({
   theme: { palette: { type, grey, background: { paper } } },
 }: Themed) => ({
-  '& > div > div': {
+  '& div div': {
     borderTop: `2px solid ${type === 'dark' ? paper : grey['300']}`,
     borderBottom: 0,
     lineHeight: 'inherit',
+    // TODO
     fontSize: 'inherit',
     fontWeight: 'bold',
   },

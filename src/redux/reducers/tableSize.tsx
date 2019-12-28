@@ -16,7 +16,7 @@ export interface TableSizeState {
   tableSize: TableSizes
 }
 
-export const tableSizeDefaultState: TableSizeState['tableSize'] = TableSizes.MEDIUM
+export const tableSizeDefaultState: TableSizeState['tableSize'] = TableSizes.SMALL
 
 export type ToggleSize = ThunkAction
 

@@ -22,4 +22,5 @@ export const Button = styled(
   textTransform: 'lowercase',
   borderRadius: 0,
   padding: 0,
+  fontSize: 'inherit',
 })
