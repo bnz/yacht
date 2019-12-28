@@ -13,11 +13,19 @@ const AsDiv = (Component: ComponentType) => styled((props) => (
   display: 'block',
 })
 
-export const Table = AsDiv(MaterialTable)
+export const Table = styled(AsDiv(MaterialTable))(({
+  theme: { breakpoints: { down } },
+}: Themed) => ({
+  [down('xs')]: {
+    overflowX: 'auto',
+    overflowY: 'hidden',
+    maxWidth: '100%',
+  },
+}))
 
 export const TableHead = AsDiv(MaterialTableHead)
 
-export const TableBody = styled(AsDiv(MaterialTableBody))({})
+export const TableBody = AsDiv(MaterialTableBody)
 
 export const TableFooter = styled(AsDiv(MaterialTableFooter))(({
   theme: { palette: { type, grey, background: { paper } } },
