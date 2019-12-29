@@ -33,7 +33,7 @@ export const CombinationsContainer: FC = () => {
               width={TABLE_FIRST_COLUMN_WIDTH}
               large={large}
             >
-              <Tooltip title={title} placement="top-start" enterDelay={300}>
+              <Tooltip title={title} placement="top-start" enterDelay={300} disableFocusListener>
                 <span>{name}</span>
               </Tooltip>
             </TableCellStyled>
