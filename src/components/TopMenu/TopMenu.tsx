@@ -3,12 +3,12 @@ import { i18n } from '../../helpers/i18n/i18n'
 import Toolbar from '@material-ui/core/Toolbar'
 import { Heading } from './Heading'
 import { AppBarStyled } from './AppBarStyled'
-import { MenuButtonConnected } from './MenuButton/MenuButtonConnected'
+import { MenuButtonStyled } from './MenuButton'
 
 export const TopMenu: FC = () => (
   <AppBarStyled>
     <Toolbar>
-      <MenuButtonConnected />
+      <MenuButtonStyled />
       <Heading>
         {i18n('yacht')}
       </Heading>
