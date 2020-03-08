@@ -8,8 +8,9 @@ import { makeLanguageSelector } from '../../../redux/selectors/makeLanguageSelec
 import { i18n } from '../../../helpers/i18n/i18n'
 import { changeLanguageThunk } from '../../../redux/actions/changeLanguageThunk'
 
+const languageSelector = makeLanguageSelector()
+
 export const LangChangeButtons: FC = () => {
-  const languageSelector = makeLanguageSelector()
   const language = useSelector(languageSelector)
   const dispatch = useDispatch()
   const onClick = () => dispatch(changeLanguageThunk())

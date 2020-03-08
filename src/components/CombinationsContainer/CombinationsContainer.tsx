@@ -8,18 +8,22 @@ import { TableHeader } from './TableHeader'
 import { CombinationWrapper } from './Combination/CombinationWrapper'
 import { TableFooter } from './TableFooter'
 import { useSelector } from 'react-redux'
-import { combinationsSelector } from '../../redux/selectors/combinationsSelector'
-import { makeTableSizeSelector } from '../../redux/selectors/tableSizeSelector'
+import { makeCombinationsSelector } from '../../redux/selectors/makeCombinationsSelector'
+import { makeTableSizeSelector } from '../../redux/selectors/makeTableSizeSelector'
 import { makePlayersSelector } from '../../redux/selectors/makePlayersSelector'
-import { isMoveAvailableSelector } from '../../redux/selectors/noMovesSelector'
+import { makeIsMoveAvailableSelector } from '../../redux/selectors/makeIsMoveAvailableSelector'
+
+const combinationsSelector = makeCombinationsSelector()
+const playersSelector = makePlayersSelector()
+const isMoveAvailableSelector = makeIsMoveAvailableSelector()
+const tableSizeSelector = makeTableSizeSelector()
 
 export const CombinationsContainer: FC = () => {
   const combinations = useSelector(combinationsSelector)
-  const playersSelector = makePlayersSelector()
   const players = useSelector(playersSelector)
-  const tableSizeSelector = makeTableSizeSelector()
   const tableSize = useSelector(tableSizeSelector)
   const isMoveAvailable = useSelector(isMoveAvailableSelector)
+
   const large = tableSize === 'medium'
 
   return (

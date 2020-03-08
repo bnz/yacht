@@ -12,8 +12,9 @@ import { EndOfGameConnected } from '../EndOfGame/EndOfGameConnected'
 import { makeGamePhaseSelector } from '../../redux/selectors/makeGamePhaseSelector'
 import { useSelector } from 'react-redux'
 
+const gamePhaseSelector = makeGamePhaseSelector()
+
 export const App: FC = () => {
-  const gamePhaseSelector = makeGamePhaseSelector()
   const gamePhase = useSelector(gamePhaseSelector)
 
   return (

@@ -11,10 +11,11 @@ import { useSelector } from 'react-redux'
 import { makePlayersSelector } from '../../redux/selectors/makePlayersSelector'
 import { makePlayerMoveSelector } from '../../redux/selectors/makePlayerMoveSelector'
 
+const playersSelector = makePlayersSelector()
+const playerMoveSelector = makePlayerMoveSelector()
+
 export const TableHeader: FC<Pick<TableCellStyledProps, 'large'>> = ({ large }) => {
-  const playersSelector = makePlayersSelector()
   const players = useSelector(playersSelector)
-  const playerMoveSelector = makePlayerMoveSelector()
   const [activePlayerId] = useSelector(playerMoveSelector)
 
   return (

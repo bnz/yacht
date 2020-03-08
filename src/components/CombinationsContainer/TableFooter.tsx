@@ -12,12 +12,13 @@ import { makeGetTotalsSelector } from '../../redux/selectors/makeGetTotalsSelect
 import { makePlayersSelector } from '../../redux/selectors/makePlayersSelector'
 import { makePlayerMoveSelector } from '../../redux/selectors/makePlayerMoveSelector'
 
+const playersSelector = makePlayersSelector()
+const getTotalsSelector = makeGetTotalsSelector()
+const playerMoveSelector = makePlayerMoveSelector()
+
 export const TableFooter: FC<Pick<TableCellStyledProps, 'large'>> = ({ large }) => {
-  const playersSelector = makePlayersSelector()
   const players = useSelector(playersSelector)
-  const getTotalsSelector = makeGetTotalsSelector()
   const totals = useSelector(getTotalsSelector)
-  const playerMoveSelector = makePlayerMoveSelector()
   const [activePlayerId] = useSelector(playerMoveSelector)
 
   return (

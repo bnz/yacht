@@ -6,10 +6,11 @@ import { makePlayersSelector } from '../../redux/selectors/makePlayersSelector'
 import { useSelector } from 'react-redux'
 import { makeGetTotalsSelector } from '../../redux/selectors/makeGetTotalsSelector'
 
+const playersSelector = makePlayersSelector()
+const getTotalsSelector = makeGetTotalsSelector()
+
 export const EndOfGameStats: FC = () => {
-  const playersSelector = makePlayersSelector()
   const players = useSelector(playersSelector)
-  const getTotalsSelector = makeGetTotalsSelector()
   const totals = useSelector(getTotalsSelector)
 
   return (

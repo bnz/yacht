@@ -9,7 +9,7 @@ import { MAX_SHOT_COUNT, PlayerMoveState } from '../reducers/playerMove'
 export interface R1 extends CombinationsState, DicesState, PlayerPointsState, PlayerMoveState {
 }
 
-export const isMoveAvailableSelector = createSelector<State, R1, boolean>(
+export const makeIsMoveAvailableSelector = () => createSelector<State, R1, boolean>(
   ({ combinations, dices, playerPoints, playerMove }) => ({
     combinations,
     dices,

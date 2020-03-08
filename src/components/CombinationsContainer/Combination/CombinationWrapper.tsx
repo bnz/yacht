@@ -9,13 +9,14 @@ interface CombinationWrapperProps
   playerId: Player['id']
 }
 
+const playerMoveSelector = makePlayerMoveSelector()
+
 export const CombinationWrapper: FC<CombinationWrapperProps> = ({
   children,
   selected,
   playerId,
   large,
 }) => {
-  const playerMoveSelector = makePlayerMoveSelector()
   const [activePlayerId] = useSelector(playerMoveSelector)
 
   return (
