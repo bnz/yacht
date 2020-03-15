@@ -1,18 +1,25 @@
 import React, { FC } from 'react'
 import { DrawerStyled } from './DrawerStyled'
-import { RestartGameButtonConnected } from './RestartGameButton/RestartGameButtonConnected'
+import { RestartGameButtonWithVisibilityHOC } from './RestartGameButton/RestartGameButtonWithVisibilityHOC'
 import { ChangeTableSizeButtonConnected } from './ChangeTableSizeButton/ChangeTableSizeButtonConnected'
 import { ThemeToggler } from './ThemeToggler'
 import { DiceSizeChangerConnected } from './DiceSizeChanger/DiceSizeChangerConnected'
-import { DrawerProps } from './DrawerConnected'
 import { LangChangeButtons } from './LangChangeButtons/LangChangeButtons'
+import { makeDrawerOpenedSelector } from '../../redux/selectors/makeDrawerOpenedSelector'
+import { useSelector } from 'react-redux'
 
-export const Drawer: FC<DrawerProps> = ({ drawerOpened }) => (
-  <DrawerStyled open={drawerOpened}>
-    <ThemeToggler />
-    <LangChangeButtons />
-    <DiceSizeChangerConnected />
-    <ChangeTableSizeButtonConnected />
-    <RestartGameButtonConnected />
-  </DrawerStyled>
-)
+const drawerOpenedSelector = makeDrawerOpenedSelector()
+
+export const Drawer: FC = () => {
+  const drawerOpened = useSelector(drawerOpenedSelector)
+
+  return (
+    <DrawerStyled open={drawerOpened}>
+      <ThemeToggler />
+      <LangChangeButtons />
+      <DiceSizeChangerConnected />
+      <ChangeTableSizeButtonConnected />
+      <RestartGameButtonWithVisibilityHOC />
+    </DrawerStyled>
+  )
+}

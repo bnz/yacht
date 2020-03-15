@@ -2,9 +2,9 @@ import React, { FC } from 'react'
 import { Inner, Push } from './MainLayoutParts'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { TopMenu } from '../TopMenu/TopMenu'
-import { DrawerConnected } from '../Drawer/DrawerConnected'
 import { Wrapper, Footer } from './MainLayoutConnected'
 import { useGlobalStyles } from './useGlobalStyles'
+import { Drawer } from '../Drawer/Drawer'
 
 export const MainLayout: FC = ({ children }) => {
   useGlobalStyles()
@@ -13,7 +13,7 @@ export const MainLayout: FC = ({ children }) => {
     <>
       <CssBaseline />
       <TopMenu />
-      <DrawerConnected />
+      <Drawer />
       <Wrapper>
         <Inner>
           {children}

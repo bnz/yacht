@@ -16,3 +16,5 @@ export type ThunkAction = () => ReduxThunkAction<void, State, null, Action>
 export type ThunkAction2 = (a?: ReduxThunkAction<void, State, null, Action>) => ReduxThunkAction<void, State, null, Action>
 
 export type Parameters<T> = T extends (...args: infer T) => any ? T : never
+
+export type Selector<T> = (state: State) => T

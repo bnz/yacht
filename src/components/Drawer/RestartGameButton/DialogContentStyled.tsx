@@ -1,4 +1,3 @@
-/*tslint:disable:no-magic-numbers*/
 import styled from '@material-ui/styles/styled'
 import DialogContent from '@material-ui/core/DialogContent'
 

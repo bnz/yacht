@@ -1,8 +1,10 @@
 import { createSelector } from 'reselect'
 import { State } from '../defaultState'
-import { GamePhases } from '../reducers/gamePhase'
+import { GamePhase, gamePhase } from '../pureSelectors/gamePhase'
 
-export const makeGamePhaseSelector = () => createSelector<State, GamePhases, GamePhases>(
-  ({ gamePhase }) => gamePhase,
+type R1 = ReturnType<GamePhase>
+
+export const makeGamePhaseSelector = () => createSelector<State, R1, R1>(
+  gamePhase,
   (gamePhase) => gamePhase,
 )
