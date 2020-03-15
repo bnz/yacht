@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { MainLayout } from '../MainLayout/MainLayout'
 import { GamePhases } from '../../redux/reducers/gamePhase'
-import { StartGameButtonConnected } from '../StartGameButton/StartGameButtonConnected'
+import { StartGameButton } from '../StartGameButton/StartGameButton'
 import { PlayersSelection } from '../PlayersSelection/PlayersSelection'
 import { DicesConnected } from '../Dices/DicesConnected'
 import { DicesActions } from '../DicesActions/DicesActions'
@@ -23,7 +23,7 @@ export const App: FC = () => {
         [GamePhases.PRE_GAME]: (
           <>
             <StartGameButtonWrapper>
-              <StartGameButtonConnected />
+              <StartGameButton />
             </StartGameButtonWrapper>
             <Rules />
           </>
