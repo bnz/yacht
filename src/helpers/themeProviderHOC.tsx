@@ -1,4 +1,4 @@
-import React, { createContext, FC, useState } from 'react'
+import React, { createContext, FC, useCallback, useMemo, useState } from 'react'
 import { PaletteType, Theme } from '@material-ui/core'
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme'
 import ThemeProvider from '@material-ui/styles/ThemeProvider'
@@ -20,28 +20,34 @@ export const ThemeContext = createContext<ThemeProviderHOCProps>({})
 export const themeProviderHOC = (Component: FC) => () => {
   const [theme, setTheme] = useState(getItem('theme', false) || 'dark')
 
-  const toggleTheme = () => {
-    const newPaletteType: PaletteType = theme === 'light' ? 'dark' : 'light'
-    setTheme(newPaletteType)
-    setItem('theme', newPaletteType)
+  const toggleTheme = useCallback(
+    () => {
+      const newPaletteType: PaletteType = theme === 'light' ? 'dark' : 'light'
+      setTheme(newPaletteType)
+      setItem('theme', newPaletteType)
 
-    document.body.style.background = newPaletteType === 'dark' ? '#303030' : '#fff'
-  }
+      document.body.style.background = newPaletteType === 'dark' ? '#303030' : '#fff'
+    },
+    [theme],
+  )
 
   const { palette: { common: { white } } }: Theme = useTheme()
 
-  const myTheme = createMuiTheme({
-    palette: {
-      type: theme,
-    },
-    overrides: {
-      MuiAppBar: {
-        colorPrimary: {
-          backgroundColor: theme === 'dark' ? mainDarkBGColor : white,
+  const myTheme = useMemo(
+    () => createMuiTheme({
+      palette: {
+        type: theme,
+      },
+      overrides: {
+        MuiAppBar: {
+          colorPrimary: {
+            backgroundColor: theme === 'dark' ? mainDarkBGColor : white,
+          },
         },
       },
-    },
-  })
+    }),
+    [theme, white],
+  )
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
