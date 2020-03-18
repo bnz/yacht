@@ -32,25 +32,23 @@ export const RestartGameButton: FC = () => {
       <DrawerListItem icon={<ReplayIconStyled />} onClick={openModal}>
         {i18n('button.restartGame')}
       </DrawerListItem>
-      {open && (
-        <Dialog open onClose={closeModal}>
-          <DialogTitle>
-            {i18n('button.restartGame')}?
-          </DialogTitle>
-          <DialogContentStyled>
-            <WarningIconStyled />
-            {i18n('currentGameWillBeLost')}
-          </DialogContentStyled>
-          <DialogActions>
-            <Button onClick={closeModal}>
-              {i18n('button.cancel')}
-            </Button>
-            <Button variant="contained" color="secondary" onClick={restartGame}>
-              {i18n('button.restartGame')}
-            </Button>
-          </DialogActions>
-        </Dialog>
-      )}
+      <Dialog open={open} onClose={closeModal}>
+        <DialogTitle>
+          {i18n('button.restartGame')}?
+        </DialogTitle>
+        <DialogContentStyled>
+          <WarningIconStyled />
+          {i18n('currentGameWillBeLost')}
+        </DialogContentStyled>
+        <DialogActions>
+          <Button onClick={closeModal}>
+            {i18n('button.cancel')}
+          </Button>
+          <Button variant="contained" color="secondary" onClick={restartGame}>
+            {i18n('button.restartGame')}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   )
 }

@@ -3,7 +3,13 @@ import { DicesProps } from './DicesConnected'
 import { Dice } from './Dice/Dice'
 import { DicesWrapper } from './DicesWrapper/DicesWrapper'
 
-export const Dices: FC<DicesProps> = ({ dices, dicesSelected, loading, selectDice, diceSize }) => (
+export const Dices: FC<DicesProps> = ({
+  dices,
+  dicesSelected,
+  loading,
+  selectDice,
+  diceSize,
+}) => (
   <DicesWrapper diceSize={diceSize}>
     {dices.map((dice, index) => {
       const selected = dicesSelected.indexOf(index) !== -1

@@ -10,7 +10,12 @@ interface DrawerListItemProps {
   onClick?(): void
 }
 
-export const DrawerListItem: FC<DrawerListItemProps> = ({ icon, onClick, children, button = true }) => (
+export const DrawerListItem: FC<DrawerListItemProps> = ({
+  icon,
+  onClick,
+  children,
+  button = true,
+}) => (
   // @ts-ignore TS2769 TODO wtf??
   <DrawerListItemStyled button={button} onClick={onClick}>
     <ListItemIcon>
