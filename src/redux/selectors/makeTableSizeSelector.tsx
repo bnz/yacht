@@ -1,8 +1,7 @@
 import { createSelector } from 'reselect'
-import { State } from '../defaultState'
-import { TableSizes } from '../reducers/tableSize'
+import { tableSize } from '../pureSelectors/tableSize'
 
-export const makeTableSizeSelector = () => createSelector<State, TableSizes, TableSizes>(
-  ({ tableSize }) => tableSize,
+export const makeTableSizeSelector = () => createSelector(
+  tableSize,
   (tableSize) => tableSize,
 )
