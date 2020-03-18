@@ -1,11 +1,13 @@
 import cx from 'classnames'
 import React, { FC } from 'react'
-import Drawer, { DrawerProps } from '@material-ui/core/Drawer'
+import Drawer from '@material-ui/core/Drawer'
 import Divider from '@material-ui/core/Divider'
 import { Theme } from '@material-ui/core'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import createStyles from '@material-ui/core/styles/createStyles'
 import List from '@material-ui/core/List'
+import { makeDrawerOpenedSelector } from '../../redux/selectors/makeDrawerOpenedSelector'
+import { useSelector } from 'react-redux'
 
 export const DRAWER_WIDTH = 32 // * theme.spacing
 
@@ -43,14 +45,15 @@ const useStyles = makeStyles(({
   },
 }))
 
-interface DrawerStyledProps extends Pick<DrawerProps, 'open' | 'onClose'> {
-}
+const drawerOpenedSelector = makeDrawerOpenedSelector()
 
-export const DrawerStyled: FC<DrawerStyledProps> = ({ open, onClose, children }) => {
+export const DrawerStyled: FC = ({ children }) => {
+  const open = useSelector(drawerOpenedSelector)
   const { drawer, paper, paperClose, drawerOpen, drawerClose, drawerHeader } = useStyles()
 
   return (
     <Drawer
+      open={open}
       className={cx(drawer, {
         [drawerOpen]: open,
         [drawerClose]: !open,
@@ -63,8 +66,6 @@ export const DrawerStyled: FC<DrawerStyledProps> = ({ open, onClose, children })
         }),
       }}
       variant="permanent"
-      onClose={onClose}
-      open={open}
     >
       <div className={drawerHeader} />
       <Divider />

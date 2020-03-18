@@ -1,25 +1,22 @@
 import React, { FC } from 'react'
 import { DrawerStyled } from './DrawerStyled'
-import { RestartGameButtonWithVisibilityHOC } from './RestartGameButton/RestartGameButtonWithVisibilityHOC'
-import { ChangeTableSizeButtonConnected } from './ChangeTableSizeButton/ChangeTableSizeButtonConnected'
 import { ThemeToggler } from './ThemeToggler'
-import { DiceSizeChangerConnected } from './DiceSizeChanger/DiceSizeChangerConnected'
 import { LangChangeButtons } from './LangChangeButtons/LangChangeButtons'
-import { makeDrawerOpenedSelector } from '../../redux/selectors/makeDrawerOpenedSelector'
-import { useSelector } from 'react-redux'
+import { notInPlayVisibilityHOC } from './notInPlayVisibilityHOC'
+import { RestartGameButton } from './RestartGameButton/RestartGameButton'
+import { ChangeTableSizeButton } from './ChangeTableSizeButton/ChangeTableSizeButton'
+import { DiceSizeChanger as DiceSizeChangerComponent } from './DiceSizeChanger/DiceSizeChanger'
 
-const drawerOpenedSelector = makeDrawerOpenedSelector()
+const RestartGame = notInPlayVisibilityHOC(RestartGameButton)
+const ChangeTableSize = notInPlayVisibilityHOC(ChangeTableSizeButton)
+const DiceSizeChanger = notInPlayVisibilityHOC(DiceSizeChangerComponent)
 
-export const Drawer: FC = () => {
-  const drawerOpened = useSelector(drawerOpenedSelector)
-
-  return (
-    <DrawerStyled open={drawerOpened}>
-      <ThemeToggler />
-      <LangChangeButtons />
-      <DiceSizeChangerConnected />
-      <ChangeTableSizeButtonConnected />
-      <RestartGameButtonWithVisibilityHOC />
-    </DrawerStyled>
-  )
-}
+export const Drawer: FC = () => (
+  <DrawerStyled>
+    <ThemeToggler />
+    <LangChangeButtons />
+    <DiceSizeChanger />
+    <ChangeTableSize />
+    <RestartGame />
+  </DrawerStyled>
+)
