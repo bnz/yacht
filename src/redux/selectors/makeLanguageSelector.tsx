@@ -1,8 +1,5 @@
 import { createSelector } from 'reselect'
-import { State } from '../defaultState'
-import { Language } from '../reducers/language'
+import { language } from '../pureSelectors/language'
+import { simpleCombiner } from '../combiners/simpleCombiner'
 
-export const makeLanguageSelector = () => createSelector<State, Language, Language>(
-  ({ language }) => language,
-  (language) => language,
-)
+export const makeLanguageSelector = () => createSelector(language, simpleCombiner)

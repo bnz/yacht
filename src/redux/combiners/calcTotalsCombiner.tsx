@@ -1,10 +1,10 @@
-import { Player, PlayersTotals } from '../redux/reducers/players'
-import { PlayerPoints } from '../redux/reducers/playerPoints'
-import { Combination } from '../redux/reducers/combinations'
+import { Player, PlayersTotals } from '../reducers/players'
+import { PlayerPoints } from '../reducers/playerPoints'
+import { Combination } from '../reducers/combinations'
 
 type CalcTotals = (players: Player[], playerPoints: PlayerPoints) => PlayersTotals
 
-export const calcTotals: CalcTotals = (players, playerPoints) => {
+export const calcTotalsCombiner: CalcTotals = (players, playerPoints) => {
   let totals: PlayersTotals = {}
 
   players.forEach(({ id: playerId }) => {

@@ -1,11 +1,6 @@
 import { createSelector } from 'reselect'
-import { State } from '../defaultState'
-import { PlayerMoveState } from '../reducers/playerMove'
+import { simpleCombiner } from '../combiners/simpleCombiner'
+import { playerMove } from '../pureSelectors/playerMove'
 
-type R1 = PlayerMoveState['playerMove']
-
-export const makePlayerMoveSelector = () => createSelector<State, R1, R1>(
-  ({ playerMove }) => playerMove,
-  (playerMove) => playerMove,
-)
+export const makePlayerMoveSelector = () => createSelector(playerMove, simpleCombiner)
 

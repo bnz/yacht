@@ -5,7 +5,7 @@ import { State } from '../../../redux/defaultState'
 import { CombinationInfo, EMPTY_CELL, isBonus as _isBonus } from '../../../redux/reducers/combinations'
 import { Player } from '../../../redux/reducers/players'
 import { DicesState } from '../../../redux/reducers/dices'
-import { PlayerMoveState } from '../../../redux/reducers/playerMove'
+import { Move } from '../../../redux/reducers/playerMove'
 import { CheckMatch, checkMatch } from '../../../helpers/checkMatch'
 import { saveCombinationThunk, SaveCombinationThunk } from '../../../redux/actions/saveCombinationThunk'
 import { Combination } from './Combination'
@@ -13,7 +13,7 @@ import { Combination } from './Combination'
 type Combination = Pick<CombinationInfo, 'combination'>;
 
 interface MapStateToProps extends DicesState, Combination {
-  activePlayerId: PlayerMoveState['playerMove'][0]
+  activePlayerId: Move[0]
   existingCombination: number | EMPTY_CELL
 }
 

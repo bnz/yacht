@@ -1,6 +1,4 @@
 import { Selector } from '../../helpers/types'
 import { CombinationInfo } from '../reducers/combinations'
 
-type Combinations = Selector<CombinationInfo[]>
-
-export const combinations: Combinations = ({ combinations }) => combinations
+export const combinations: Selector<CombinationInfo[]> = ({ combinations }) => combinations

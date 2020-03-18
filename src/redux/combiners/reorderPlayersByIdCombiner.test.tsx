@@ -1,26 +1,30 @@
-import { arrayReorderByCondition } from './arrayReorderByCondition'
+import { reorderPlayersByIdCombiner } from './reorderPlayersByIdCombiner'
 
 describe('arrayReorderByCondition', () => {
 
   it('should return correct simple array', () => {
-    expect(arrayReorderByCondition(
-      ['one', 'two', 'three'],
-      (arrayItem) => arrayItem === 'two',
-    )).toEqual([
-      'two',
-      'three',
-      'one',
-    ])
-  })
-
-  it('should return correct array of objects', () => {
-    expect(arrayReorderByCondition(
+    expect(reorderPlayersByIdCombiner(
       [
         { id: 'one' },
         { id: 'two' },
         { id: 'three' },
       ],
-      ({ id }) => id === 'two'
+      ['three', 1],
+    )).toEqual([
+      { id: 'three' },
+      { id: 'one' },
+      { id: 'two' },
+    ])
+  })
+
+  it('should return correct array of objects', () => {
+    expect(reorderPlayersByIdCombiner(
+      [
+        { id: 'one' },
+        { id: 'two' },
+        { id: 'three' },
+      ],
+      ['two', 1],
     )).toEqual([
       { id: 'two' },
       { id: 'three' },

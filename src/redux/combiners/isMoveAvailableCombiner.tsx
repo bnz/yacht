@@ -1,27 +1,26 @@
-// import { checkMatch, prepareCombination as pc } from './index'
-import { Combination, CombinationInfo } from '../redux/reducers/combinations'
-import { checkMatch } from './checkMatch'
-import { Dices } from '../redux/reducers/dices'
-import { PlayerPoints } from '../redux/reducers/playerPoints'
+import { Combination, CombinationInfo } from '../reducers/combinations'
+import { checkMatch } from '../../helpers/checkMatch'
+import { Dices } from '../reducers/dices'
+import { PlayerPoints } from '../reducers/playerPoints'
+import { MAX_SHOT_COUNT, Move } from '../reducers/playerMove'
 
 type IsMoveAvailable = (
   combinations: CombinationInfo[],
   dices: Dices,
   playerPoints: PlayerPoints,
-  activePlayerId: string,
-  noMoreShots: boolean,
+  playerMove: Move,
 ) => boolean
 
 /**
  * Return true if player have available moves
  */
-export const isMoveAvailable: IsMoveAvailable = (
+export const isMoveAvailableCombiner: IsMoveAvailable = (
   combinations,
   dices,
   playerPoints,
-  activePlayerId,
-  noMoreShots,
+  playerMove,
 ) => {
+  const [activePlayerId, shot] = playerMove
   const player = playerPoints[activePlayerId]
 
   let matchesCount = 0
@@ -41,7 +40,7 @@ export const isMoveAvailable: IsMoveAvailable = (
     /**
      * If no matches, no more shots and player already have this combination
      */
-    if (points === undefined && noMoreShots) {
+    if (points === undefined && shot === MAX_SHOT_COUNT) {
       noMoves = true
     }
   })

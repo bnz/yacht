@@ -1,5 +1,5 @@
-import { isMoveAvailable } from './isMoveAvailable'
-import { MAX_SHOT_COUNT } from '../redux/reducers/playerMove'
+import { isMoveAvailableCombiner } from './isMoveAvailableCombiner'
+import { MAX_SHOT_COUNT } from '../reducers/playerMove'
 
 const combinations: any = [
   {
@@ -124,18 +124,17 @@ const playerPoints = {
 describe('checkMoveAvailable', () => {
 
   it('should have move available', () => {
-    expect(isMoveAvailable(
+    expect(isMoveAvailableCombiner(
       combinations,
       dices,
       playerPoints,
-      'playerId',
-      true,
+      ['playerId', 3],
     )).toBeTruthy()
   })
 
   it('player have empty combinations, but should have no moves', () => {
     expect(
-      isMoveAvailable(
+      isMoveAvailableCombiner(
         [
           {
             name: 'Единицы',
@@ -156,15 +155,14 @@ describe('checkMoveAvailable', () => {
             1: 5,
           },
         },
-        'playerId',
-        true,
+        ['playerId', 3],
       ),
     ).toBeFalsy()
   })
 
   it('should detect available combination', () => {
     expect(
-      isMoveAvailable(
+      isMoveAvailableCombiner(
         [
           {
             name: 'Единицы',
@@ -185,14 +183,13 @@ describe('checkMoveAvailable', () => {
             2: 10,
           },
         },
-        'playerId',
-        true,
+        ['playerId', 3],
       ),
     ).toBeTruthy()
   })
 
   it('should have no moves available', () => {
-    expect(isMoveAvailable(
+    expect(isMoveAvailableCombiner(
       [
         {
           name: 'Единицы',
@@ -219,11 +216,10 @@ describe('checkMoveAvailable', () => {
       {
         '7e4f7e04-6611-43b0-b847-60256f527519': {
           chance: 11,
-          bonus: -63
+          bonus: -63,
         },
       },
-      '7e4f7e04-6611-43b0-b847-60256f527519',
-      3 === MAX_SHOT_COUNT,
+      ['7e4f7e04-6611-43b0-b847-60256f527519', 3],
     )).toBeFalsy()
   })
 

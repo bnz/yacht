@@ -7,7 +7,7 @@ enum Constants {
   RESET_PLAYER_MOVE = 'RESET_PLAYER_MOVE',
 }
 
-type Move = [string, number]
+export type Move = [string, number]
 
 export interface PlayerMoveState {
   playerMove: Move
@@ -17,7 +17,7 @@ export const MAX_SHOT_COUNT = 3
 
 type PlayerMoveActionReturn = ActionWithEntry<Constants, Move>
 
-export const playerMoveDefaultState: PlayerMoveState['playerMove'] = ['', 0]
+export const playerMoveDefaultState: Move = ['', 0]
 
 type NextTurn = (move: Move) => PlayerMoveActionReturn
 

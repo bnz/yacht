@@ -1,10 +1,5 @@
 import { createSelector } from 'reselect'
-import { State } from '../defaultState'
-import { DrawerOpened, drawerOpened } from '../pureSelectors/drawerOpened'
+import { drawerOpened } from '../pureSelectors/drawerOpened'
+import { simpleCombiner } from '../combiners/simpleCombiner'
 
-type R1 = ReturnType<DrawerOpened>
-
-export const makeDrawerOpenedSelector = () => createSelector<State, R1, R1>(
-  drawerOpened,
-  (drawerOpened) => drawerOpened,
-)
+export const makeDrawerOpenedSelector = () => createSelector(drawerOpened, simpleCombiner)

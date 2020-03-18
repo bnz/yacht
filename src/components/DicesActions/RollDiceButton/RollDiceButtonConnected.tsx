@@ -4,10 +4,10 @@ import { generateRandomDicesThunk } from '../../../redux/actions/generateRandomD
 import { LoadingState, SetLoading, setLoading } from '../../../redux/reducers/loading'
 import { State } from '../../../redux/defaultState'
 import { ThunkAction } from '../../../helpers/types'
-import { PlayerMoveState } from '../../../redux/reducers/playerMove'
+import { Move } from '../../../redux/reducers/playerMove'
 
 interface MapStateToProps extends LoadingState {
-  shot: PlayerMoveState['playerMove'][1]
+  shot: Move[1]
 }
 
 interface MapDispatchToProps {

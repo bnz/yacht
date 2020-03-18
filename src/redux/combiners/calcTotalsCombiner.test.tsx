@@ -1,7 +1,7 @@
-import { calcTotals } from './calcTotals'
-import { Player } from '../redux/reducers/players'
-import { PlayerPoints } from '../redux/reducers/playerPoints'
-import { BONUS_POINTS, Combination } from '../redux/reducers/combinations'
+import { calcTotalsCombiner } from './calcTotalsCombiner'
+import { Player } from '../reducers/players'
+import { PlayerPoints } from '../reducers/playerPoints'
+import { BONUS_POINTS, Combination } from '../reducers/combinations'
 
 const players: Player[] = [
   {
@@ -35,7 +35,7 @@ const playerPoints: PlayerPoints = {
 describe('calcTotals', () => {
 
   it('should return correct totals', () => {
-    expect(calcTotals(players, playerPoints)).toEqual({
+    expect(calcTotalsCombiner(players, playerPoints)).toEqual({
       one: 83,
       two: 108,
     })
