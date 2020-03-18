@@ -1,10 +1,5 @@
 import { createSelector } from 'reselect'
-import { State } from '../defaultState'
-import { CombinationInfo } from '../reducers/combinations'
+import { combinations } from '../pureSelectors/combinations'
+import { simpleCombiner } from '../../helpers/simpleCombiner'
 
-type R1 = CombinationInfo[]
-
-export const makeCombinationsSelector = () => createSelector<State, R1, R1>(
-  ({ combinations }) => combinations,
-  (combinations) => combinations,
-)
+export const makeCombinationsSelector = () => createSelector(combinations, simpleCombiner)
