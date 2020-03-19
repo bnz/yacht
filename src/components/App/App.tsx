@@ -8,7 +8,7 @@ import { DicesActions } from '../DicesActions/DicesActions'
 import { Rules } from '../Rules/Rules'
 import { StartGameButtonWrapper } from '../StartGameButton/StartGameButtonWrapper'
 import { CombinationsContainer } from '../CombinationsContainer/CombinationsContainer'
-import { EndOfGameConnected } from '../EndOfGame/EndOfGameConnected'
+import { EndOfGameContainer } from '../EndOfGame/EndOfGameContainer'
 import { makeGamePhaseSelector } from '../../redux/selectors/makeGamePhaseSelector'
 import { useSelector } from 'react-redux'
 
@@ -33,7 +33,7 @@ export const App: FC = () => {
         ),
         [GamePhases.IN_PLAY]: (
           <>
-            <EndOfGameConnected />
+            <EndOfGameContainer />
             <DicesConnected />
             <DicesActions />
             <CombinationsContainer />
