@@ -3,7 +3,6 @@ import styled from '@material-ui/styles/styled'
 import { Themed } from '../../helpers/types'
 import { replaceKeysInObject } from '../../helpers/replaceKeysInObject'
 import { DrawerOpenedConnectorProps } from './MainLayoutConnected'
-import { DRAWER_WIDTH } from '../Drawer/DrawerStyled'
 
 const $footerHeight = 10
 
@@ -12,21 +11,24 @@ const $innerPadding = 5
 const $innerPaddingMobile = 2
 
 export const Wrapper = styled(
-  ({ drawer, ...props }: DrawerOpenedConnectorProps) => <div {...props} />,
+  ({ drawer, ...props }: DrawerOpenedConnectorProps) => (
+    <div {...props} />
+  ),
 )(({
   theme: {
     spacing,
     transitions: { create, easing, duration },
+    drawerWidth,
   },
   drawer,
-}: Themed & DrawerOpenedConnectorProps) => ({
+}: Themed<DrawerOpenedConnectorProps>) => ({
   minHeight: '100%',
 
   // Equal to height of footer
   // But also accounting for potential margin-bottom of last child
   marginBottom: spacing($footerHeight) * -1,
 
-  marginLeft: drawer ? spacing(DRAWER_WIDTH) : 0,
+  marginLeft: drawer ? spacing(drawerWidth) : 0,
   transition: create('margin-left', {
     easing: easing.sharp,
     duration: duration.enteringScreen,
@@ -38,19 +40,22 @@ export const Push = styled('div')(({ theme: { spacing } }: Themed) => ({
 }))
 
 export const Footer = styled(
-  ({ drawer, ...props }: DrawerOpenedConnectorProps) => <footer {...props} />,
+  ({ drawer, ...props }: DrawerOpenedConnectorProps) => (
+    <footer {...props} />
+  ),
 )(({
   theme: {
     spacing, transitions: { create, easing, duration },
     breakpoints: { down },
+    drawerWidth,
   },
   drawer,
-}: Themed & DrawerOpenedConnectorProps) => ({
+}: Themed<DrawerOpenedConnectorProps>) => ({
   display: 'flex',
   alignItems: 'center',
   height: spacing($footerHeight),
   padding: spacing(0, $innerPadding),
-  marginLeft: drawer ? spacing(DRAWER_WIDTH) : 0,
+  marginLeft: drawer ? spacing(drawerWidth) : 0,
   transition: create('margin-left', {
     easing: easing.sharp,
     duration: duration.enteringScreen,

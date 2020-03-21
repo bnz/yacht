@@ -1,13 +1,13 @@
 import React, { FC } from 'react'
-import { DrawerListDivider } from '../DrawerListDivider'
-import { DrawerListItem } from '../DrawerListItem'
+import { ListDivider } from '../ListParts/ListDivider'
+import { ListItem } from '../ListParts/ListItem'
 import { ButtonGroup } from '../DiceSizeChanger/ButtonGroup'
 import Button from '@material-ui/core/Button'
 import { useSelector } from 'react-redux'
-import { makeLanguageSelector } from '../../../redux/selectors/makeLanguageSelector'
-import { i18n } from '../../../helpers/i18n/i18n'
-import { changeLanguageThunk } from '../../../redux/actions/changeLanguageThunk'
-import { useDispatchedCallback } from '../../../helpers/useDispatchedCallback'
+import { makeLanguageSelector } from '../../../../../redux/selectors/makeLanguageSelector'
+import { i18n } from '../../../../../helpers/i18n/i18n'
+import { changeLanguageThunk } from '../../../../../redux/actions/changeLanguageThunk'
+import { useDispatchedCallback } from '../../../../../helpers/useDispatchedCallback'
 
 const languageSelector = makeLanguageSelector()
 
@@ -17,8 +17,8 @@ export const LangChangeButtons: FC = () => {
 
   return (
     <>
-      <DrawerListDivider />
-      <DrawerListItem
+      <ListDivider />
+      <ListItem
         button={false}
         icon={
           <ButtonGroup>
@@ -32,7 +32,7 @@ export const LangChangeButtons: FC = () => {
         }
       >
         {i18n('language')}
-      </DrawerListItem>
+      </ListItem>
     </>
   )
 }

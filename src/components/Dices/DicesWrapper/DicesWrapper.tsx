@@ -10,7 +10,7 @@ export const DicesWrapper = styled(
   ({ diceSize, ...props }: DicesWrapper) => (
     <div {...props} />
   ),
-)(({ diceSize, theme: { spacing, breakpoints: { down } } }: Themed & DicesWrapper) => {
+)(({ diceSize, theme: { spacing, breakpoints: { down } } }: Themed<DicesWrapper>) => {
   const size = diceSize ? diceSize : diceSizeDefaultState
 
   return {

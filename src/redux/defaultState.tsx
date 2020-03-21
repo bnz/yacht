@@ -14,7 +14,7 @@ import {
   tableSize,
   drawerOpened,
   playerPoints,
-  language,
+  language, activeTab,
 } from './getStateFromStorage'
 import { LoadingState } from './reducers/loading'
 import { DiceSizeState } from './reducers/diceSize'
@@ -24,11 +24,13 @@ import { TableSizeState } from './reducers/tableSize'
 import { DrawerOpenedState } from './reducers/drawerOpened'
 import { PlayerPointsState } from './reducers/playerPoints'
 import { LanguageState } from './reducers/language'
+import { ActiveTabState } from './reducers/activeTab'
 
 export interface State
   extends GamePhaseState, PlayersState, DicesState, DicesSelectedState,
     LoadingState, DiceSizeState, CombinationsState,
-    PlayerMoveState, TableSizeState, DrawerOpenedState, PlayerPointsState, LanguageState {
+    PlayerMoveState, TableSizeState, DrawerOpenedState, PlayerPointsState,
+    LanguageState, ActiveTabState {
 }
 
 export const defaultState: State = {
@@ -44,4 +46,5 @@ export const defaultState: State = {
   drawerOpened,
   playerPoints,
   language,
+  activeTab,
 }

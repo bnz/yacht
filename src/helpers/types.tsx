@@ -7,9 +7,9 @@ export interface ActionWithEntry<T = string, E = {}> extends Action<T> {
   entry: E
 }
 
-export interface Themed {
+export type Themed<T = {}> = {
   theme: Theme
-}
+} & T
 
 export type ThunkAction = () => ReduxThunkAction<void, State, null, Action>
 

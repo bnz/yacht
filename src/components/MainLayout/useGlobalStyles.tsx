@@ -21,9 +21,6 @@ export const useGlobalStyles = makeStyles(({ palette: { grey, type, background: 
         '50%': {
           backgroundColor: 'transparent',
         },
-        // '100%': {
-        //   backgroundColor,
-        // },
       },
     },
   }

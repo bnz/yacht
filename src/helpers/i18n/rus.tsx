@@ -32,6 +32,11 @@ export const rus: LanguageMap = {
   'button.goHome': 'На главную',
   'button.strikeOut': 'Вычеркнуть',
 
+  'tab.combinations': 'Комбинации',
+  'tab.settings': 'Настройки',
+  'tab.rules': 'Правила',
+  'tab.history': 'История',
+
   'combination.ones': 'Единицы',
   'combination.ones.title': 'Сумма всех костей, на которых выпали 1',
   'combination.twos': 'Двойки',

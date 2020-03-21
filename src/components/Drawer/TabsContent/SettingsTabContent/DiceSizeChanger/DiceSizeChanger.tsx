@@ -1,13 +1,13 @@
 import React, { FC } from 'react'
-import { i18n } from '../../../helpers/i18n/i18n'
-import { DrawerListItem } from '../DrawerListItem'
-import { DrawerListDivider } from '../DrawerListDivider'
+import { i18n } from '../../../../../helpers/i18n/i18n'
+import { ListItem } from '../ListParts/ListItem'
+import { ListDivider } from '../ListParts/ListDivider'
 import { ButtonGroup } from './ButtonGroup'
-import { makeDiceSizeSelector } from '../../../redux/selectors/makeDiceSizeSelector'
+import { makeDiceSizeSelector } from '../../../../../redux/selectors/makeDiceSizeSelector'
 import { useSelector } from 'react-redux'
-import { useDispatchedCallback } from '../../../helpers/useDispatchedCallback'
+import { useDispatchedCallback } from '../../../../../helpers/useDispatchedCallback'
 import Button from '@material-ui/core/Button'
-import { decreaseDiceSize, increaseDiceSize, maxDiceSize, minDiceSize } from '../../../redux/reducers/diceSize'
+import { decreaseDiceSize, increaseDiceSize, maxDiceSize, minDiceSize } from '../../../../../redux/reducers/diceSize'
 import AddIcon from '@material-ui/icons/Add'
 import RemoveIcon from '@material-ui/icons/Remove'
 
@@ -20,8 +20,8 @@ export const DiceSizeChanger: FC = () => {
 
   return (
     <>
-      <DrawerListDivider />
-      <DrawerListItem
+      <ListDivider />
+      <ListItem
         button={false}
         icon={
           <ButtonGroup>
@@ -35,7 +35,7 @@ export const DiceSizeChanger: FC = () => {
         }
       >
         {i18n('diceSize')}
-      </DrawerListItem>
+      </ListItem>
     </>
   )
 }

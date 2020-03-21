@@ -32,6 +32,11 @@ export const eng: LanguageMap = {
   'button.goHome': 'Go home',
   'button.strikeOut': 'Strike out',
 
+  'tab.combinations': 'Combinations',
+  'tab.settings': 'Settings',
+  'tab.rules': 'Rules',
+  'tab.history': 'History',
+
   'combination.ones': 'Ones',
   'combination.ones.title': 'The sum of dice with the number 1',
   'combination.twos': 'Twos',

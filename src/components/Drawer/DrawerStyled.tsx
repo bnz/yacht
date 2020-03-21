@@ -1,26 +1,29 @@
 import cx from 'classnames'
 import React, { FC } from 'react'
 import Drawer from '@material-ui/core/Drawer'
-import Divider from '@material-ui/core/Divider'
 import { Theme } from '@material-ui/core'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import createStyles from '@material-ui/core/styles/createStyles'
-import List from '@material-ui/core/List'
 import { makeDrawerOpenedSelector } from '../../redux/selectors/makeDrawerOpenedSelector'
 import { useSelector } from 'react-redux'
-
-export const DRAWER_WIDTH = 32 // * theme.spacing
 
 const useStyles = makeStyles(({
   spacing,
   mixins: { toolbar },
   transitions: { create, easing, duration },
+  drawerWidth,
 }: Theme) => createStyles({
   drawerHeader: {
     ...toolbar,
   },
+  drawerContent: {
+    overflowY: 'auto',
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+  },
   drawer: {
-    width: spacing(DRAWER_WIDTH),
+    width: spacing(drawerWidth),
   },
   paper: {
     overflowX: 'hidden',
@@ -29,7 +32,7 @@ const useStyles = makeStyles(({
     borderRight: 0,
   },
   drawerOpen: {
-    width: spacing(DRAWER_WIDTH),
+    width: spacing(drawerWidth),
     transition: create('width', {
       easing: easing.sharp,
       duration: duration.enteringScreen,
@@ -49,7 +52,7 @@ const drawerOpenedSelector = makeDrawerOpenedSelector()
 
 export const DrawerStyled: FC = ({ children }) => {
   const open = useSelector(drawerOpenedSelector)
-  const { drawer, paper, paperClose, drawerOpen, drawerClose, drawerHeader } = useStyles()
+  const { drawer, paper, paperClose, drawerOpen, drawerClose, drawerHeader, drawerContent } = useStyles()
 
   return (
     <Drawer
@@ -68,10 +71,9 @@ export const DrawerStyled: FC = ({ children }) => {
       variant="permanent"
     >
       <div className={drawerHeader} />
-      <Divider />
-      <List>
+      <div className={drawerContent}>
         {children}
-      </List>
+      </div>
     </Drawer>
   )
 }

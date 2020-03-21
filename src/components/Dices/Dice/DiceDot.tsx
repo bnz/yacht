@@ -14,7 +14,7 @@ export const DiceDot = styled(
       <div />
     </div>
   ),
-)(({ filled, roll, theme: { palette: { type, grey, common: { black } } } }: Themed & DotProps) => ({
+)(({ filled, roll, theme: { palette: { type, grey, common: { black } } } }: Themed<DotProps>) => ({
 
   minWidth: `${$wrapWidth / 3}em`,
   display: 'flex',

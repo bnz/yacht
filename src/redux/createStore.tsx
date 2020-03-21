@@ -14,6 +14,7 @@ import { tableSize } from './reducers/tableSize'
 import { drawerOpened } from './reducers/drawerOpened'
 import { playerPoints } from './reducers/playerPoints'
 import { language } from './reducers/language'
+import { activeTab } from './reducers/activeTab'
 
 const middleware = [thunk]
 
@@ -30,6 +31,7 @@ const reducers: Reducer<State> = combineReducers<State>({
   drawerOpened,
   playerPoints,
   language,
+  activeTab,
 })
 
 declare global {

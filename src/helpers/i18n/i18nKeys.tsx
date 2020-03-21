@@ -30,6 +30,11 @@ export type i18nKeys =
   | 'button.goHome'
   | 'button.strikeOut'
 
+  | 'tab.combinations'
+  | 'tab.settings'
+  | 'tab.rules'
+  | 'tab.history'
+
   | 'combination.ones'
   | 'combination.ones.title'
   | 'combination.twos'

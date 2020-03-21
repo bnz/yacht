@@ -11,6 +11,7 @@ import { tableSizeDefaultState } from './reducers/tableSize'
 import { drawerOpenedDefaultState } from './reducers/drawerOpened'
 import { playerPointsDefaultState } from './reducers/playerPoints'
 import { languageDefaultState } from './reducers/language'
+import { activeTabDefaultState } from './reducers/activeTab'
 
 export let gamePhase = gamePhaseDefaultState.gamePhase
 export let players = playersDefaultState
@@ -24,6 +25,7 @@ export let tableSize = tableSizeDefaultState
 export let drawerOpened = drawerOpenedDefaultState
 export let playerPoints = playerPointsDefaultState
 export let language = languageDefaultState
+export let activeTab = activeTabDefaultState
 
 try {
   gamePhase = getItem('gamePhase', false) || gamePhase
@@ -38,6 +40,7 @@ try {
   drawerOpened = getItem('drawerOpened') || drawerOpened
   playerPoints = getItem('playerPoints') || playerPoints
   language = getItem('language') || language
+  activeTab = getItem('activeTab') || activeTab
 } catch (e) {
   console.error(e)
 }

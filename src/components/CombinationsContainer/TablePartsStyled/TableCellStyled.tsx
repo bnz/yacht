@@ -33,7 +33,7 @@ export const TableCellStyled = styled(
 )(({
   theme: { spacing, palette: { type, grey, background: { paper } } },
   centered, heading, selected, noPadding, width, active, large,
-}: Themed & TableCellStyledProps) => {
+}: Themed<TableCellStyledProps>) => {
   const activeColor = type === 'dark' ? paper : grey['300']
 
   return conditionalCSS([

@@ -1,22 +1,30 @@
 import React, { FC } from 'react'
 import { DrawerStyled } from './DrawerStyled'
-import { ThemeToggler } from './ThemeToggler'
-import { LangChangeButtons } from './LangChangeButtons/LangChangeButtons'
-import { notInPlayVisibilityHOC } from './notInPlayVisibilityHOC'
-import { RestartGameButton } from './RestartGameButton/RestartGameButton'
-import { ChangeTableSizeButton } from './ChangeTableSizeButton/ChangeTableSizeButton'
-import { DiceSizeChanger as DiceSizeChangerComponent } from './DiceSizeChanger/DiceSizeChanger'
+import { Tabs as PureTabs } from './Tabs/Tabs'
 
-const RestartGame = notInPlayVisibilityHOC(RestartGameButton)
-const ChangeTableSize = notInPlayVisibilityHOC(ChangeTableSizeButton)
-const DiceSizeChanger = notInPlayVisibilityHOC(DiceSizeChangerComponent)
+import { SettingsTab } from './TabsContent/SettingsTabContent/SettingsTab'
+import { TabContent } from './Tabs/TabContent'
+import { TabsContainer } from './Tabs/TabsContainer'
+import { notInPlayVisibilityHOC } from '../../helpers/notInPlayVisibilityHOC'
+
+const Tabs = notInPlayVisibilityHOC(PureTabs)
 
 export const Drawer: FC = () => (
   <DrawerStyled>
-    <ThemeToggler />
-    <LangChangeButtons />
-    <DiceSizeChanger />
-    <ChangeTableSize />
-    <RestartGame />
+    <Tabs />
+    <TabsContainer>
+      <TabContent>
+        <SettingsTab />
+      </TabContent>
+      <TabContent>
+        combinations
+      </TabContent>
+      <TabContent>
+        rules
+      </TabContent>
+      <TabContent>
+        history
+      </TabContent>
+    </TabsContainer>
   </DrawerStyled>
 )

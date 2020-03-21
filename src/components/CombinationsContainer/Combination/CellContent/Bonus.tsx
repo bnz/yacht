@@ -10,7 +10,7 @@ interface BonusProps {
 
 export const Bonus = styled(
   ({ alt, ...props }: BonusProps) => <div {...props} />,
-)(({ theme: { palette: { type } }, alt }: Themed & BonusProps) => conditionalCSS([
+)(({ theme: { palette: { type } }, alt }: Themed<BonusProps>) => conditionalCSS([
   [alt, {
     fontStyle: 'italic',
     color: type === 'dark' ? grey[700] : grey[400],

@@ -11,11 +11,13 @@ interface DiceInnerProps {
 }
 
 export const DiceInner = styled(
-  ({ roll, selected, ...rest }: DiceInnerProps) => <div {...rest} />,
+  ({ roll, selected, ...rest }: DiceInnerProps) => (
+    <div {...rest} />
+  ),
 )(({
   roll, selected,
   theme: { palette: { type, common: { white, black }, text: { disabled } } },
-}: Themed & DiceInnerProps) => ({
+}: Themed<DiceInnerProps>) => ({
 
   display: 'flex',
   flexWrap: 'wrap',

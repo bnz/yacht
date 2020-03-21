@@ -1,8 +1,8 @@
-import { visibilityHOC_2 } from '../../helpers/visibilityHOC'
-import { makeGamePhaseSelector } from '../../redux/selectors/makeGamePhaseSelector'
+import { visibilityHOC_2 } from './visibilityHOC'
+import { makeGamePhaseSelector } from '../redux/selectors/makeGamePhaseSelector'
 import React, { ComponentType, FC } from 'react'
 import { useSelector } from 'react-redux'
-import { GamePhases } from '../../redux/reducers/gamePhase'
+import { GamePhases } from '../redux/reducers/gamePhase'
 
 export const notInPlayVisibilityHOC = <T extends {}>(Component: ComponentType): FC<T> => {
   const gamePhaseSelector = makeGamePhaseSelector()

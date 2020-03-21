@@ -1,7 +1,7 @@
 import ListItem from '@material-ui/core/ListItem'
 import styled from '@material-ui/styles/styled'
 
-export const DrawerListItemStyled = styled(ListItem)({
+export const ListItemStyled = styled(ListItem)({
   whiteSpace: 'nowrap',
   justifyContent: 'center',
 })
