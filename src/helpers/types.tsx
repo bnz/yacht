@@ -11,9 +11,13 @@ export type Themed<T = {}> = {
   theme: Theme
 } & T
 
-export type ThunkAction = () => ReduxThunkAction<void, State, null, Action>
+type ReduxThunkActionReturn = ReduxThunkAction<void, State, null, Action>
 
-export type ThunkAction2 = (a?: ReduxThunkAction<void, State, null, Action>) => ReduxThunkAction<void, State, null, Action>
+export type ThunkAction = () => ReduxThunkActionReturn
+
+export type ThunkActionP1<P1> = (p1: P1) => ReduxThunkActionReturn
+
+export type ThunkActionP3<P1, P2, P3> = (p1: P1, p2: P2, p3: P3) => ReduxThunkActionReturn
 
 export type Parameters<T> = T extends (...args: infer T) => any ? T : never
 

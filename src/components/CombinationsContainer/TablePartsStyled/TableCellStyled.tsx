@@ -9,13 +9,11 @@ export interface TableCellStyledProps {
   selected?: boolean
   noPadding?: boolean
   centered?: boolean
-  width?: number
+  firstColumn?: boolean
+  empty?: boolean
   active?: boolean
   large?: boolean
 }
-
-export const TABLE_FIRST_COLUMN_WIDTH = 165
-export const TABLE_COLUMN_WIDTH = 170
 
 export const TableCellStyled = styled(
   ({
@@ -23,7 +21,8 @@ export const TableCellStyled = styled(
     selected,
     noPadding,
     centered,
-    width,
+    firstColumn,
+    empty,
     active,
     large,
     ...props
@@ -31,8 +30,12 @@ export const TableCellStyled = styled(
     <TableCell component="div" {...props} />
   ),
 )(({
-  theme: { spacing, palette: { type, grey, background: { paper } } },
-  centered, heading, selected, noPadding, width, active, large,
+  theme: {
+    spacing, palette: { type, grey, background: { paper }, error: { light } },
+    combinationsTable: { firstColumnWidth, columnWidth },
+  },
+  centered, heading, selected, noPadding, active, large,
+  firstColumn = false, empty = false,
 }: Themed<TableCellStyledProps>) => {
   const activeColor = type === 'dark' ? paper : grey['300']
 
@@ -41,7 +44,7 @@ export const TableCellStyled = styled(
       textAlign: 'center',
     }],
     [heading, {
-      color: '#f99',
+      color: light,
     }],
     [selected, {
       backgroundColor: activeColor,
@@ -50,9 +53,13 @@ export const TableCellStyled = styled(
       padding: 0,
       position: 'relative',
     }],
-    [width, {
-      width,
-      minWidth: width,
+    [!empty && firstColumn, {
+      width: firstColumnWidth,
+      minWidth: firstColumnWidth,
+    }],
+    [!empty && !firstColumn, {
+      width: columnWidth,
+      minWidth: columnWidth,
     }],
     [active && !heading, {
       borderLeft: `1px solid ${activeColor}`,

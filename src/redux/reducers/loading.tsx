@@ -1,5 +1,7 @@
-import { ActionWithEntry } from '../../helpers/types'
+import { ActionWithEntry, Selector } from '../../helpers/types'
 import { Reducer } from 'redux'
+import { createSelector } from 'reselect'
+import { simpleCombiner } from '../combiners/simpleCombiner'
 
 type Loading = boolean
 
@@ -21,6 +23,10 @@ export const setLoading: SetLoading = (flag) => ({
   type: Constants.SET_LOADING,
   entry: flag
 })
+
+export const loadingSelector: Selector<Loading> = ({ loading }) => loading
+
+export const makeLoadingSelector = () => createSelector(loadingSelector, simpleCombiner)
 
 export const loading: Reducer<Loading, LoadingActionReturn> = (state = loadingDefaultState, { type, entry }) => {
   switch (type) {

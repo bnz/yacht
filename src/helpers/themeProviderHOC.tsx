@@ -15,7 +15,7 @@ export interface ThemeProviderHOCProps {
 
 export const ThemeContext = createContext<ThemeProviderHOCProps>({})
 
-export const themeProviderHOC = (Component: FC) => () => {
+export const themeProviderHOC = (Component: FC): FC => () => {
   const [theme, setTheme] = useState(getItem('theme', false) || 'dark')
 
   const toggleTheme = useCallback(

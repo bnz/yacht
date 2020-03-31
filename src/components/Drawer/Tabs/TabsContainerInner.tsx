@@ -1,27 +1,14 @@
 import styled from '@material-ui/styles/styled'
-import React from 'react'
 import { Themed } from '../../../helpers/types'
 import { ActiveTab } from '../../../redux/reducers/activeTab'
+import { cwp } from '../../../helpers/cwp'
 
 export interface TabsContainerInnerProps {
   activeTab?: ActiveTab
 }
 
-const fn = <T extends {}>(...propsToExclude: Array<keyof T>) => (restProps: any) => {
-  const rest = Object.assign({}, restProps)
-  Object.keys(rest).forEach((key) => {
-    if (propsToExclude.indexOf(key as keyof T) !== -1) {
-      delete rest[key]
-    }
-  })
-
-  return (
-    <div {...rest} />
-  )
-}
-
 export const TabsContainerInner = styled(
-  fn<TabsContainerInnerProps>('activeTab'),
+  cwp()<TabsContainerInnerProps>('activeTab'),
 )(({
   theme: { transitions: { duration: { standard } }, drawerTabsCount },
   activeTab = 0,

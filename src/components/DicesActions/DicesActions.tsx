@@ -1,11 +1,11 @@
 import React, { FC } from 'react'
-import { RollDiceButtonConnected } from './RollDiceButton/RollDiceButtonConnected'
 import { ResetDicesButtonConnected } from './ResetDicesButton/ResetDicesButtonConnected'
 import { DicesActionsWrapper } from './DicesActionsWrapper'
+import { RollDiceButton } from './RollDiceButton/RollDiceButton'
 
 export const DicesActions: FC = () => (
   <DicesActionsWrapper>
-    <RollDiceButtonConnected />
+    <RollDiceButton />
     <ResetDicesButtonConnected />
   </DicesActionsWrapper>
 )

@@ -1,8 +1,8 @@
-import React from 'react'
 import styled from '@material-ui/styles/styled'
 import { Themed } from '../../../../../helpers/types'
-import { Divider } from '@material-ui/core'
+import Divider from '@material-ui/core/Divider'
 import { conditionalCSS } from '../../../../../helpers/conditionalCSS'
+import { cwp } from '../../../../../helpers/cwp'
 
 interface DrawerListDividerProps {
   top?: boolean
@@ -10,9 +10,7 @@ interface DrawerListDividerProps {
 }
 
 export const ListDivider = styled(
-  ({ top, bottom, ...restProps }: DrawerListDividerProps) => (
-    <Divider {...restProps} />
-  ),
+  cwp(Divider)<DrawerListDividerProps>('top', 'bottom'),
 )(({
   theme: { spacing }, top = true, bottom = true,
 }: Themed<DrawerListDividerProps>) => conditionalCSS([

@@ -11,7 +11,6 @@ export const DICES_COUNT = 5
 
 enum Constants {
   GENERATE_RANDOM_DICES = 'GENERATE_RANDOM_DICES',
-  UPDATE_DICES = 'UPDATE_DICES',
   RESET_DICES = 'RESET_DICES',
 }
 
@@ -33,11 +32,12 @@ export const resetDices: ResetDices = () => ({
   entry: [],
 })
 
-export const dices: Reducer<Dices, DicesActionReturn> = (state = dicesDefaultState, { type, entry }) => {
+export const dices: Reducer<Dices, DicesActionReturn> = (
+  state = dicesDefaultState,
+  { type, entry },
+) => {
   switch (type) {
     case Constants.GENERATE_RANDOM_DICES:
-    case Constants.UPDATE_DICES:
-      // TODO: find out WTF ?? why just "return entry" is not working
       return [...entry]
     case Constants.RESET_DICES:
       return [...dicesDefaultState]

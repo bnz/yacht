@@ -11,7 +11,7 @@ const RestartGame = notInPlayVisibilityHOC(RestartGameButton)
 const ChangeTableSize = notInPlayVisibilityHOC(ChangeTableSizeButton)
 const DiceSizeChanger = notInPlayVisibilityHOC(DiceSizeChangerComponent)
 
-export const SettingsTab: FC = () => (
+export const SettingsTabContent: FC = () => (
   <List>
     <ThemeToggler />
     <LangChangeButtons />

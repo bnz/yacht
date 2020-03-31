@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Checkbox } from '@material-ui/core'
+import Checkbox from '@material-ui/core/Checkbox'
 import { useSelector } from 'react-redux'
 import { makeTableSizeSelector } from '../../../../../redux/selectors/makeTableSizeSelector'
 

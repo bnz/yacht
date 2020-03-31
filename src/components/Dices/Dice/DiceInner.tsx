@@ -1,6 +1,6 @@
-import React from 'react'
 import styled from '@material-ui/styles/styled'
 import { Themed } from '../../../helpers/types'
+import { cwp } from '../../../helpers/cwp'
 
 export const $wrapWidth = 1.8
 export const $delay = 300
@@ -11,9 +11,7 @@ interface DiceInnerProps {
 }
 
 export const DiceInner = styled(
-  ({ roll, selected, ...rest }: DiceInnerProps) => (
-    <div {...rest} />
-  ),
+  cwp()<DiceInnerProps>('roll', 'selected'),
 )(({
   roll, selected,
   theme: { palette: { type, common: { white, black }, text: { disabled } } },

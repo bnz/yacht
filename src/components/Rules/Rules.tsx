@@ -28,28 +28,28 @@ export const Rules: FC = () => (
     <Table size="small">
       <TableBody>
         <TableRow>
-          <TableCell>{i18n('combination.ones')}</TableCell>
-          <TableCell>{i18n('combination.ones.title')}</TableCell>
+          <TableCell>{i18n('combination.1')}</TableCell>
+          <TableCell>{i18n('combination.1.title')}</TableCell>
         </TableRow>
         <TableRow>
-          <TableCell>{i18n('combination.twos')}</TableCell>
-          <TableCell>{i18n('combination.twos.title')}</TableCell>
+          <TableCell>{i18n('combination.2')}</TableCell>
+          <TableCell>{i18n('combination.2.title')}</TableCell>
         </TableRow>
         <TableRow>
-          <TableCell>{i18n('combination.threes')}</TableCell>
-          <TableCell>{i18n('combination.threes.title')}</TableCell>
+          <TableCell>{i18n('combination.3')}</TableCell>
+          <TableCell>{i18n('combination.3.title')}</TableCell>
         </TableRow>
         <TableRow>
-          <TableCell>{i18n('combination.fours')}</TableCell>
-          <TableCell>{i18n('combination.fours.title')}</TableCell>
+          <TableCell>{i18n('combination.4')}</TableCell>
+          <TableCell>{i18n('combination.4.title')}</TableCell>
         </TableRow>
         <TableRow>
-          <TableCell>{i18n('combination.fives')}</TableCell>
-          <TableCell>{i18n('combination.fives.title')}</TableCell>
+          <TableCell>{i18n('combination.5')}</TableCell>
+          <TableCell>{i18n('combination.5.title')}</TableCell>
         </TableRow>
         <TableRow>
-          <TableCell>{i18n('combination.sixes')}</TableCell>
-          <TableCell>{i18n('combination.sixes.title')}</TableCell>
+          <TableCell>{i18n('combination.6')}</TableCell>
+          <TableCell>{i18n('combination.6.title')}</TableCell>
         </TableRow>
       </TableBody>
     </Table>
@@ -72,8 +72,8 @@ export const Rules: FC = () => (
           <TableCell>{i18n('combination.threeOfAKind.title')}</TableCell>
         </TableRow>
         <TableRow>
-          <TableCellNoWrap>{i18n('combination.fourOfAKind')}</TableCellNoWrap>
-          <TableCell>{i18n('combination.fourOfAKind.title')}</TableCell>
+          <TableCellNoWrap>{i18n('combination.equal_4')}</TableCellNoWrap>
+          <TableCell>{i18n('combination.equal_4.title')}</TableCell>
         </TableRow>
         <TableRow>
           <TableCellNoWrap>{i18n('combination.smallStraight')}</TableCellNoWrap>
@@ -88,8 +88,8 @@ export const Rules: FC = () => (
           <TableCell>{i18n('combination.fullHouse.title')}</TableCell>
         </TableRow>
         <TableRow>
-          <TableCellNoWrap>{i18n('combination.yacht')}</TableCellNoWrap>
-          <TableCell>{i18n('combination.yacht.title')}</TableCell>
+          <TableCellNoWrap>{i18n('combination.theYacht')}</TableCellNoWrap>
+          <TableCell>{i18n('combination.theYacht.title')}</TableCell>
         </TableRow>
         <TableRow>
           <TableCellNoWrap>{i18n('combination.chance')}</TableCellNoWrap>

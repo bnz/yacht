@@ -11,7 +11,6 @@ import { ListDivider } from '../ListParts/ListDivider'
 import { ReplayIconStyled } from './ReplayIconStyled'
 import { useDispatch } from 'react-redux'
 import { restartGameThunk } from '../../../../../redux/actions/restartGameThunk'
-import { ActiveTab, changeActiveTab } from '../../../../../redux/reducers/activeTab'
 
 export const RestartGameButton: FC = () => {
   const [open, setOpen] = useState(false)
@@ -23,7 +22,6 @@ export const RestartGameButton: FC = () => {
     () => {
       closeModal()
       dispatch(restartGameThunk())
-      dispatch(changeActiveTab(ActiveTab.SETTINGS))
     },
     [closeModal, dispatch],
   )

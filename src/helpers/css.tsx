@@ -44,3 +44,9 @@ export const align: Align = (
   alignItems: vertical,
   justifyContent: horizontal,
 })
+
+export const cropString: CSSProperties = {
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+}

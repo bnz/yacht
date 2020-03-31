@@ -47,11 +47,11 @@ describe('checkMatch', () => {
     cm(6, dices, fail)
   })
 
-  it('should match three ones', () => {
+  it('should match three 1', () => {
     cm(1, [1, 3, 1, 1, 1], { maxPoints: 5, points: 4 })
   })
 
-  it('fives', () => {
+  it('5', () => {
     cm(5, [4, 3, 5, 5, 5], { maxPoints: 25, points: 15 })
     cm(5, [4, 5, 5, 5, 3], { maxPoints: 25, points: 15 })
     cm(5, [5, 4, 5, 1, 5], { maxPoints: 25, points: 15 })

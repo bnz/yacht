@@ -1,16 +1,14 @@
-import React from 'react'
 import styled from '@material-ui/styles/styled'
 import { Themed } from '../../../helpers/types'
 import { diceSizeDefaultState, DiceSizeState } from '../../../redux/reducers/diceSize'
+import { cwp } from '../../../helpers/cwp'
 
 interface DicesWrapper extends Partial<DiceSizeState> {
 }
 
 export const DicesWrapper = styled(
-  ({ diceSize, ...props }: DicesWrapper) => (
-    <div {...props} />
-  ),
-)(({ diceSize, theme: { spacing, breakpoints: { down } } }: Themed<DicesWrapper>) => {
+  cwp()<DicesWrapper>('diceSize'),
+)(({ theme: { spacing, breakpoints: { down } }, diceSize }: Themed<DicesWrapper>) => {
   const size = diceSize ? diceSize : diceSizeDefaultState
 
   return {

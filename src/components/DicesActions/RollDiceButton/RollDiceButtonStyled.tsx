@@ -14,7 +14,7 @@ export const RollDiceButtonStyled = styled(
 )(({ theme: { spacing, breakpoints: { down } } }: Themed) => ({
   marginRight: spacing(2),
   marginBottom: spacing(2),
-  minWidth: spacing(40),
+  whiteSpace: 'nowrap',
   [down('xs')]: {
     marginRight: 0,
   },

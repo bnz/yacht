@@ -8,10 +8,10 @@ import { stretch } from '../../helpers/css'
 export const Heading = styled((props) => (
   <Typography variant="h4" component="h1" {...props} />
 ))(({
-  theme: { palette: { type }, breakpoints: { down }, mainDarkBackgroundColor },
+  theme: { palette: { type }, breakpoints: { down }, mainLayout: { darkBackgroundColor } },
 }: Themed) => conditionalCSS([
   [type === 'light', {
-    color: mainDarkBackgroundColor,
+    color: darkBackgroundColor,
   }],
   {
     [down('xs')]: {

@@ -5,6 +5,7 @@ describe('conditionalCSS', () => {
   it('should return correct css', () => {
     const condition1 = true
     const condition2 = false
+    const condition3 = false
 
     expect(conditionalCSS([
       {
@@ -17,6 +18,11 @@ describe('conditionalCSS', () => {
       [condition2, {
         display: 'none',
       }],
+      [condition3, {
+        flexDirection: 'column',
+      }, {
+        flexDirection: 'row',
+      }],
       {
         color: 'red',
       },
@@ -25,6 +31,7 @@ describe('conditionalCSS', () => {
       textAlign: 'right',
       color: 'red',
       borderBottom: '1px solid #f99',
+      flexDirection: 'row',
     })
   })
 

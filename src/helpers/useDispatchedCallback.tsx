@@ -1,11 +1,10 @@
-import { ActionWithEntry, ThunkAction, ThunkAction2 } from './types'
+import { ActionWithEntry, ThunkAction } from './types'
 import { useDispatch } from 'react-redux'
 import { useCallback } from 'react'
 import { Action as ReduxAction } from 'redux'
 
 type Action =
   | ReturnType<ThunkAction>
-  | ReturnType<ThunkAction2>
   | ReduxAction
   | ActionWithEntry
 

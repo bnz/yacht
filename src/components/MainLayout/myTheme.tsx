@@ -5,9 +5,29 @@ import { CSSProperties } from 'react'
 declare module '@material-ui/core/styles/createMuiTheme' {
 
   interface Theme {
+    /**
+     * Drawer
+     */
     drawerTabsCount: number
     drawerWidth: number // have to be used with theme.spacing()
-    mainDarkBackgroundColor: CSSProperties['color']
+
+    /**
+     * Main layout
+     */
+    mainLayout: {
+      darkBackgroundColor: CSSProperties['color']
+      footerHeight: number
+      innerPadding: number
+      innerPaddingMobile: number
+    }
+
+    /**
+     * Combinations Table
+     */
+    combinationsTable: {
+      firstColumnWidth: number
+      columnWidth: number
+    }
   }
 
   interface ThemeOptions extends Partial<Theme> {
@@ -20,7 +40,16 @@ export const myTheme = (theme: PaletteType, white: CommonColors['white']) => {
   return {
     drawerTabsCount: 4,
     drawerWidth: 42,
-    mainDarkBackgroundColor: mainDarkBGColor,
+    mainLayout: {
+      darkBackgroundColor: mainDarkBGColor,
+      footerHeight: 10,
+      innerPadding: 5,
+      innerPaddingMobile: 2,
+    },
+    combinationsTable: {
+      firstColumnWidth: 165,
+      columnWidth: 170,
+    },
     palette: {
       type: theme,
     },
