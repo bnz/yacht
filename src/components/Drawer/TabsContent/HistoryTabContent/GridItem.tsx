@@ -8,14 +8,18 @@ interface GridItemProps {
   strikeOut?: boolean
   altColor?: boolean
   altAlign?: boolean
+  active?: boolean
 }
 
 export const GridItem = styled(
-  cwp(Grid)<GridItemProps>('strikeOut', 'altColor', 'altAlign'),
+  cwp(Grid)<GridItemProps>('strikeOut', 'altColor', 'altAlign', 'active'),
 )(({
-  theme: { spacing, palette: { action: { disabled }, error: { light } } },
-  strikeOut, altColor, altAlign,
+  theme: { spacing, palette: { action: { disabled }, error: { light }, success: { dark } } },
+  strikeOut, altColor, altAlign, active,
 }: Themed<GridItemProps>) => conditionalCSS([
+  {
+    padding: spacing(1),
+  },
   [strikeOut, {
     textDecoration: 'line-through',
     color: light,
@@ -26,7 +30,7 @@ export const GridItem = styled(
   [altAlign, {
     textAlign: 'right',
   }],
-  {
-    padding: spacing(1),
-  },
+  [active, {
+    color: dark,
+  }],
 ]))

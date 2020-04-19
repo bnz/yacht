@@ -4,6 +4,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import { ListItemStyled } from './ListItemStyled'
 
 interface DrawerListItemProps {
+  // TODO: typings!!!
   icon: any
   button?: boolean
 

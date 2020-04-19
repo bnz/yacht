@@ -2,12 +2,11 @@ import React, { FC } from 'react'
 import Tooltip from '@material-ui/core/Tooltip'
 import { TableCellStyled } from './TablePartsStyled/TableCellStyled'
 import { CombinationConnected } from './Combination/CombinationConnected'
-import { isBonus } from '../../redux/reducers/combinations'
+import { isBonus, makeCombinationsSelector } from '../../redux/reducers/combinations'
 import { Table, TableBody, TableRow } from './TablePartsStyled/Table'
 import { TableHeader } from './TableHeader'
 import { TableFooter } from './TableFooter'
 import { useSelector } from 'react-redux'
-import { makeCombinationsSelector } from '../../redux/selectors/makeCombinationsSelector'
 import { makeTableSizeSelector } from '../../redux/selectors/makeTableSizeSelector'
 import { makePlayersSelector } from '../../redux/selectors/makePlayersSelector'
 import { makeIsMoveAvailableSelector } from '../../redux/selectors/makeIsMoveAvailableSelector'
@@ -32,40 +31,36 @@ export const CombinationsContainer: FC = () => {
     <Table size={tableSize}>
       <TableHeader />
       <TableBody>
-        {combinations.map(({ name, title, combination }) => {
-          const selected = isBonus(combination)
-
-          return (
-            <TableRow key={name}>
-              <TableCellStyled firstColumn selected={selected} large={large}>
-                <Tooltip title={title} placement="top-start" enterDelay={300} disableFocusListener>
-                  <span>{name}</span>
-                </Tooltip>
-              </TableCellStyled>
-              {players.map(({ id: playerId }) => (
-                <TableCellStyled
-                  key={playerId}
-                  large={large}
-                  selected={selected}
-                  active={activePlayerId === playerId}
-                  noPadding
-                  centered
-                >
-                  <CombinationConnected
-                    playerId={playerId}
-                    combination={combination}
-                    isMoveAvailable={isMoveAvailable}
-                  />
-                </TableCellStyled>
-              ))}
+        {combinations.map(({ name, title, combination }) => (
+          <TableRow key={name}>
+            <TableCellStyled firstColumn selected={isBonus(combination)} large={large}>
+              <Tooltip title={title} placement="top-start" enterDelay={300} disableFocusListener>
+                <span>{name}</span>
+              </Tooltip>
+            </TableCellStyled>
+            {players.map(({ id: playerId }) => (
               <TableCellStyled
-                selected={selected}
+                key={playerId}
                 large={large}
-                empty
-              />
-            </TableRow>
-          )
-        })}
+                selected={isBonus(combination)}
+                active={activePlayerId === playerId}
+                noPadding
+                centered
+              >
+                <CombinationConnected
+                  playerId={playerId}
+                  combination={combination}
+                  isMoveAvailable={isMoveAvailable}
+                />
+              </TableCellStyled>
+            ))}
+            <TableCellStyled
+              selected={isBonus(combination)}
+              large={large}
+              empty
+            />
+          </TableRow>
+        ))}
       </TableBody>
       <TableFooter />
     </Table>

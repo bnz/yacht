@@ -1,13 +1,13 @@
 import { createSelector } from 'reselect'
 import { isMoveAvailableCombiner } from '../combiners/isMoveAvailableCombiner'
-import { combinations } from '../pureSelectors/combinations'
-import { dices } from '../pureSelectors/dices'
 import { playerPoints } from '../pureSelectors/playerPoints'
 import { playerMove } from '../pureSelectors/playerMove'
+import { combinationsSelector } from '../reducers/combinations'
+import { dicesSelector } from '../reducers/dices'
 
 export const makeIsMoveAvailableSelector = () => createSelector(
-  combinations,
-  dices,
+  combinationsSelector,
+  dicesSelector,
   playerPoints,
   playerMove,
   isMoveAvailableCombiner,

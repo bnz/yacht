@@ -14,6 +14,7 @@ import { languageDefaultState } from './reducers/language'
 import { activeTabDefaultState } from './reducers/activeTab'
 import { historyDefaultState } from './reducers/history'
 import { historyFollowActivePlayerDefaultState } from './reducers/historyFollowActivePlayer'
+import { activeFirstDefaultState } from './reducers/activeFirst'
 
 export let gamePhase = gamePhaseDefaultState.gamePhase
 export let players = playersDefaultState
@@ -31,6 +32,7 @@ export let history = historyDefaultState
 export let loading: boolean
 export let drawerOpened: boolean
 export let historyFollowActivePlayer: boolean
+export let activeFirst: boolean
 
 try {
   gamePhase = getItem('gamePhase', false) || gamePhase
@@ -49,6 +51,7 @@ try {
   loading = getBooleanItem('loading', loadingDefaultState)
   drawerOpened = getBooleanItem('drawerOpened', drawerOpenedDefaultState)
   historyFollowActivePlayer = getBooleanItem('historyFollowActivePlayer', historyFollowActivePlayerDefaultState)
+  activeFirst = getBooleanItem('activeFirst', activeFirstDefaultState)
 
 } catch (e) {
   console.error(e)

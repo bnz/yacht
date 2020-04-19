@@ -3,7 +3,7 @@ import update from 'immutability-helper'
 import { addToHistory } from '../reducers/history'
 
 export const addToHistoryThunk: ThunkAction = () => (dispatch, getState) => {
-  const { playerMove: [activePlayerId, shot], dices: stateDices } = getState()
+  const { playerMove: [activePlayerId, shot], dices: stateDices, dicesSelected } = getState()
   let { history } = getState()
   let dices = [...stateDices]
 
@@ -22,6 +22,7 @@ export const addToHistoryThunk: ThunkAction = () => (dispatch, getState) => {
           {
             tries: [dices],
             result: {},
+            dicesSelected: [],
           },
         ],
       },
@@ -32,6 +33,7 @@ export const addToHistoryThunk: ThunkAction = () => (dispatch, getState) => {
       [activePlayerId]: {
         [lastElementIndex]: {
           tries: { $push: [dices] },
+          dicesSelected: { $push: [dicesSelected] },
         },
       },
     })

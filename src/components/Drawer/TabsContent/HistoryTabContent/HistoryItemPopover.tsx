@@ -6,7 +6,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 import { Theme } from '@material-ui/core'
 import { Move } from '../../../../redux/reducers/history'
 
-interface HistoryItemPopoverProps extends Pick<PopoverProps, 'open' | 'anchorEl'>, Pick<Move, 'tries'> {
+interface HistoryItemPopoverProps extends Pick<PopoverProps, 'open' | 'anchorEl'>, Pick<Move, 'tries' | 'dicesSelected'> {
   onClose(): void
 }
 
@@ -33,7 +33,7 @@ const popoverProps: Partial<PopoverProps> = {
 }
 
 export const HistoryItemPopover: FC<HistoryItemPopoverProps> = ({
-  onClose, open, anchorEl, tries,
+  onClose, open, anchorEl, tries, dicesSelected: selected,
 }) => {
   const { paper } = useStyles()
 
@@ -47,9 +47,13 @@ export const HistoryItemPopover: FC<HistoryItemPopoverProps> = ({
     >
       {tries.map((items, index) => (
         <div key={index}>
-          {items.map(((item, index) => (
-            <Dice key={index} value={item} />
-          )))}
+          {items.map((item, i) => (
+            <Dice
+              key={i}
+              value={item}
+              selected={selected[index] && selected[index].indexOf(i) !== -1}
+            />
+          ))}
         </div>
       ))}
     </Popover>

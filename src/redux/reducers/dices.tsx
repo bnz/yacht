@@ -1,5 +1,5 @@
 import { Reducer } from 'redux'
-import { ActionWithEntry } from '../../helpers/types'
+import { ActionWithEntry, Selector } from '../../helpers/types'
 
 export type Dices = number[]
 
@@ -31,6 +31,8 @@ export const resetDices: ResetDices = () => ({
   type: Constants.RESET_DICES,
   entry: [],
 })
+
+export const dicesSelector: Selector<Dices> = ({ dices }) => dices
 
 export const dices: Reducer<Dices, DicesActionReturn> = (
   state = dicesDefaultState,

@@ -7,12 +7,12 @@ import { useDispatchedCallback } from '../../../../../helpers/useDispatchedCallb
 import { CheckboxAsIcon } from './CheckboxAsIcon'
 
 export const ChangeTableSizeButton: FC = () => {
-  const onChange = useDispatchedCallback(toggleSize())
+  const onClick = useDispatchedCallback(toggleSize())
 
   return (
     <>
       <ListDivider />
-      <ListItem onClick={onChange} icon={<CheckboxAsIcon />}>
+      <ListItem onClick={onClick} icon={<CheckboxAsIcon />}>
         {i18n('compactTable')}
       </ListItem>
     </>

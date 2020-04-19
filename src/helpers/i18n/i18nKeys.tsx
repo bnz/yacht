@@ -5,6 +5,7 @@ export type i18nKeys =
   | 'playerNo'
   | 'diceSize'
   | 'compactTable'
+  | 'activePlayerFirst'
   | 'currentGameWillBeLost'
   | 'combinations'
   | 'total'
@@ -37,6 +38,10 @@ export type i18nKeys =
 
   | 'history.header'
   | 'history.user.label'
+  | 'history.noHistoryYet'
+  | 'history.activeMove'
+  | 'history.activeMoveTries1'
+  | 'history.activeMoveTries2'
   | 'history.checkbox.followActivePlayer'
 
   | 'combination.1'

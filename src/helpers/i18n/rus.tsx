@@ -5,6 +5,7 @@ export const rus: LanguageMap = {
   darkTheme: 'Темная тема',
   language: 'Язык',
   compactTable: 'Компактная таблица',
+  activePlayerFirst: 'Активный игрок первый',
   diceSize: 'Размер костей',
   playerNo: 'Игрок №',
   currentGameWillBeLost: 'Текущая игра будет утеряна.',
@@ -39,6 +40,10 @@ export const rus: LanguageMap = {
 
   'history.header': 'История',
   'history.user.label': 'История игрока',
+  'history.noHistoryYet': 'Истории пока нет',
+  'history.activeMove': 'Ваш ход, еще #triesLeft# #tries#...',
+  'history.activeMoveTries1': 'попытка',
+  'history.activeMoveTries2': 'попытки',
   'history.checkbox.followActivePlayer': '',
 
   'combination.1': 'Единицы',

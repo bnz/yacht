@@ -1,5 +1,7 @@
-import { ActionWithEntry } from '../../helpers/types'
+import { ActionWithEntry, Selector } from '../../helpers/types'
 import { Reducer } from 'redux'
+import { createSelector } from 'reselect'
+import { simpleCombiner } from '../combiners/simpleCombiner'
 
 export enum ActiveTab {
   SETTINGS,
@@ -26,6 +28,10 @@ export const changeActiveTab: ChangeActiveTab = (tab) => ({
   type: Constants.CHANGE_ACTIVE_TAB,
   entry: tab,
 })
+
+export const activeTabSelector: Selector<ActiveTab> = ({ activeTab }) => activeTab
+
+export const makeActiveTabSelector = () => createSelector(activeTabSelector, simpleCombiner)
 
 export const activeTab: Reducer<ActiveTab, ActiveTabActionReturn> = (
   state = activeTabDefaultState,

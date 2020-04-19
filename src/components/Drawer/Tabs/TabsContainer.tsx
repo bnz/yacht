@@ -2,7 +2,7 @@ import styled from '@material-ui/styles/styled'
 import { TabsContainerInnerProps, TabsContainerInner } from './TabsContainerInner'
 import React, { FC } from 'react'
 import { useSelector } from 'react-redux'
-import { makeActiveTabSelector } from '../../../redux/selectors/makeActiveTabSelector'
+import { makeActiveTabSelector } from '../../../redux/reducers/activeTab'
 
 const Wrapper: FC<TabsContainerInnerProps> = ({
   activeTab,

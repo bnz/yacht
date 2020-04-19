@@ -6,10 +6,12 @@ import { DiceSizeChanger as DiceSizeChangerComponent } from './DiceSizeChanger/D
 import { notInPlayVisibilityHOC } from '../../../../helpers/notInPlayVisibilityHOC'
 import { RestartGameButton } from './RestartGameButton/RestartGameButton'
 import { ChangeTableSizeButton } from './ChangeTableSizeButton/ChangeTableSizeButton'
+import { ActiveFirstButton } from './ActiveFirstButton/ActiveFirstButton'
 
 const RestartGame = notInPlayVisibilityHOC(RestartGameButton)
 const ChangeTableSize = notInPlayVisibilityHOC(ChangeTableSizeButton)
 const DiceSizeChanger = notInPlayVisibilityHOC(DiceSizeChangerComponent)
+const ActiveFirst = notInPlayVisibilityHOC(ActiveFirstButton)
 
 export const SettingsTabContent: FC = () => (
   <List>
@@ -17,6 +19,7 @@ export const SettingsTabContent: FC = () => (
     <LangChangeButtons />
     <DiceSizeChanger />
     <ChangeTableSize />
+    <ActiveFirst />
     <RestartGame />
   </List>
 )

@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
-import { combinations } from '../pureSelectors/combinations'
 import { playerPoints } from '../pureSelectors/playerPoints'
 import { isEndOfGameCombiner } from '../combiners/isEndOfGameCombiner'
+import { combinationsSelector } from '../reducers/combinations'
 
-export const makeIsEndOfGameSelector = () => createSelector(combinations, playerPoints, isEndOfGameCombiner)
+export const makeIsEndOfGameSelector = () => createSelector(combinationsSelector, playerPoints, isEndOfGameCombiner)

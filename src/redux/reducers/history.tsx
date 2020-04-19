@@ -17,6 +17,7 @@ export interface Move {
   result: {
     [key in Combination]?: number
   }
+  dicesSelected: Dices[]
 }
 
 interface History {

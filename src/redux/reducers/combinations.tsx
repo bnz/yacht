@@ -1,7 +1,9 @@
 import { Reducer } from 'redux'
-import { ActionWithEntry } from '../../helpers/types'
+import { ActionWithEntry, Selector } from '../../helpers/types'
 import { DICES_COUNT } from './dices'
 import { i18n } from '../../helpers/i18n/i18n'
+import { createSelector } from 'reselect'
+import { simpleCombiner } from '../combiners/simpleCombiner'
 
 export enum Combination {
   ONE = 1,
@@ -141,6 +143,10 @@ export const MAX_POSSIBLE_POINTS = combinationsDefaultState.reduce(
   (prev, curr) => prev + curr.max,
   0,
 )
+
+export const combinationsSelector: Selector<CombinationInfo[]> = ({ combinations }) => combinations
+
+export const makeCombinationsSelector = () => createSelector(combinationsSelector, simpleCombiner)
 
 export const combinations: Reducer<CombinationInfo[], CombinationsReturn> = (
   state = combinationsDefaultState,

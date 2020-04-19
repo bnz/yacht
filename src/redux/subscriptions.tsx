@@ -9,7 +9,7 @@ export const subscriptions: Subscriptions = ({ subscribe, getState }) => subscri
   const {
     gamePhase, players, dices, dicesSelected, diceSize, playerMove,
     tableSize, drawerOpened, playerPoints, language, activeTab, history,
-    historyFollowActivePlayer,
+    historyFollowActivePlayer, activeFirst,
   } = getState()
 
   setItem('gamePhase', gamePhase)
@@ -25,4 +25,5 @@ export const subscriptions: Subscriptions = ({ subscribe, getState }) => subscri
   setItem('activeTab', toString(activeTab))
   setItem('history', toString(history))
   setItem('historyFollowActivePlayer', toString(historyFollowActivePlayer))
+  setItem('activeFirst', toString(activeFirst))
 })

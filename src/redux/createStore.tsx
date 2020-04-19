@@ -17,6 +17,7 @@ import { language } from './reducers/language'
 import { activeTab } from './reducers/activeTab'
 import { history } from './reducers/history'
 import { historyFollowActivePlayer } from './reducers/historyFollowActivePlayer'
+import { activeFirst } from './reducers/activeFirst'
 
 const middleware = [thunk]
 
@@ -36,6 +37,7 @@ const reducers: Reducer<State> = combineReducers<State>({
   activeTab,
   history,
   historyFollowActivePlayer,
+  activeFirst,
 })
 
 declare global {

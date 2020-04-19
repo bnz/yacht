@@ -5,6 +5,7 @@ export const eng: LanguageMap = {
   darkTheme: 'Dark theme',
   language: 'Language',
   compactTable: 'Compact table',
+  activePlayerFirst: 'Active player first',
   diceSize: 'Dice size',
   playerNo: 'Player #',
   currentGameWillBeLost: 'Current game will be lost.',
@@ -39,6 +40,10 @@ export const eng: LanguageMap = {
 
   'history.header': 'History',
   'history.user.label': 'History of user',
+  'history.noHistoryYet': 'No history yet',
+  'history.activeMove': 'Your move, #triesLeft# tries left...',
+  'history.activeMoveTries1': '',
+  'history.activeMoveTries2': '',
   'history.checkbox.followActivePlayer': 'Следовать за активным игроком',
 
   'combination.1': 'Ones',

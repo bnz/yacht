@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux'
 import { State } from '../../../../redux/defaultState'
 import { Move as PlayerMove } from '../../../../redux/reducers/playerMove'
 import { HistoryItem } from './HistoryItem'
+import { i18n } from '../../../../helpers/i18n/i18n'
+import { NoHistoryYetStyled } from './NoHistoryYetStyled'
 
 const historySelector = makeHistorySelector()
 
@@ -18,15 +20,18 @@ export const HistoryTabContentData: FC<HistoryTabContentDataProps> = ({ playerId
 
   return (
     <>
-      {playerHistory.length ? playerHistory.map(({ tries, result }, index) => (
+      {playerHistory.length ? playerHistory.map(({ tries, result, dicesSelected }, index) => (
         <HistoryItem
           key={index}
           index={index}
           tries={tries}
           result={result}
+          dicesSelected={dicesSelected}
         />
       )) : (
-        <div>истории пока нет</div>
+        <NoHistoryYetStyled>
+          {i18n('history.noHistoryYet')}
+        </NoHistoryYetStyled>
       )}
     </>
   )

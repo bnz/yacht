@@ -1,5 +1,5 @@
 import { PaletteType } from '@material-ui/core'
-import { CommonColors } from '@material-ui/core/colors/common'
+import { CommonColors } from '@material-ui/core/styles/createPalette'
 import { CSSProperties } from 'react'
 
 declare module '@material-ui/core/styles/createMuiTheme' {

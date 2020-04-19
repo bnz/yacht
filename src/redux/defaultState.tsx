@@ -18,6 +18,7 @@ import {
   activeTab,
   history,
   historyFollowActivePlayer,
+  activeFirst,
 } from './getStateFromStorage'
 import { LoadingState } from './reducers/loading'
 import { DiceSizeState } from './reducers/diceSize'
@@ -30,12 +31,14 @@ import { LanguageState } from './reducers/language'
 import { ActiveTabState } from './reducers/activeTab'
 import { HistoryState } from './reducers/history'
 import { HistoryFollowActivePlayerState } from './reducers/historyFollowActivePlayer'
+import { ActiveFirstState } from './reducers/activeFirst'
 
 export interface State
   extends GamePhaseState, PlayersState, DicesState, DicesSelectedState,
     LoadingState, DiceSizeState, CombinationsState,
     PlayerMoveState, TableSizeState, DrawerOpenedState, PlayerPointsState,
-    LanguageState, ActiveTabState, HistoryState, HistoryFollowActivePlayerState {
+    LanguageState, ActiveTabState, HistoryState, HistoryFollowActivePlayerState,
+    ActiveFirstState {
 }
 
 export const defaultState: State = {
@@ -54,4 +57,5 @@ export const defaultState: State = {
   activeTab,
   history,
   historyFollowActivePlayer,
+  activeFirst,
 }

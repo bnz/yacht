@@ -23,6 +23,7 @@ export const GridContainer = styled(
     background: hover,
   }],
   {
+    cursor: 'pointer',
     '&:hover': {
       background: hover,
     },
