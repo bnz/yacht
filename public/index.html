@@ -9,7 +9,10 @@
   </head>
   <body>
     <script>
-      if (localStorage.getItem('theme') === 'dark') {
+      window.isDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+      if (localStorage.getItem('theme-auto') === 'true') {
+        document.body.style.background = window.isDarkTheme ? '#303030' : '#fafafa'
+      } else if (localStorage.getItem('theme') === 'dark') {
         document.body.style.background = '#303030'
       }
     </script>

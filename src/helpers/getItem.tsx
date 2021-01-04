@@ -1,15 +1,17 @@
 import { State } from '../redux/defaultState'
 
+export type localStorageKeys = keyof State | 'theme' | 'theme-auto'
+
 /**
  * Get item from localStorage
  */
-export const getItem = (key: keyof State | 'theme', parse = true) => {
+export const getItem = (key: localStorageKeys, parse = true) => {
   const item = localStorage.getItem(key)
 
   return parse ? JSON.parse(item!) : item
 }
 
-export const getBooleanItem = (key: keyof State | 'theme', fallback: boolean): boolean => {
+export const getBooleanItem = (key: localStorageKeys, fallback: boolean): boolean => {
   let tmp: boolean | null
 
   tmp = getItem(key)

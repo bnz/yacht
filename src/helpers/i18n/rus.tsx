@@ -15,6 +15,7 @@ export const rus: LanguageMap = {
   maximumPossibleNumberOfPoints: 'Максимально возможное количество очков',
   ofMax: 'из макс.',
   more: 'еще',
+  auto: 'Авто (синхронизировать с настройками системы)',
   points1: 'очков',
   points2: 'очко',
   points3: 'очка',

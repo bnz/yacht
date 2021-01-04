@@ -15,6 +15,7 @@ export const eng: LanguageMap = {
   maximumPossibleNumberOfPoints: 'Maximum possible number of points',
   ofMax: 'of max',
   more: '',
+  auto: 'Auto (sync with OS settings)',
   points1: 'points left',
   points2: 'points left',
   points3: 'points left',

@@ -42,6 +42,7 @@ const reducers: Reducer<State> = combineReducers<State>({
 
 declare global {
   interface Window {
+    isDarkTheme: boolean
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
   }
 }

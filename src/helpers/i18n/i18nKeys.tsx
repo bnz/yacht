@@ -13,6 +13,7 @@ export type i18nKeys =
   | 'maximumPossibleNumberOfPoints'
   | 'ofMax'
   | 'more'
+  | 'auto'
   | 'points1'
   | 'points2'
   | 'points3'
