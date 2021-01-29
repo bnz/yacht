@@ -1,9 +1,9 @@
 import { CSSProperties } from 'react'
 import { AlignItemsProperty, JustifyContentProperty } from 'csstype'
 
-type Stretch4 = (top?: number, right?: number, bottom?: number, left?: number) => CSSProperties
+type Stretch4 = (top?: number | string, right?: number | string, bottom?: number | string, left?: number | string) => CSSProperties
 
-const iU = (value: number | undefined): boolean => value === undefined
+const iU = (value: number | string | undefined): boolean => value === undefined
 
 export const stretch: Stretch4 = (
   top = 0,

@@ -2,6 +2,7 @@ import { LanguageMap } from './i18n'
 
 export const eng: LanguageMap = {
   yacht: 'Yacht',
+  indigo: 'Indigo',
   darkTheme: 'Dark theme',
   language: 'Language',
   compactTable: 'Compact table',

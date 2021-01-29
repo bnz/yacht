@@ -64,6 +64,12 @@ export const myTheme = (theme: PaletteType, white: CommonColors['white']) => {
           backgroundColor: theme === 'dark' ? mainDarkBGColor : white,
         },
       },
+      MuiSelect: {
+        selectMenu: {
+          fontSize: 34,
+          lineHeight: '40px',
+        },
+      },
     },
   }
 }

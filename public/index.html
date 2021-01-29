@@ -9,6 +9,14 @@
   </head>
   <body>
     <script>
+      const game = localStorage.getItem('game')
+      if (game === 'indigo') {
+        document.title = 'Indigo board game'
+      }
+      if (game === 'yacht') {
+        document.title = 'Yacht dice game'
+      }
+
       window.isDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
       if (localStorage.getItem('theme-auto') === 'true') {
         document.body.style.background = window.isDarkTheme ? '#303030' : '#fafafa'

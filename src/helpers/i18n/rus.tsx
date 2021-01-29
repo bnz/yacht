@@ -2,6 +2,7 @@ import { LanguageMap } from './i18n'
 
 export const rus: LanguageMap = {
   yacht: 'Яхта',
+  indigo: 'Индиго',
   darkTheme: 'Темная тема',
   language: 'Язык',
   compactTable: 'Компактная таблица',

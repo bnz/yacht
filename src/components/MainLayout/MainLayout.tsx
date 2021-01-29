@@ -20,7 +20,7 @@ export const MainLayout: FC = ({ children }) => {
         </Inner>
         <Push />
       </Wrapper>
-      <Footer>bonez &copy; 2019</Footer>
+      <Footer>bonez &copy; 2019 - {new Date().getFullYear()}</Footer>
     </>
   )
 }

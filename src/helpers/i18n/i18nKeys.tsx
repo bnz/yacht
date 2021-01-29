@@ -1,5 +1,6 @@
 export type i18nKeys =
   | 'yacht'
+  | 'indigo'
   | 'darkTheme'
   | 'language'
   | 'playerNo'
