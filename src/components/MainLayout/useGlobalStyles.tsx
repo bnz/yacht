@@ -1,5 +1,5 @@
 import makeStyles from '@material-ui/core/styles/makeStyles'
-import { AM as amount } from '../Indigo/Indigo'
+import { AM as amount } from '../Indigo/Store/Store'
 
 export const useGlobalStyles = makeStyles(({ palette: { grey, type, background: { paper } } }) => {
   const backgroundColor = type === 'dark' ? paper : grey['300']
@@ -25,6 +25,10 @@ export const useGlobalStyles = makeStyles(({ palette: { grey, type, background: 
     '@global': {
       'html, body, #root': {
         height: '100%',
+      },
+
+      body: {
+        'touch-action': 'manipulation'
       },
 
       ...result,

@@ -2,12 +2,12 @@ import React, { FC } from 'react'
 import { Inner, Push } from './MainLayoutParts'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { TopMenu } from '../TopMenu/TopMenu'
-import { Wrapper, Footer } from './MainLayoutConnected'
+import { Footer, Wrapper } from './MainLayoutConnected'
 import { useGlobalStyles } from './useGlobalStyles'
 import { Drawer } from '../Drawer/Drawer'
 
 export const MainLayout: FC = ({ children }) => {
-  useGlobalStyles()
+  useGlobalStyles({ foo: 'bar' })
 
   return (
     <>

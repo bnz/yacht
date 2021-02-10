@@ -1,6 +1,8 @@
 import { State } from '../redux/defaultState'
 
-export type localStorageKeys = keyof State | 'theme' | 'theme-auto' | 'game'
+export type localStorageKeys =
+  | keyof State
+  | 'theme' | 'theme-auto' | 'game'
 
 /**
  * Get item from localStorage

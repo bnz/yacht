@@ -1,123 +1,91 @@
-import React, { FC } from 'react'
-import { stretch } from '../../helpers/css'
-import { SVG } from './SVG'
-import styled from '@material-ui/styles/styled'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { FC, useCallback } from 'react'
 import { Wrapper } from './Wrapper'
 import { Item } from './Item'
+import { HelpingTools } from './HelpingTools'
+import { observer } from 'mobx-react'
+import { useStore } from './Store/Provider'
+import { GamePhase } from './Store/Store'
+import Button from '@material-ui/core/Button'
+import { StartGameButtonWrapper } from '../StartGameButton/StartGameButtonWrapper'
+import { PlayerManager } from './Players/PlayerManager'
+import ButtonGroup from '@material-ui/core/ButtonGroup'
 
-export const AM = 9
+export const Indigo: FC = observer(() => {
+  const store = useStore()
+  const onNextMove = useCallback(() => {
+    store.nextMove()
+  }, [])
 
-const itemsCount = (new Array(AM * AM)).fill(null)
-
-const w = 100
-
-const Column = styled('div')({
-  display: 'inline-block',
-  verticalAlign: 'top',
-  marginRight: '1em',
-})
-
-const Wrap = styled('div')({
-  width: w,
-  height: `${w * 86.60254 / 100}px`,
-})
-
-const Label = styled('div')({
-  color: '#fff',
-  textAlign: 'center',
-  fontSize: '1.4em',
-  padding: '.1em 0 .5em',
-})
-
-export const Indigo: FC = () => {
   return (
     <>
-
-      <Wrapper amount={AM}>
-        {itemsCount.map((_, i) => (
-          <Item key={i} dataId={i + 1} />
-        ))}
-      </Wrapper>
-
-      <div
-        style={{
-          ...stretch('40%', '1em', '1em', 'auto'),
-          backgroundColor: 'rgba(0, 0, 0, .7)',
-          padding: '1em',
-          // display: 'flex',
-          display: 'none',
-          maxWidth: '100%',
-          overflow: 'auto',
-        }}
-      >
-        <Column>
-          <Wrap>
-            <SVG uses={['hex-main-bg', 'hex-circle-top-right', 'hex-circle-bottom-right', 'hex-circle-center-left']} />
-            <Label>shuriken-l</Label>
-            <SVG uses={['hex-main-bg', 'hex-circle-top-left', 'hex-circle-bottom-left', 'hex-circle-center-right']} />
-            <Label>shuriken-r</Label>
-          </Wrap>
-        </Column>
-        <Column>
-          <Wrap>
-            <SVG uses={['hex-main-bg', 'hex-line-0deg', 'hex-line-60deg', 'hex-line-120deg']} />
-            <Label>crossroad</Label>
-          </Wrap>
-        </Column>
-        <Column>
-          <Wrap>
-            <SVG uses={['hex-main-bg', 'hex-line-0deg', 'hex-circle-center-left', 'hex-circle-center-right']} />
-            <Label>turtle-0</Label>
-            <SVG uses={['hex-main-bg', 'hex-line-60deg', 'hex-circle-top-left', 'hex-circle-bottom-right']} />
-            <Label>turtle-60</Label>
-            <SVG uses={['hex-main-bg', 'hex-line-120deg', 'hex-circle-bottom-left', 'hex-circle-top-right']} />
-            <Label>turtle-120</Label>
-          </Wrap>
-        </Column>
-        <Column>
-          <Wrap>
-            <SVG uses={['hex-main-bg', 'hex-line-0deg', 'hex-arc-top', 'hex-arc-bottom']} />
-            <Label>lizard-0</Label>
-            <SVG uses={['hex-main-bg', 'hex-line-60deg', 'hex-arc-top-right', 'hex-arc-bottom-left']} />
-            <Label>lizard-60</Label>
-            <SVG uses={['hex-main-bg', 'hex-line-120deg', 'hex-arc-bottom-right', 'hex-arc-top-left']} />
-            <Label>lizard-120</Label>
-          </Wrap>
-        </Column>
-        <Column>
-          <Wrap>
-            <SVG uses={['hex-main-bg', 'hex-arc-bottom', 'hex-arc-bottom-right', 'hex-circle-top-left']} />
-            <Label>human-1</Label>
-            <SVG uses={['hex-main-bg', 'hex-arc-bottom', 'hex-arc-bottom-left', 'hex-circle-top-right']} />
-            <Label>human-2</Label>
-            <SVG uses={['hex-main-bg', 'hex-arc-bottom-left', 'hex-arc-top-left', 'hex-circle-center-right']} />
-            <Label>human-3</Label>
-            <SVG uses={['hex-main-bg', 'hex-arc-top-left', 'hex-arc-top', 'hex-circle-bottom-right']} />
-            <Label>human-4</Label>
-            <SVG uses={['hex-main-bg', 'hex-arc-top', 'hex-arc-top-right', 'hex-circle-bottom-left']} />
-            <Label>human-5</Label>
-            <SVG uses={['hex-main-bg', 'hex-arc-top-right', 'hex-arc-bottom-right', 'hex-circle-center-left']} />
-            <Label>human-6</Label>
-          </Wrap>
-        </Column>
-        {/*
-        <Column>
-          <Wrap>
-            <SVG uses={['hex-treasure-bg', 'hex-treasure-bottom']} />
-            <SVG uses={['hex-treasure-bg', 'hex-treasure-bottom-left']} />
-            <SVG uses={['hex-treasure-bg', 'hex-treasure-top-left']} />
-            <SVG uses={['hex-treasure-bg', 'hex-treasure-top']} />
-            <SVG uses={['hex-treasure-bg', 'hex-treasure-top-right']} />
-            <SVG uses={['hex-treasure-bg', 'hex-treasure-bottom-right']} />
-          </Wrap>
-        </Column>
-        <Column>
-          <Wrap>
-            <SVG uses={['hex-treasure-bg', 'hex-center']} />
-          </Wrap>
-        </Column>
-        */}
-      </div>
+      <StartGameButtonWrapper>
+        <ButtonGroup
+          variant="contained"
+          size="large"
+          color="primary"
+        >
+          <Button
+            disabled={store.gamePhase === GamePhase.PRE_GAME}
+            onClick={
+              useCallback(() => {
+                store.setGamePhase(GamePhase.PRE_GAME)
+              }, [])
+            }
+          >
+            start
+          </Button>
+          &nbsp;&nbsp;&nbsp;
+          <Button
+            disabled={store.gamePhase === GamePhase.PLAYERS_SELECTION}
+            onClick={
+              useCallback(() => {
+                store.setGamePhase(GamePhase.PLAYERS_SELECTION)
+              }, [])
+            }
+          >
+            player
+          </Button>
+          <Button
+            disabled={store.gamePhase === GamePhase.IN_PLAY}
+            onClick={
+              useCallback(() => {
+                store.setGamePhase(GamePhase.IN_PLAY)
+              }, [])
+            }
+          >
+            game
+          </Button>
+        </ButtonGroup>
+        {store.gamePhase === GamePhase.IN_PLAY && (
+          <ButtonGroup
+            variant="contained"
+            size="large"
+            color="primary"
+            style={{
+              marginLeft: 24,
+            }}
+          >
+            <Button onClick={onNextMove}>next move</Button>
+          </ButtonGroup>
+        )}
+      </StartGameButtonWrapper>
+      {{
+        [GamePhase.PRE_GAME]: (
+          <>PRE_GAME</>
+        ),
+        [GamePhase.PLAYERS_SELECTION]: (
+          <PlayerManager />
+        ),
+        [GamePhase.IN_PLAY]: (
+          <Wrapper amount={store.colsAmount}>
+            {store.itemsCount.map((_, i) => (
+              <Item key={i} dataId={i + 1} />
+            ))}
+          </Wrapper>
+        ),
+      }[store.gamePhase]}
+      <HelpingTools />
     </>
   )
-}
+})

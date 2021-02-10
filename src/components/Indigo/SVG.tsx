@@ -1,9 +1,9 @@
-import svg from './hex.svg'
 import React, { FC } from 'react'
-
-export type Ids =
-  | 12 | 13 | 14 | 15 | 16
-
+import styled from '@material-ui/styles/styled'
+import svg from './hex.svg'
+import { Themed } from '../../helpers/types'
+import { conditionalCSS } from '../../helpers/conditionalCSS'
+import { StyledProps } from '@material-ui/core/styles'
 
 export type RouteTileIds =
   | 'shuriken-l'
@@ -44,7 +44,6 @@ export const routeTileIds: { [id in RouteTileIds]: Uses[] } = {
   'human-6': ['hex-main-bg', 'hex-arc-top-right', 'hex-arc-bottom-right', 'hex-circle-center-left'],
 }
 
-
 export type Uses =
   | 'hex-main-bg'
   | 'hex-treasure-bg'
@@ -77,32 +76,77 @@ export type Uses =
   | 'hex-treasure-top-left'
   | 'hex-treasure-top-right'
 
-interface SvgComponentProps {
-  className?: string
-  uses: Uses[]
+  | 'token-place'
+
+  | 'hex-decorator-corner-left'
+  | 'hex-decorator-corner-right'
+  | 'hex-decorator-corner-top-left'
+  | 'hex-decorator-corner-top-right'
+  | 'hex-decorator-corner-bottom-left'
+  | 'hex-decorator-corner-bottom-right'
+
+
+  /**
+   * EMPTY LINES
+   */
+  | 'hex-decorator-line-empty-top'
+  | 'hex-decorator-line-empty-left-top'
+  | 'hex-decorator-line-empty-left-bottom'
+  | 'hex-decorator-line-empty-bottom'
+  | 'hex-decorator-line-empty-right-bottom'
+  | 'hex-decorator-line-empty-right-top'
+
+  /**
+   * GATEWAYS
+   */
+  | 'hex-decorator-gateway-top-left'
+  | 'hex-decorator-gateway-top-right'
+  | 'hex-decorator-gateway-right'
+  | 'hex-decorator-gateway-bottom-right'
+  | 'hex-decorator-gateway-bottom-left'
+  | 'hex-decorator-gateway-left'
+
+interface SvgComponentProps extends Partial<StyledProps> {
+  fill?: string
+  uses?: Uses[]
+
+  onClick?(): void
 }
 
-export const tilesMap: { [id: number]: Uses[] } = {
-
-  // center
-  41: ['hex-treasure-bg', 'hex-center'],
-
-  // treasures
-  5: ['hex-treasure-bg', 'hex-treasure-bottom'],
-  19: ['hex-treasure-bg', 'hex-treasure-bottom-right'],
-  27: ['hex-treasure-bg', 'hex-treasure-bottom-left'],
-  55: ['hex-treasure-bg', 'hex-treasure-top-right'],
-  63: ['hex-treasure-bg', 'hex-treasure-top-left'],
-  77: ['hex-treasure-bg', 'hex-treasure-top'],
-}
-
-export const SVG: FC<SvgComponentProps> = ({
-  className,
+export const SVGComponent: FC<SvgComponentProps> = ({
+  fill,
   uses = [],
+  onClick,
+  className,
 }) => (
-  <svg viewBox="0 0 101 87" className={className}>
-    {uses.map((use) => (
+  <svg viewBox="0 0 101 87" fill={fill} onClick={onClick} className={className}>
+    {uses.map((use) => use === 'hex-default-bg' ? (
+      <path
+        key={use}
+        d="M75.012 0l25.004 43.308-25.004 43.309H25.004L0 43.308 25.004 0h50.008z"
+        fill="darkkhaki"
+      />
+    ) : (
       <use key={use} href={`${svg}#${use}`} />
     ))}
   </svg>
 )
+
+export const SVG = styled(SVGComponent)(({
+  onClick, theme,
+}: Themed<SvgComponentProps>) => conditionalCSS([
+  [onClick !== undefined, {
+    cursor: 'pointer',
+    '& path': {
+      transitionProperty: 'fill',
+      transitionDuration: theme.transitions.duration.standard,
+
+      '&:hover': {
+        fill: 'red',
+      },
+      '&:active': {
+        fill: 'blue',
+      },
+    },
+  }],
+]))

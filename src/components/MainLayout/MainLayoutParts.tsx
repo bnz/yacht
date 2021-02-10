@@ -3,6 +3,7 @@ import { Themed } from '../../helpers/types'
 import { replaceKeysInObject } from '../../helpers/replaceKeysInObject'
 import { DrawerOpenedConnectorProps } from './MainLayoutConnected'
 import { cwp } from '../../helpers/cwp'
+import { conditionalCSS } from '../../helpers/conditionalCSS'
 
 export const Wrapper = styled(
   cwp()<DrawerOpenedConnectorProps>('drawer'),
@@ -62,21 +63,29 @@ export const Footer = styled(
 
 export const Inner = styled('div')(({
   theme: {
+    game,
     spacing, mixins: { toolbar },
     breakpoints: { down },
     mainLayout: { innerPadding, innerPaddingMobile },
   },
-}: Themed) => ({
-  padding: spacing(2, innerPadding),
-  ...replaceKeysInObject(
-    toolbar,
-    'minHeight',
-    'paddingTop',
-    (value: number): number => spacing(value / 6),
-  ),
-  maxWidth: spacing(130),
-  [down('xs')]: {
-    paddingLeft: spacing(innerPaddingMobile),
-    paddingRight: spacing(innerPaddingMobile),
+}: Themed) => conditionalCSS([
+  {
+    padding: spacing(2, innerPadding),
+    ...replaceKeysInObject(
+      toolbar,
+      'minHeight',
+      'paddingTop',
+      (value: number): number => spacing(value / 6),
+    ),
+    maxWidth: spacing(130),
   },
-}))
+  [game === 'yacht', {
+    [down('xs')]: {
+      paddingLeft: spacing(innerPaddingMobile),
+      paddingRight: spacing(innerPaddingMobile),
+    },
+  }, {
+    paddingLeft: 0,
+    paddingRight: 0,
+  }],
+]))

@@ -1,10 +1,13 @@
 import { PaletteType } from '@material-ui/core'
 import { CommonColors } from '@material-ui/core/styles/createPalette'
 import { CSSProperties } from 'react'
+import { getItem } from '../../helpers/getItem'
 
 declare module '@material-ui/core/styles/createMuiTheme' {
 
   interface Theme {
+    game: 'yacht' | 'indigo'
+
     /**
      * Drawer
      */
@@ -38,6 +41,8 @@ export const myTheme = (theme: PaletteType, white: CommonColors['white']) => {
   const mainDarkBGColor = '#333'
 
   return {
+    game: getItem('game', false),
+
     drawerTabsCount: 4,
     drawerWidth: 42,
     mainLayout: {

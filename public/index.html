@@ -9,6 +9,8 @@
   </head>
   <body>
     <script>
+      document.addEventListener('gesturestart', (e) => e.preventDefault(), false)
+
       const game = localStorage.getItem('game')
       if (game === 'indigo') {
         document.title = 'Indigo board game'

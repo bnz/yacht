@@ -3,10 +3,9 @@ import styled from '@material-ui/styles/styled'
 import { Themed } from '../../helpers/types'
 
 export const StartGameButtonWrapper = styled('div')(({
-  theme: { spacing, breakpoints: { down } },
+  theme: { spacing, breakpoints: { down }, mainLayout: { innerPadding } },
 }: Themed) => ({
-  paddingTop: spacing(2),
-  paddingBottom: spacing(4),
+  padding: spacing(2, innerPadding),
   [down('xs')]: {
     textAlign: 'center',
   },
