@@ -13,63 +13,54 @@ import ButtonGroup from '@material-ui/core/ButtonGroup'
 
 export const Indigo: FC = observer(() => {
   const store = useStore()
-  const onNextMove = useCallback(() => {
-    store.nextMove()
-  }, [])
 
   return (
     <>
-      <StartGameButtonWrapper>
-        <ButtonGroup
-          variant="contained"
-          size="large"
-          color="primary"
-        >
-          <Button
-            disabled={store.gamePhase === GamePhase.PRE_GAME}
-            onClick={
-              useCallback(() => {
-                store.setGamePhase(GamePhase.PRE_GAME)
-              }, [])
-            }
-          >
-            start
-          </Button>
-          &nbsp;&nbsp;&nbsp;
-          <Button
-            disabled={store.gamePhase === GamePhase.PLAYERS_SELECTION}
-            onClick={
-              useCallback(() => {
-                store.setGamePhase(GamePhase.PLAYERS_SELECTION)
-              }, [])
-            }
-          >
-            player
-          </Button>
-          <Button
-            disabled={store.gamePhase === GamePhase.IN_PLAY}
-            onClick={
-              useCallback(() => {
-                store.setGamePhase(GamePhase.IN_PLAY)
-              }, [])
-            }
-          >
-            game
-          </Button>
-        </ButtonGroup>
-        {store.gamePhase === GamePhase.IN_PLAY && (
+      <div style={{
+        position: 'absolute',
+        top: 60,
+        left: 8,
+        zIndex: 1,
+      }}>
+        <StartGameButtonWrapper>
           <ButtonGroup
             variant="contained"
             size="large"
             color="primary"
-            style={{
-              marginLeft: 24,
-            }}
           >
-            <Button onClick={onNextMove}>next move</Button>
+            <Button
+              disabled={store.gamePhase === GamePhase.PRE_GAME}
+              onClick={
+                useCallback(() => {
+                  store.gamePhase = GamePhase.PRE_GAME
+                }, [])
+              }
+            >
+              start
+            </Button>
+            <Button
+              disabled={store.gamePhase === GamePhase.PLAYERS_SELECTION}
+              onClick={
+                useCallback(() => {
+                  store.gamePhase = GamePhase.PLAYERS_SELECTION
+                }, [])
+              }
+            >
+              player
+            </Button>
+            <Button
+              disabled={store.gamePhase === GamePhase.IN_PLAY}
+              onClick={
+                useCallback(() => {
+                  store.startGame()
+                }, [])
+              }
+            >
+              game
+            </Button>
           </ButtonGroup>
-        )}
-      </StartGameButtonWrapper>
+        </StartGameButtonWrapper>
+      </div>
       {{
         [GamePhase.PRE_GAME]: (
           <>PRE_GAME</>
@@ -81,6 +72,9 @@ export const Indigo: FC = observer(() => {
           <Wrapper amount={store.colsAmount}>
             {store.itemsCount.map((_, i) => (
               <Item key={i} dataId={i + 1} />
+            ))}
+            {store.bottomCount.map((_, i) => (
+              <Item key={i} dataId={store.itemsCount.length + i + 1} />
             ))}
           </Wrapper>
         ),

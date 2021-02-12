@@ -4,6 +4,7 @@ import svg from './hex.svg'
 import { Themed } from '../../helpers/types'
 import { conditionalCSS } from '../../helpers/conditionalCSS'
 import { StyledProps } from '@material-ui/core/styles'
+import { Tiles } from './Store/Store'
 
 export type RouteTileIds =
   | 'shuriken-l'
@@ -26,7 +27,15 @@ export type RouteTileIds =
   | 'human-5'
   | 'human-6'
 
-export const routeTileIds: { [id in RouteTileIds]: Uses[] } = {
+export const abstractRouteTileIds: Record<Tiles, Uses[]> = {
+  shuriken: ['hex-main-bg', 'hex-circle-top-right', 'hex-circle-bottom-right', 'hex-circle-center-left'],
+  crossroad: ['hex-main-bg', 'hex-line-0deg', 'hex-line-60deg', 'hex-line-120deg'],
+  turtle: ['hex-main-bg', 'hex-line-0deg', 'hex-circle-center-left', 'hex-circle-center-right'],
+  lizard: ['hex-main-bg', 'hex-line-0deg', 'hex-arc-top', 'hex-arc-bottom'],
+  human: ['hex-main-bg', 'hex-arc-bottom', 'hex-arc-bottom-right', 'hex-circle-top-left'],
+}
+
+export const routeTileIds: Record<RouteTileIds, Uses[]>  = {
   'shuriken-l': ['hex-main-bg', 'hex-circle-top-right', 'hex-circle-bottom-right', 'hex-circle-center-left'],
   'shuriken-r': ['hex-main-bg', 'hex-circle-top-left', 'hex-circle-bottom-left', 'hex-circle-center-right'],
   'crossroad': ['hex-main-bg', 'hex-line-0deg', 'hex-line-60deg', 'hex-line-120deg'],
@@ -138,8 +147,8 @@ export const SVG = styled(SVGComponent)(({
   [onClick !== undefined, {
     cursor: 'pointer',
     '& path': {
-      transitionProperty: 'fill',
-      transitionDuration: theme.transitions.duration.standard,
+      // transitionProperty: 'fill',
+      // transitionDuration: theme.transitions.duration.standard,
 
       '&:hover': {
         fill: 'red',

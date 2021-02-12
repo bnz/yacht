@@ -8,17 +8,13 @@ interface GatewayProps {
   dataId: number
 }
 
-export const Gateway: FC<GatewayProps> = observer(({ dataId }) => {
-  const store = useStore()
-
-  return (
-    <>
-      {store.isGateway(dataId) && (
-        <SVG
-          uses={[withLine[dataId as GatewaysBgIds], 'token-place']}
-          fill={gateways[store.players.length][dataId as GatewaysIds]}
-        />
-      )}
-    </>
-  )
-})
+export const Gateway: FC<GatewayProps> = observer(({ dataId }) => (
+  <>
+    {useStore().isGateway(dataId) && (
+      <SVG
+        uses={[withLine[dataId as GatewaysBgIds], 'token-place']}
+        fill={gateways[useStore().players.length][dataId as GatewaysIds]}
+      />
+    )}
+  </>
+))

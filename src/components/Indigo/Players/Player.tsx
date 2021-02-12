@@ -13,10 +13,10 @@ interface PlayerProps {
 }
 
 export enum PlayerId {
-  Player1 = 'player-1',
-  Player2 = 'player-2',
-  Player3 = 'player-3',
-  Player4 = 'player-4',
+  Player1 = 'p-1',
+  Player2 = 'p-2',
+  Player3 = 'p-3',
+  Player4 = 'p-4',
 }
 
 export const playerIdToSVGMap: Record<string, string> = {

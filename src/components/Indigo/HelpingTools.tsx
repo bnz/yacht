@@ -5,6 +5,7 @@ import { SVG } from './SVG'
 import { observer } from 'mobx-react'
 import { useStore } from './Store/Provider'
 import Typography from '@material-ui/core/Typography'
+import { Themed } from '../../helpers/types'
 
 const w = 100
 
@@ -26,6 +27,13 @@ const Label = styled('div')({
   padding: '.1em 0 .5em',
   whiteSpace: 'nowrap',
 })
+
+const Heading = styled(
+  (props) => <Typography align="center" {...props} />,
+)(({ theme: { spacing } }: Themed) => ({
+  margin: spacing(0, 0, 1, 0),
+  fontWeight: 'bold',
+}))
 
 export const HelpingTools: FC = observer(() => {
   const store = useStore()
@@ -51,7 +59,7 @@ export const HelpingTools: FC = observer(() => {
           voluptatem.
         </Column>
         <Column>
-          <Typography align="center">asd</Typography>
+          <Heading>6</Heading>
           <Wrap>
             <SVG uses={['hex-main-bg', 'hex-circle-top-right', 'hex-circle-bottom-right', 'hex-circle-center-left']} />
             <Label>shuriken-l</Label>
@@ -60,12 +68,14 @@ export const HelpingTools: FC = observer(() => {
           </Wrap>
         </Column>
         <Column>
+          <Heading>6</Heading>
           <Wrap>
             <SVG uses={['hex-main-bg', 'hex-line-0deg', 'hex-line-60deg', 'hex-line-120deg']} />
             <Label>crossroad</Label>
           </Wrap>
         </Column>
         <Column>
+          <Heading>14</Heading>
           <Wrap>
             <SVG uses={['hex-main-bg', 'hex-line-0deg', 'hex-circle-center-left', 'hex-circle-center-right']} />
             <Label>turtle-0</Label>
@@ -76,6 +86,7 @@ export const HelpingTools: FC = observer(() => {
           </Wrap>
         </Column>
         <Column>
+          <Heading>14</Heading>
           <Wrap>
             <SVG uses={['hex-main-bg', 'hex-line-0deg', 'hex-arc-top', 'hex-arc-bottom']} />
             <Label>lizard-0</Label>
@@ -86,6 +97,7 @@ export const HelpingTools: FC = observer(() => {
           </Wrap>
         </Column>
         <Column>
+          <Heading>14</Heading>
           <Wrap>
             <SVG uses={['hex-main-bg', 'hex-arc-bottom', 'hex-arc-bottom-right', 'hex-circle-top-left']} />
             <Label>human-1</Label>

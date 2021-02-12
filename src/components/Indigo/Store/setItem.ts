@@ -1,8 +1,9 @@
 import { LocalStorageKeys } from './getItem'
-import { GamePhase, Player } from './Store'
-import { PlayerId } from '../Players/Player'
+import { BoardTile, GamePhase, Player, PlayerMove, PreSit, Tiles } from './Store'
 
-type Value = GamePhase | Player[] | PlayerId
+export type Value =
+  | GamePhase | Player[] | Record<Tiles, number>
+  | PlayerMove | BoardTile[] | PreSit
 
 export const setItem = (key: LocalStorageKeys, value: Value) => {
   const data = localStorage.getItem('indigo-data')

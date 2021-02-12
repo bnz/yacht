@@ -26,6 +26,11 @@ const ItemComponent: FC<ItemProps> = observer(({ className, dataId, ...props }) 
         'data-location': store.getItemLocation(dataId),
         'data-i': dataId,
       } : {})}
+      {...(store.preSit !== null && store.preSit.location === dataId ? {
+        style: {
+          zIndex: 1,
+        },
+      } : {})}
       {...props}
     >
       {emptyIds.indexOf(dataId) === -1 && (

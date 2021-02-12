@@ -21,6 +21,7 @@ const SmileButton: FC<StyledProps> = observer(({ className }) => {
         useCallback(() => {
           runInAction(() => {
             store.helpingToolVisible = !store.helpingToolVisible
+            localStorage.setItem('indigo-helpingToolVisible', `${store.helpingToolVisible}`)
           })
         }, [])
       }
