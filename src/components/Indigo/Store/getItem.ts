@@ -1,7 +1,9 @@
 import { setItem } from './setItem'
 
 export type LocalStorageKeys =
-  | 'phase' | 'players' | 'player-move' | 'route-tiles' | 'history' | 'pre-sit'
+  | 'phase' | 'players' | 'player-move'
+  | 'route-tiles-count'
+  | 'route-tiles' | 'history' | 'pre-sit'
 
 export const getItem = (key: LocalStorageKeys) => {
   const data = localStorage.getItem('indigo-data')

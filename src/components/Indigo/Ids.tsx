@@ -1,8 +1,21 @@
 import { Uses } from './SVG'
 import { PlayerId } from './Players/Player'
 
-export const emptyIds: number[] = [
-  1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13,
+export type EmptyIds =
+  | 1 | 2 | 3 | /* 4 */ 5 /* 6, 7, 8 */ | 9 /* 10 */ | 11 | 12 | 13
+  | 14 | 15 | 16 | 17 /* 18...22 */ | 23 | 24 | 25 | 26
+  | 27 | 28 /* 29...37 */ | 38 | 39
+  | 40 | 41 /* 42...50 */ | 51 | 52
+  | 53 | 54 /* 55...63 */ | 64 | 65
+  | 66 | 67 /* 68...76 */ | 77 | 78
+  | 79 | 80 /* 81...89 */ | 90 | 91
+  | 92 | 93 | 94 /* 95...101 */ | 102 | 103 | 104
+  | 105 | 106 | 107 | 108 | 109 /* 110...112 */ | 113 | 114 | 115 | 116 | 117
+  | 118 | 119 | 120 | 121 | 122 | 123 | 124 | 125 | 126 | 127 | 128 | 129 | 130
+  | 131 | 132 | 133 | 134 | 135 | 136 | 137 | 138 | 139 | 140 | 141 | 142 | 143
+
+export const emptyIds: EmptyIds[] = [
+  1, 2, 3, 5, 9, 11, 12, 13,
   14, 15, 16, 17, 23, 24, 25, 26,
   27, 28, 38, 39,
   40, 41, 51, 52,
@@ -15,10 +28,16 @@ export const emptyIds: number[] = [
   131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143,
 ]
 
-export const treasureCenterTileIds: number[] = [
+export type TreasureCenterTileIds = 59
+
+export const treasureCenterTileIds: TreasureCenterTileIds[] = [
   59,
 ]
-export const treasureTilesIds: number[] = [
+
+export type TreasureTilesIds =
+  | 7 | 29 | 37 | 81 | 89 | 111
+
+export const treasureTilesIds: TreasureTilesIds[] = [
   7,
   29, 37,
   81, 89,
@@ -108,7 +127,9 @@ export const decorators: Record<DecoratorsIds, Uses> = {
    */
   6: 'hex-decorator-line-empty-top',
   8: 'hex-decorator-line-empty-top',
+  16: 'hex-decorator-line-empty-right-top',
   24: 'hex-decorator-line-empty-left-top',
+  41: 'hex-decorator-line-empty-right-top',
   51: 'hex-decorator-line-empty-left-top',
   80: 'hex-decorator-line-empty-right-bottom',
   94: 'hex-decorator-line-empty-right-bottom',
@@ -116,8 +137,6 @@ export const decorators: Record<DecoratorsIds, Uses> = {
   102: 'hex-decorator-line-empty-left-bottom',
   123: 'hex-decorator-line-empty-bottom',
   125: 'hex-decorator-line-empty-bottom',
-  16: 'hex-decorator-line-empty-right-top',
-  41: 'hex-decorator-line-empty-right-top',
 }
 
 export type GatewaysBgIds =

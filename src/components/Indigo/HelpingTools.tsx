@@ -38,12 +38,15 @@ const Heading = styled(
 export const HelpingTools: FC = observer(() => {
   const store = useStore()
 
+  if (!store.helpingToolVisible) {
+    return null
+  }
+
   return (
     <div
       style={{
         ...stretch('30%', '1em', '1em', '1em'),
         backgroundColor: 'rgba(0, 0, 0, .7)',
-        display: store.helpingToolVisible ? 'block' : 'none',
         borderRadius: '1em',
       }}
     >

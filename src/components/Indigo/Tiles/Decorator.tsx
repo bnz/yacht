@@ -1,15 +1,18 @@
 import React, { FC } from 'react'
 import { decorators, DecoratorsIds } from '../Ids'
 import { SVG } from '../SVG'
+import { TileWrapper } from './TileWrapper'
 
 interface DecoratorProps {
-  dataId: number
+  id: DecoratorsIds
 }
 
-export const Decorator: FC<DecoratorProps> = ({ dataId }) => (
-  <>
-    {decorators[dataId as DecoratorsIds] && (
-      <SVG uses={[decorators[dataId as DecoratorsIds]]} />
-    )}
-  </>
-)
+export const Decorator: FC<DecoratorProps> = ({ id }) => {
+  console.log('Decorator:::render')
+
+  return (
+    <TileWrapper dataId={id}>
+      <SVG uses={[decorators[id]]} />
+    </TileWrapper>
+  )
+}

@@ -1,19 +1,16 @@
 import React, { FC } from 'react'
-import { abstractRouteTileIds, SVG } from '../SVG'
-import { Tiles } from '../Store/Store'
+import { SVG } from '../SVG'
 import { TileActionsStyled } from './TileActions'
 import { useStore } from '../Store/Provider'
+import { Ids } from './RouteTile'
 
 interface RouteTileWithActionsProps {
-  id: number
+  id: Ids
 }
 
-export const RouteTileWithActions: FC<RouteTileWithActionsProps> = ({ id }) => {
-
-  return (
-    <>
-      <SVG uses={abstractRouteTileIds[useStore().preSit!.name as NonNullable<Tiles>]} />
-      <TileActionsStyled id={id} />
-    </>
-  )
-}
+export const RouteTileWithActions: FC<RouteTileWithActionsProps> = ({ id }) => (
+  <>
+    <SVG uses={useStore().routeTiles[id].uses} />
+    <TileActionsStyled id={id} />
+  </>
+)

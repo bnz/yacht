@@ -1,7 +1,12 @@
 import React, { FC } from 'react'
 import { SVG, Uses } from '../SVG'
+import { TileWrapper } from './TileWrapper'
 
-const tilesMap: { [id: number]: Uses[] } = {
+export type TreasureCenterTileIds = 59
+
+export type TreasureTileIds = | 7 | 29 | 37 | 81 | 89 | 111
+
+const tilesMap: Record<TreasureTileIds | TreasureCenterTileIds, Uses[]> = {
   /**
    * CENTER
    */
@@ -19,9 +24,15 @@ const tilesMap: { [id: number]: Uses[] } = {
 }
 
 interface TreasureTileProps {
-  id: number
+  id: TreasureTileIds | TreasureCenterTileIds
 }
 
-export const TreasureTile: FC<TreasureTileProps> = ({ id }) => (
-  <SVG uses={tilesMap[id]} />
-)
+export const TreasureTile: FC<TreasureTileProps> = ({ id }) => {
+  console.log('TreasureTile:::render')
+
+  return (
+    <TileWrapper dataId={id}>
+      <SVG uses={tilesMap[id]} />
+    </TileWrapper>
+  )
+}

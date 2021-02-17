@@ -28,14 +28,14 @@ export type RouteTileIds =
   | 'human-6'
 
 export const abstractRouteTileIds: Record<Tiles, Uses[]> = {
-  shuriken: ['hex-main-bg', 'hex-circle-top-right', 'hex-circle-bottom-right', 'hex-circle-center-left'],
-  crossroad: ['hex-main-bg', 'hex-line-0deg', 'hex-line-60deg', 'hex-line-120deg'],
-  turtle: ['hex-main-bg', 'hex-line-0deg', 'hex-circle-center-left', 'hex-circle-center-right'],
-  lizard: ['hex-main-bg', 'hex-line-0deg', 'hex-arc-top', 'hex-arc-bottom'],
-  human: ['hex-main-bg', 'hex-arc-bottom', 'hex-arc-bottom-right', 'hex-circle-top-left'],
+  shuriken: ['hex-default-bg', 'hex-circle-top-right', 'hex-circle-bottom-right', 'hex-circle-center-left'],
+  crossroad: ['hex-default-bg', 'hex-line-0deg', 'hex-line-60deg', 'hex-line-120deg'],
+  turtle: ['hex-default-bg', 'hex-line-0deg', 'hex-circle-center-left', 'hex-circle-center-right'],
+  lizard: ['hex-default-bg', 'hex-line-0deg', 'hex-arc-top', 'hex-arc-bottom'],
+  human: ['hex-default-bg', 'hex-arc-bottom', 'hex-arc-bottom-right', 'hex-circle-top-left'],
 }
 
-export const routeTileIds: Record<RouteTileIds, Uses[]>  = {
+export const routeTileIds: Record<RouteTileIds, Uses[]> = {
   'shuriken-l': ['hex-main-bg', 'hex-circle-top-right', 'hex-circle-bottom-right', 'hex-circle-center-left'],
   'shuriken-r': ['hex-main-bg', 'hex-circle-top-left', 'hex-circle-bottom-left', 'hex-circle-center-right'],
   'crossroad': ['hex-main-bg', 'hex-line-0deg', 'hex-line-60deg', 'hex-line-120deg'],
@@ -120,42 +120,24 @@ interface SvgComponentProps extends Partial<StyledProps> {
   uses?: Uses[]
 
   onClick?(): void
+
+  onMouseEnter?(): void
+
+  onMouseLeave?(): void
 }
 
-export const SVGComponent: FC<SvgComponentProps> = ({
-  fill,
-  uses = [],
-  onClick,
-  className,
-}) => (
-  <svg viewBox="0 0 101 87" fill={fill} onClick={onClick} className={className}>
-    {uses.map((use) => use === 'hex-default-bg' ? (
-      <path
-        key={use}
-        d="M75.012 0l25.004 43.308-25.004 43.309H25.004L0 43.308 25.004 0h50.008z"
-        fill="darkkhaki"
-      />
-    ) : (
+const SVGComponent: FC<SvgComponentProps> = ({ uses = [], ...props }) => (
+  <svg viewBox="0 0 101 87" {...props}>
+    {uses.map((use) => (
       <use key={use} href={`${svg}#${use}`} />
     ))}
   </svg>
 )
 
 export const SVG = styled(SVGComponent)(({
-  onClick, theme,
+  onClick,
 }: Themed<SvgComponentProps>) => conditionalCSS([
   [onClick !== undefined, {
     cursor: 'pointer',
-    '& path': {
-      // transitionProperty: 'fill',
-      // transitionDuration: theme.transitions.duration.standard,
-
-      '&:hover': {
-        fill: 'red',
-      },
-      '&:active': {
-        fill: 'blue',
-      },
-    },
   }],
 ]))

@@ -4,7 +4,6 @@ import { useStore } from '../Store/Provider'
 import { playerIdToSVGMap } from './Player'
 import { playerIdToColorMap } from '../Ids'
 import { PlayerSeatWrapper } from './PlayerSeatWrapper'
-import { toJS } from 'mobx'
 import { abstractRouteTileIds, SVG } from '../SVG'
 import { Tiles } from '../Store/Store'
 
@@ -12,7 +11,7 @@ interface PlayerSeat {
   dataId: number
 }
 
-const playerSeats: number[] = [134, 136, 138, 140]
+const playerSeats: number[] = [1, 13, 79, 91]
 
 export const PlayerSeat: FC<PlayerSeat> = observer(({ dataId }) => {
   const store = useStore()
@@ -22,7 +21,7 @@ export const PlayerSeat: FC<PlayerSeat> = observer(({ dataId }) => {
     const id = store.players[seatIndex].id
 
     if (store.playerMove[0] === id) {
-      console.log(toJS(store.playerMove))
+      // console.log(toJS(store.playerMove))
     }
 
     return (

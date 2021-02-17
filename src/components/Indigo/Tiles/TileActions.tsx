@@ -1,54 +1,70 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { FC, useCallback } from 'react'
+import React, { FC, useCallback, useEffect } from 'react'
 import { styled } from '@material-ui/core'
 import { StyledProps } from '@material-ui/core/styles'
 import { Themed } from '../../../helpers/types'
 import CheckIcon from '@material-ui/icons/Check'
 import CloseIcon from '@material-ui/icons/Close'
 import RotateRightIcon from '@material-ui/icons/RotateRight'
-import ButtonBase from '@material-ui/core/ButtonBase'
 import RotateLeftIcon from '@material-ui/icons/RotateLeft'
 import { observer } from 'mobx-react'
 import { useStore } from '../Store/Provider'
-import { runInAction } from 'mobx'
+import { Ids } from './RouteTile'
+import { RoundButton } from './TileActionsParts'
 
 interface TileActionsProps extends StyledProps {
-  id: number
+  id: Ids
 }
 
 const TileActions: FC<TileActionsProps> = observer(({ id, className }) => {
   const store = useStore()
 
+  useEffect(() => {
+    const fn = (e: KeyboardEvent) => {
+      switch (e.code) {
+        case 'Escape':
+          store.cancelPreSit(id)
+          break
+        case 'Enter':
+        case 'NumpadEnter':
+          store.applySit(id)
+          break
+      }
+    }
+    document.addEventListener('keydown', fn, false)
+    return () => {
+      document.removeEventListener('keydown', fn, false)
+    }
+  }, [])
+
+  const crossroad = store.routeTiles[id].tile === 'crossroad'
+
   return (
     <div className={className}>
-      <ButtonBase style={{ width: '100%', borderRadius: '50%' }}>
-        <RotateLeftIcon style={{ fontSize: '100%', width: '50%', height: '50%' }} />
-      </ButtonBase>
-      <ButtonBase style={{ width: '100%', borderRadius: '50%' }}>
-        <RotateRightIcon style={{ fontSize: '100%', width: '50%', height: '50%' }} />
-      </ButtonBase>
-      <ButtonBase
-        style={{ width: '100%', borderRadius: '50%' }}
+      <RoundButton disabled={crossroad}>
+        <RotateLeftIcon {...(crossroad ? { color: 'disabled' } : {})} />
+      </RoundButton>
+      <RoundButton disabled={crossroad}>
+        <RotateRightIcon {...(crossroad ? { color: 'disabled' } : {})} />
+      </RoundButton>
+      <RoundButton
         onClick={
           useCallback(() => {
-            runInAction(() => {
-              store.preSit = null
-            })
+            store.cancelPreSit(id)
           }, [])
         }
       >
-        <CloseIcon style={{ fontSize: '100%', width: '50%', height: '50%', color: 'red' }} />
-      </ButtonBase>
-      <ButtonBase
-        style={{ width: '100%', borderRadius: '50%' }}
+        <CloseIcon color="secondary" />
+      </RoundButton>
+      <RoundButton
         onClick={
           useCallback(() => {
-            store.setHistory(id)
+            store.applySit(id)
           }, [])
         }
       >
-        <CheckIcon style={{ fontSize: '100%', width: '50%', height: '50%', color: 'green' }} />
-      </ButtonBase>
+        <CheckIcon color="primary" />
+      </RoundButton>
     </div>
   )
 })
@@ -57,7 +73,6 @@ export const TileActionsStyled = styled(TileActions)(({
   theme: {
     palette: { background: { paper: backgroundColor } },
     shadows: { 10: boxShadow },
-    shape: { borderRadius },
     breakpoints: { down },
   },
 }: Themed) => {
@@ -73,7 +88,7 @@ export const TileActionsStyled = styled(TileActions)(({
     gridTemplateColumns: '1fr 1fr',
     gridTemplateRows: '1fr 1fr',
     justifyItems: 'center',
-    borderRadius,
+    borderRadius: '25%',
     backgroundColor,
     boxShadow,
   }

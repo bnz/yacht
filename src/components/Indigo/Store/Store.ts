@@ -4,7 +4,8 @@ import { getOrApply } from './getItem'
 import { getRandomInt } from '../../../helpers/random'
 import { gateways } from '../Ids'
 import { PlayerId } from '../Players/Player'
-import { routeTileIds, Uses } from '../SVG'
+import { abstractRouteTileIds, RouteTileIds, Uses } from '../SVG'
+import { Ids } from '../Tiles/RouteTile'
 
 export interface Player {
   id: PlayerId
@@ -32,7 +33,20 @@ export interface BoardTile {
   rotation?: string
 }
 
-export type PreSit = BoardTile | null
+export type PreSit = boolean | null
+
+export interface RouteTile {
+  tile: RouteTileIds | null,
+  uses: Uses[]
+  player: PlayerId | null
+  preSit: boolean
+}
+
+export enum HexType {
+  decorator,
+  treasure,
+  route,
+}
 
 export interface iStore {
   dispose(): void
@@ -40,8 +54,8 @@ export interface iStore {
   startGame(): void
 
   colsAmount: number
+
   itemsCount: any[]
-  bottomCount: any[]
 
   getItemLocation(dataId: number): string
 
@@ -65,15 +79,23 @@ export interface iStore {
 
   tiles: Record<Tiles, number>
 
-  history: BoardTile[]
+  routeTiles: Record<Ids, RouteTile>
+
+  routeTileIds: Ids[][]
+
+  idsToTypeMap: Record<number, HexType>
 
   preSit: PreSit
 
-  setPreSitById(id: number): void
+  applySit(id: Ids): void
 
-  setHistory(id: number): void
+  setPreSit(id: Ids): void
 
-  getUsesFromHistoryById(id: number): Uses[] | undefined
+  cancelPreSit(id: Ids): void
+
+  sitMouseEnter(id: Ids): void
+
+  sitMouseLeave(id: Ids): void
 }
 
 export const AM = 13
@@ -91,20 +113,20 @@ export class Store implements iStore {
   startGame() {
     this.gamePhase = GamePhase.IN_PLAY
     this.playerMove = [this.players[0].id, this.randomTile]
-    this.history = []
     this.tiles = this.defaultTiles
-    this.preSit = null
+    this.routeTiles = this.defaultRouteTiles
   }
 
   colsAmount = AM
 
   itemsCount = (new Array(this.colsAmount * 10)).fill(null)
 
-  bottomCount = (new Array(this.colsAmount)).fill(null)
-
   getItemLocation(dataId: number): string {
     const am = this.colsAmount
-    return [(dataId % am) || am, Math.ceil(dataId / am)].join('|')
+    return [
+      (dataId % am) || am,
+      Math.ceil(dataId / am),
+    ].join('|')
   }
 
   helpingToolVisible = localStorage.getItem('indigo-helpingToolVisible') === 'true'
@@ -200,7 +222,7 @@ export class Store implements iStore {
     human: 14,
   }
 
-  private _tiles = getOrApply<Record<Tiles, number>>('route-tiles', () => this.defaultTiles)
+  private _tiles = getOrApply<Record<Tiles, number>>('route-tiles-count', () => this.defaultTiles)
 
   get tiles() {
     return this._tiles
@@ -208,7 +230,7 @@ export class Store implements iStore {
 
   set tiles(tiles) {
     this._tiles = tiles
-    setItem('route-tiles', this.tiles)
+    setItem('route-tiles-count', this.tiles)
   }
 
   get tileNames() {
@@ -224,26 +246,54 @@ export class Store implements iStore {
     if (this.tiles[randTileName] === 0) {
       delete this.tiles[randTileName]
     }
-    setItem('route-tiles', this.tiles)
+    setItem('route-tiles-count', this.tiles)
     return randTileName
   }
 
-  private _history = getOrApply<BoardTile[]>('history', () => [])
-
-  get history(): BoardTile[] {
-    return this._history
+  private defaultRouteTileProps: RouteTile = {
+    tile: null,
+    uses: ['hex-default-bg'] as Uses[],
+    preSit: false,
+    player: null,
   }
 
-  set history(history) {
-    if (history[0]) {
-      this._history.push(history[0])
-    } else {
-      this._history = []
-    }
-    setItem('history', this.history)
+  routeTileIds: Ids[][] = [
+    [18, 19, 20, 21, 22],
+    [30, 31, 32, 33, 34, 35, 36],
+    [42, 43, 44, 45, 46, 47, 48, 49, 50],
+    [55, 56, 57, 58],
+    [60, 61, 62, 63],
+    [68, 69, 70, 71, 72, 73, 74, 75, 76],
+    [82, 83, 84, 85, 86, 87, 88],
+    [95, 96, 97, 98, 99, 100, 101],
+    [110],
+    [112],
+  ]
+
+  private defaultRouteTiles: Record<Ids, RouteTile> = (() => {
+    // @ts-ignore TODO
+    const res: Record<Ids, RouteTile> = {}
+    this.routeTileIds.flat().forEach((id) => res[id] = this.defaultRouteTileProps)
+    return res
+  })()
+
+  private fillWithIds<T>(ids: number[], type: HexType): Record<number, HexType> {
+    const res: Record<number, HexType> = {}
+    ids.forEach((id) => res[id] = type)
+    return res
   }
 
-  private _preSit = getOrApply<PreSit>('pre-sit', () => null)
+  idsToTypeMap: Record<number, HexType> = {
+    ...this.fillWithIds([4, 10, 53, 65, 121, 127], HexType.decorator),
+    ...this.fillWithIds([6, 8, 16, 24, 41, 51, 80, 94, 90, 102, 123, 125], HexType.decorator),
+    ...this.fillWithIds([7, 29, 37, 59, 81, 89, 111], HexType.treasure),
+    ...this.fillWithIds([18, 19, 20, 21, 22, 30, 31, 32, 33, 34, 35, 36, 42, 43, 44, 45, 46, 47, 48, 49, 50, 55, 56, 57, 58, 60, 61, 62, 63, 68, 69, 70, 71, 72, 73, 74, 75, 76, 82, 83, 84, 85, 86, 87, 88, 95, 96, 97, 98, 99, 100, 101, 110, 112], HexType.route),
+  }
+
+  routeTiles = getOrApply<Record<Ids, RouteTile>>('route-tiles', () => this.defaultRouteTiles)
+  // routeTiles = this.defaultRouteTiles
+
+  private _preSit = getOrApply('pre-sit', () => false)
 
   get preSit() {
     return this._preSit
@@ -254,35 +304,44 @@ export class Store implements iStore {
     setItem('pre-sit', this.preSit)
   }
 
-  setPreSitById(id: number) {
-    this.preSit = {
-      playerId: this.playerMove[0],
-      name: this.playerMove[1],
-      location: id,
-    }
-  }
-
-  setHistory(id: number) {
-    this.history = [{
-      location: id,
-      playerId: this.playerMove[0],
-      name: this.playerMove[1],
-    }]
+  applySit(id: Ids) {
+    this.preSit = false
+    this.routeTiles[id].preSit = false
+    this.routeTiles[id].uses[0] = 'hex-main-bg'
+    setItem('route-tiles', this.routeTiles)
     this.nextMove()
-    this.preSit = null
   }
 
-  getUsesFromHistoryById(id: number): Uses[] | undefined {
-    const tile = this.history.find(({ location }) => location === id)
-
-    if (tile !== undefined) {
-      for (let i = 0; i <= Object.keys(routeTileIds).length - 1; i++) {
-        if (Object.keys(routeTileIds)[i].split('-')[0] === tile.name) {
-          // @ts-ignore
-          return routeTileIds[Object.keys(routeTileIds)[i]]
-        }
-      }
+  setPreSit(id: Ids) {
+    this.preSit = true
+    this.routeTiles[id] = {
+      // @ts-ignore
+      tile: this.playerMove[1],
+      // @ts-ignore
+      player: this.playerMove[0],
+      preSit: true,
+      uses: abstractRouteTileIds[this.playerMove[1] as NonNullable<Tiles>],
     }
+    setItem('route-tiles', this.routeTiles)
+  }
+
+  cancelPreSit(id: Ids) {
+    this.preSit = false
+    this.routeTiles[id] = {
+      tile: null,
+      uses: ['hex-default-bg'],
+      player: null,
+      preSit: false,
+    }
+    setItem('route-tiles', this.routeTiles)
+  }
+
+  sitMouseEnter(id: Ids) {
+    this.routeTiles[id].uses = abstractRouteTileIds[this.playerMove[1] as NonNullable<Tiles>]
+  }
+
+  sitMouseLeave(id: Ids) {
+    this.routeTiles[id].uses = ['hex-default-bg']
   }
 
 }

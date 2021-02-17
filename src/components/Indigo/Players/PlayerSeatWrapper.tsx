@@ -3,7 +3,6 @@ import styled from '@material-ui/styles/styled'
 import { conditionalCSS } from '../../../helpers/conditionalCSS'
 import { Themed } from '../../../helpers/types'
 import React from 'react'
-import { stretch } from '../../../helpers/css'
 
 interface PlayerSeatWrapperProps {
   selected?: boolean
@@ -15,11 +14,11 @@ export const PlayerSeatWrapper = styled(
   theme: {
     shape: { borderRadius },
     shadows,
-    palette: { divider, background: { paper: backgroundColor } },
+    palette: { background: { paper: backgroundColor } },
   },
   selected,
 }: Themed<PlayerSeatWrapperProps>) => {
-  const s = 20
+  const s = 0
 
   return conditionalCSS([
     {
@@ -31,11 +30,6 @@ export const PlayerSeatWrapper = styled(
       borderRadius,
 
       position: 'relative',
-
-      '& div:first-of-type': {
-        backgroundColor: '#f99',
-        ...stretch(0, 0, 'auto', 0),
-      },
 
       '& img': {
         display: 'block',

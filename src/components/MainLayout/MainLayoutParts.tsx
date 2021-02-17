@@ -85,7 +85,9 @@ export const Inner = styled('div')(({
       paddingRight: spacing(innerPaddingMobile),
     },
   }, {
-    paddingLeft: 0,
-    paddingRight: 0,
+    margin: '0 auto',
+    maxWidth: spacing(150),
+    // paddingLeft: 0,
+    // paddingRight: 0,
   }],
 ]))
