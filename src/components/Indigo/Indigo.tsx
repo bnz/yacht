@@ -14,6 +14,7 @@ import { TileWrapper } from './Tiles/TileWrapper'
 import { TreasureCenterTileIds, TreasureTile, TreasureTileIds } from './Tiles/TreasureTile'
 import { Decorator } from './Tiles/Decorator'
 import { DecoratorsIds } from './Ids'
+import { Overlay } from './Overlay'
 
 export const Indigo: FC = observer(() => {
   const store = useStore()
@@ -76,36 +77,39 @@ export const Indigo: FC = observer(() => {
           <PlayerManager />
         ),
         [GamePhase.IN_PLAY]: (
-          <Wrapper amount={store.colsAmount} alt={store.preSit}>
+          <>
+            <Overlay />
+            <Wrapper amount={store.colsAmount}>
 
-            {store.itemsCount.map((_, index) => {
-              const dataId = index + 1
+              {store.itemsCount.map((_, index) => {
+                const dataId = index + 1
 
-              switch (store.idsToTypeMap[dataId]) {
-                case HexType.decorator:
-                  return (
-                    <Decorator key={dataId} id={dataId as DecoratorsIds} />
-                  )
-                case HexType.treasure:
-                  return (
-                    <TreasureTile key={dataId} id={dataId as TreasureTileIds | TreasureCenterTileIds} />
-                  )
-                case HexType.route:
-                  return (
-                    <RouteTile key={dataId} id={dataId as Ids} />
-                  )
-                default:
-                  return (
-                    <TileWrapper key={dataId} dataId={dataId} />
-                  )
-              }
-            })}
+                switch (store.idsToTypeMap[dataId]) {
+                  case HexType.decorator:
+                    return (
+                      <Decorator key={dataId} id={dataId as DecoratorsIds} />
+                    )
+                  case HexType.treasure:
+                    return (
+                      <TreasureTile key={dataId} id={dataId as TreasureTileIds | TreasureCenterTileIds} />
+                    )
+                  case HexType.route:
+                    return (
+                      <RouteTile key={dataId} id={dataId as Ids} />
+                    )
+                  default:
+                    return (
+                      <TileWrapper key={dataId} dataId={dataId} />
+                    )
+                }
+              })}
 
-            {/*<Seat playerId={PlayerId.Player1} locationId={1} />*/}
-            {/*<Seat playerId={PlayerId.Player2} locationId={1} />*/}
-            {/*<Seat playerId={PlayerId.Player3} locationId={1} />*/}
-            {/*<Seat playerId={PlayerId.Player4} locationId={1} />*/}
-          </Wrapper>
+              {/*<Seat playerId={PlayerId.Player1} locationId={1} />*/}
+              {/*<Seat playerId={PlayerId.Player2} locationId={1} />*/}
+              {/*<Seat playerId={PlayerId.Player3} locationId={1} />*/}
+              {/*<Seat playerId={PlayerId.Player4} locationId={1} />*/}
+            </Wrapper>
+          </>
         ),
       }[store.gamePhase]}
       <HelpingTools />

@@ -33,7 +33,7 @@ export interface BoardTile {
   rotation?: string
 }
 
-export type PreSit = boolean | null
+export type PreSit = Ids | null
 
 export interface RouteTile {
   tile: RouteTileIds | null,
@@ -87,11 +87,11 @@ export interface iStore {
 
   preSit: PreSit
 
-  applySit(id: Ids): void
+  applySit(): void
 
   setPreSit(id: Ids): void
 
-  cancelPreSit(id: Ids): void
+  cancelPreSit(): void
 
   sitMouseEnter(id: Ids): void
 
@@ -293,7 +293,7 @@ export class Store implements iStore {
   routeTiles = getOrApply<Record<Ids, RouteTile>>('route-tiles', () => this.defaultRouteTiles)
   // routeTiles = this.defaultRouteTiles
 
-  private _preSit = getOrApply('pre-sit', () => false)
+  private _preSit = getOrApply<PreSit>('pre-sit', () => null)
 
   get preSit() {
     return this._preSit
@@ -304,16 +304,18 @@ export class Store implements iStore {
     setItem('pre-sit', this.preSit)
   }
 
-  applySit(id: Ids) {
-    this.preSit = false
-    this.routeTiles[id].preSit = false
-    this.routeTiles[id].uses[0] = 'hex-main-bg'
+  applySit() {
+    if (this.preSit !== null) {
+      this.routeTiles[this.preSit].preSit = false
+      this.routeTiles[this.preSit].uses[0] = 'hex-main-bg'
+      this.preSit = null
+    }
     setItem('route-tiles', this.routeTiles)
     this.nextMove()
   }
 
   setPreSit(id: Ids) {
-    this.preSit = true
+    this.preSit = id
     this.routeTiles[id] = {
       // @ts-ignore
       tile: this.playerMove[1],
@@ -325,13 +327,15 @@ export class Store implements iStore {
     setItem('route-tiles', this.routeTiles)
   }
 
-  cancelPreSit(id: Ids) {
-    this.preSit = false
-    this.routeTiles[id] = {
-      tile: null,
-      uses: ['hex-default-bg'],
-      player: null,
-      preSit: false,
+  cancelPreSit() {
+    if (this.preSit !== null) {
+      this.routeTiles[this.preSit] = {
+        tile: null,
+        uses: ['hex-default-bg'],
+        player: null,
+        preSit: false,
+      }
+      this.preSit = null
     }
     setItem('route-tiles', this.routeTiles)
   }

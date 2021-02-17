@@ -23,11 +23,11 @@ const TileActions: FC<TileActionsProps> = observer(({ id, className }) => {
     const fn = (e: KeyboardEvent) => {
       switch (e.code) {
         case 'Escape':
-          store.cancelPreSit(id)
+          store.cancelPreSit()
           break
         case 'Enter':
         case 'NumpadEnter':
-          store.applySit(id)
+          store.applySit()
           break
       }
     }
@@ -49,18 +49,14 @@ const TileActions: FC<TileActionsProps> = observer(({ id, className }) => {
       </RoundButton>
       <RoundButton
         onClick={
-          useCallback(() => {
-            store.cancelPreSit(id)
-          }, [])
+          useCallback(() => store.cancelPreSit(), [])
         }
       >
         <CloseIcon color="secondary" />
       </RoundButton>
       <RoundButton
         onClick={
-          useCallback(() => {
-            store.applySit(id)
-          }, [])
+          useCallback(() => store.applySit(), [])
         }
       >
         <CheckIcon color="primary" />
