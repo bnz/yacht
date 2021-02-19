@@ -1,9 +1,9 @@
 import { LocalStorageKeys } from './getItem'
-import { BoardTile, GamePhase, Player, PlayerMove, PreSit, RouteTile, Tiles } from './Store'
+import { BoardTile, GamePhase, PlayerMove, Players, PreSit, RouteTile, Tiles } from './Store'
 import { Ids } from '../Tiles/RouteTile'
 
 export type Value =
-  | GamePhase | Player[] | Record<Tiles, number>
+  | GamePhase | Players | Record<Tiles, number>
   | PlayerMove | BoardTile[] | PreSit
   | Record<Ids, RouteTile>
 

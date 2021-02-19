@@ -41,10 +41,20 @@ const TileActions: FC<TileActionsProps> = observer(({ id, className }) => {
 
   return (
     <div className={className}>
-      <RoundButton disabled={crossroad}>
+      <RoundButton
+        disabled={crossroad}
+        onClick={
+          useCallback(() => store.rotateLeft(), [])
+        }
+      >
         <RotateLeftIcon {...(crossroad ? { color: 'disabled' } : {})} />
       </RoundButton>
-      <RoundButton disabled={crossroad}>
+      <RoundButton
+        disabled={crossroad}
+        onClick={
+          useCallback(() => store.rotateRight(), [])
+        }
+      >
         <RotateRightIcon {...(crossroad ? { color: 'disabled' } : {})} />
       </RoundButton>
       <RoundButton

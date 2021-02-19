@@ -8,7 +8,7 @@ interface DecoratorProps {
 }
 
 export const Decorator: FC<DecoratorProps> = ({ id }) => {
-  console.log('Decorator:::render')
+  // console.log('Decorator:::render')
 
   return (
     <TileWrapper dataId={id}>

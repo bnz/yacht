@@ -5,6 +5,7 @@ import { observer } from 'mobx-react'
 import { StyledProps } from '@material-ui/core/styles'
 import { useStore } from './Store/Provider'
 import { stretch } from '../../helpers/css'
+import { Themed } from '../../helpers/types'
 
 const OverlayComponent: FC<StyledProps> = observer(({ className }) => {
   const store = useStore()
@@ -23,9 +24,9 @@ const OverlayComponent: FC<StyledProps> = observer(({ className }) => {
   )
 })
 
-export const Overlay = styled(OverlayComponent)({
+export const Overlay = styled(OverlayComponent)(({ theme: { palette: { type } } }: Themed) => ({
   ...stretch(0, 0, 0, 0),
-  backgroundColor: 'rgba(0, 0, 0, 0.2)',
+  backgroundColor: type === 'dark' ? 'rgba(0, 0, 0, 0.2)' : 'rgba(255,255,255, 0.2)',
   zIndex: 1,
   display: 'none',
-})
+}))

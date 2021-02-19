@@ -12,9 +12,7 @@ export const AddPlayer: FC = observer(() => {
 
   return (
     <PlayerWrapper alt onClick={
-      useCallback(() => {
-        store.addPlayer()
-      }, [])
+      useCallback(() => store.addPlayer(), [])
     }>
       <AddIcon fontSize="large" />
       <Typography component="div">

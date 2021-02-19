@@ -18,7 +18,7 @@ export const PlayerSeatWrapper = styled(
   },
   selected,
 }: Themed<PlayerSeatWrapperProps>) => {
-  const s = 0
+  const s = selected ? 20 : 10
 
   return conditionalCSS([
     {
@@ -26,9 +26,9 @@ export const PlayerSeatWrapper = styled(
       marginLeft: `-${s}%`,
       marginTop: `-${s}%`,
       padding: '10% 5% 10%',
-
+      transitionProperty: 'width, margin',
+      transitionDuration: '0.2s',
       borderRadius,
-
       position: 'relative',
 
       '& img': {

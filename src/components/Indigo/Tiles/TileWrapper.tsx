@@ -16,14 +16,11 @@ export const TileWrapperComponent: FC<TileWrapperComponentProps> = ({
   onTop,
   dataId,
   ...props
-}) => {
-
-  return (
-    <li className={cx(className, 'hexagon-item')} {...props} data-id={dataId}>
-      {children}
-    </li>
-  )
-}
+}) => (
+  <li className={cx(className, 'hexagon-item')} {...props} data-id={dataId}>
+    {children}
+  </li>
+)
 
 export const TileWrapper = styled(TileWrapperComponent)(({
   onTop,

@@ -1,8 +1,8 @@
 import React, { FC } from 'react'
 import { observer } from 'mobx-react'
 import { useStore } from '../Store/Provider'
-import { Player } from './Player'
 import { PlayersWrapper } from './PlayersWrapper'
+import { Player } from './Player'
 import { AddPlayer } from './AddPlayer'
 
 export const PlayerManager: FC = observer(() => {
@@ -10,10 +10,10 @@ export const PlayerManager: FC = observer(() => {
 
   return (
     <PlayersWrapper>
-      {store.players.map(({ id }) => (
-        <Player key={id} id={id} />
+      {Object.entries(store.players).map(([dataId, { id }]) => (
+        <Player key={dataId} id={id} />
       ))}
-      {store.players.length < 4 && (
+      {Object.keys(store.players).length < 4 && (
         <AddPlayer />
       )}
     </PlayersWrapper>

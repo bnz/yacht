@@ -28,7 +28,9 @@ export const RouteTile: FC<RouteTileProps> = observer(({ id }) => {
   const onMouseEnter = useCallback(() => store.sitMouseEnter(id), [])
   const onMouseLeave = useCallback(() => store.sitMouseLeave(id), [])
 
-  console.log('RouteTile:::render')
+  // console.log(toJS(store.routeTiles[id]), id)
+
+  // console.log('RouteTile:::render')
 
   return (
     <TileWrapper onTop={preSit} dataId={id}>

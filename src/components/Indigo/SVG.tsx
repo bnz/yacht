@@ -9,17 +9,13 @@ import { Tiles } from './Store/Store'
 export type RouteTileIds =
   | 'shuriken-l'
   | 'shuriken-r'
-
   | 'crossroad'
-
   | 'turtle-0'
   | 'turtle-60'
   | 'turtle-120'
-
   | 'lizard-0'
   | 'lizard-60'
   | 'lizard-120'
-
   | 'human-1'
   | 'human-2'
   | 'human-3'
@@ -36,9 +32,9 @@ export const abstractRouteTileIds: Record<Tiles, Uses[]> = {
 }
 
 export const routeTileIds: Record<RouteTileIds, Uses[]> = {
+  'crossroad': ['hex-main-bg', 'hex-line-0deg', 'hex-line-60deg', 'hex-line-120deg'],
   'shuriken-l': ['hex-main-bg', 'hex-circle-top-right', 'hex-circle-bottom-right', 'hex-circle-center-left'],
   'shuriken-r': ['hex-main-bg', 'hex-circle-top-left', 'hex-circle-bottom-left', 'hex-circle-center-right'],
-  'crossroad': ['hex-main-bg', 'hex-line-0deg', 'hex-line-60deg', 'hex-line-120deg'],
   'turtle-0': ['hex-main-bg', 'hex-line-0deg', 'hex-circle-center-left', 'hex-circle-center-right'],
   'turtle-60': ['hex-main-bg', 'hex-line-60deg', 'hex-circle-top-left', 'hex-circle-bottom-right'],
   'turtle-120': ['hex-main-bg', 'hex-line-120deg', 'hex-circle-bottom-left', 'hex-circle-top-right'],
@@ -51,6 +47,14 @@ export const routeTileIds: Record<RouteTileIds, Uses[]> = {
   'human-4': ['hex-main-bg', 'hex-arc-top-left', 'hex-arc-top', 'hex-circle-bottom-right'],
   'human-5': ['hex-main-bg', 'hex-arc-top', 'hex-arc-top-right', 'hex-circle-bottom-left'],
   'human-6': ['hex-main-bg', 'hex-arc-top-right', 'hex-arc-bottom-right', 'hex-circle-center-left'],
+}
+
+export const weirdMap: Record<Tiles, RouteTileIds> = {
+  shuriken: 'shuriken-l',
+  crossroad: 'crossroad',
+  turtle: 'turtle-0',
+  lizard: 'lizard-0',
+  human: 'human-1',
 }
 
 export type Uses =

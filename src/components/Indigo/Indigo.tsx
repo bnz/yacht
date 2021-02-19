@@ -4,7 +4,7 @@ import { Wrapper } from './Wrapper'
 import { HelpingTools } from './HelpingTools'
 import { observer } from 'mobx-react'
 import { useStore } from './Store/Provider'
-import { GamePhase, HexType } from './Store/Store'
+import { GamePhase, HexType, PlayerSitIds } from './Store/Store'
 import Button from '@material-ui/core/Button'
 import { StartGameButtonWrapper } from '../StartGameButton/StartGameButtonWrapper'
 import { PlayerManager } from './Players/PlayerManager'
@@ -15,11 +15,12 @@ import { TreasureCenterTileIds, TreasureTile, TreasureTileIds } from './Tiles/Tr
 import { Decorator } from './Tiles/Decorator'
 import { DecoratorsIds } from './Ids'
 import { Overlay } from './Overlay'
+import { Seat } from './Tiles/Seat'
 
 export const Indigo: FC = observer(() => {
   const store = useStore()
 
-  console.log(':::ROOT:::')
+  // console.log(':::ROOT:::')
 
   return (
     <>
@@ -80,7 +81,6 @@ export const Indigo: FC = observer(() => {
           <>
             <Overlay />
             <Wrapper amount={store.colsAmount}>
-
               {store.itemsCount.map((_, index) => {
                 const dataId = index + 1
 
@@ -97,17 +97,16 @@ export const Indigo: FC = observer(() => {
                     return (
                       <RouteTile key={dataId} id={dataId as Ids} />
                     )
+                  case HexType.seat:
+                    return (
+                      <Seat key={dataId} id={dataId as PlayerSitIds} />
+                    )
                   default:
                     return (
                       <TileWrapper key={dataId} dataId={dataId} />
                     )
                 }
               })}
-
-              {/*<Seat playerId={PlayerId.Player1} locationId={1} />*/}
-              {/*<Seat playerId={PlayerId.Player2} locationId={1} />*/}
-              {/*<Seat playerId={PlayerId.Player3} locationId={1} />*/}
-              {/*<Seat playerId={PlayerId.Player4} locationId={1} />*/}
             </Wrapper>
           </>
         ),

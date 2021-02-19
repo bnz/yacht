@@ -9,11 +9,12 @@ interface GatewayProps {
 }
 
 export const Gateway: FC<GatewayProps> = observer(({ dataId }) => (
+
   <>
     {useStore().isGateway(dataId) && (
       <SVG
         uses={[withLine[dataId as GatewaysBgIds], 'token-place']}
-        fill={gateways[useStore().players.length][dataId as GatewaysIds]}
+        fill={gateways[Object.keys(useStore().players).length][dataId as GatewaysIds]}
       />
     )}
   </>

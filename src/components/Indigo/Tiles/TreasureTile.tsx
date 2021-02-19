@@ -28,7 +28,7 @@ interface TreasureTileProps {
 }
 
 export const TreasureTile: FC<TreasureTileProps> = ({ id }) => {
-  console.log('TreasureTile:::render')
+  // console.log('TreasureTile:::render')
 
   return (
     <TileWrapper dataId={id}>

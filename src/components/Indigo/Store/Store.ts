@@ -1,15 +1,19 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, runInAction, toJS } from 'mobx'
 import { setItem } from './setItem'
 import { getOrApply } from './getItem'
 import { getRandomInt } from '../../../helpers/random'
-import { gateways } from '../Ids'
 import { PlayerId } from '../Players/Player'
-import { abstractRouteTileIds, RouteTileIds, Uses } from '../SVG'
+import { abstractRouteTileIds, RouteTileIds, Uses, weirdMap } from '../SVG'
 import { Ids } from '../Tiles/RouteTile'
+import { gateways } from '../Ids'
 
 export interface Player {
   id: PlayerId
 }
+
+export type PlayerSitIds = 1 | 13 | 79 | 91
+
+export type Players = Record<PlayerSitIds, Player>
 
 export enum GamePhase {
   PRE_GAME,
@@ -17,7 +21,7 @@ export enum GamePhase {
   IN_PLAY,
 }
 
-export type PlayerMove = [PlayerId, Tiles | null]
+export type PlayerMove = [PlayerId, Tiles | null, RouteTileIds | null]
 
 export type Tiles =
   | 'shuriken' // l r
@@ -46,6 +50,7 @@ export enum HexType {
   decorator,
   treasure,
   route,
+  seat,
 }
 
 export interface iStore {
@@ -63,13 +68,11 @@ export interface iStore {
 
   gamePhase: GamePhase
 
-  players: Player[]
-
-  getPlayerById(playerId: string): Player | undefined
+  players: Players
 
   addPlayer(): void
 
-  removePlayerById(playerId: string): void
+  removePlayerById(playerId: PlayerId): void
 
   playerMove: PlayerMove
 
@@ -81,8 +84,6 @@ export interface iStore {
 
   routeTiles: Record<Ids, RouteTile>
 
-  routeTileIds: Ids[][]
-
   idsToTypeMap: Record<number, HexType>
 
   preSit: PreSit
@@ -92,6 +93,10 @@ export interface iStore {
   setPreSit(id: Ids): void
 
   cancelPreSit(): void
+
+  rotateLeft(): void
+
+  rotateRight(): void
 
   sitMouseEnter(id: Ids): void
 
@@ -112,7 +117,7 @@ export class Store implements iStore {
 
   startGame() {
     this.gamePhase = GamePhase.IN_PLAY
-    this.playerMove = [this.players[0].id, this.randomTile]
+    this.playerMove = [this.players[1].id, this.nextTile[0], this.nextTile[1]]
     this.tiles = this.defaultTiles
     this.routeTiles = this.defaultRouteTiles
   }
@@ -142,24 +147,30 @@ export class Store implements iStore {
     setItem('phase', this._gamePhase)
   }
 
-  players = getOrApply<Player[]>('players', () => {
+  players = getOrApply<Players>('players', () => {
     const first = getRandomInt(1, 4)
     let second
     do {
       second = getRandomInt(1, 4)
     } while (second === first)
-    return [
-      { id: `p-${first}` as PlayerId },
-      { id: `p-${second}` as PlayerId },
-    ]
+
+    return {
+      1: {
+        id: `p-${first}`,
+      },
+      13: {
+        id: `p-${second}`,
+      },
+    } as Players
   })
 
-  getPlayerById(playerId: string) {
-    return this.players.find(({ id }) => id === playerId)
+  private get playersKeys(): PlayerSitIds[] {
+    // @ts-ignore
+    return Object.keys(this.players)
   }
 
   addPlayer() {
-    const ids = this.players.map(({ id }) => parseInt(id.split('-')[1], 10))
+    const ids = Object.entries(this.players).map(([, { id }]) => parseInt(id.split('-')[1], 10))
     let index = 0
     for (let i = 1; i <= 4; i++) {
       if (ids.indexOf(i) === -1) {
@@ -167,23 +178,30 @@ export class Store implements iStore {
         break
       }
     }
-    this.players.push({ id: `p-${index}` as PlayerId })
+    this.players[Object.keys(this.players).length === 2 ? 79 : 91] = {
+      id: ({
+        1: PlayerId.Player1,
+        2: PlayerId.Player2,
+        3: PlayerId.Player3,
+        4: PlayerId.Player4,
+      } as Record<number, PlayerId>)[index],
+    }
     this.savePlayers()
-    this.playerMove = [this.players[0].id, null]
+    this.playerMove = [this.players[1].id, null, null]
     return this.players
   }
 
-  removePlayerById(playerId: string) {
-    this.players.splice(
-      this.players.findIndex(({ id }) => id === playerId),
-      1,
-    )
-    this.savePlayers()
-    this.playerMove = [this.players[0].id, null]
-    return this.players
+  removePlayerById(playerId: PlayerId) {
+    const newPlayers = Object.entries(this.players).map(([, { id }]) => id).filter((id) => id !== playerId)
+    runInAction(() => {
+      delete this.players[this.playersKeys[this.playersKeys.length - 1]]
+      this.playersKeys.forEach((id, i) => this.players[id].id = newPlayers[i])
+      this.playerMove = [this.players[1].id, null, null]
+      this.savePlayers()
+    })
   }
 
-  private _playerMove = getOrApply<PlayerMove>('player-move', () => [this.players[0].id, null])
+  private _playerMove = getOrApply<PlayerMove>('player-move', () => [this.players[1].id, null, null])
 
   get playerMove() {
     return this._playerMove
@@ -191,15 +209,16 @@ export class Store implements iStore {
 
   set playerMove(move: PlayerMove) {
     this._playerMove = move
-    setItem('player-move', this._playerMove)
+    setItem('player-move', this.playerMove)
   }
 
   nextMove() {
-    const index = this.players.findIndex(({ id }) => id === this.playerMove[0])
-    this.playerMove = [
-      this.players[this.players.length - 1 > index ? index + 1 : 0].id,
-      this.randomTile,
-    ]
+    const index = Object.entries(this.players).findIndex(([, { id }]) => id === this.playerMove[0])
+    const keys = Object.keys(this.players)
+    const nextKey = parseInt(keys[keys.length - 1 > index ? index + 1 : 0], 10) as PlayerSitIds
+
+    const nextTile = this.randomTile as NonNullable<Tiles>
+    this.playerMove = [this.players[nextKey].id, nextTile, weirdMap[nextTile]]
   }
 
   private savePlayers() {
@@ -207,7 +226,7 @@ export class Store implements iStore {
   }
 
   private get gatewayKeys(): string[] {
-    return Object.keys(gateways[this.players.length])
+    return Object.keys(gateways[this.playersKeys.length])
   }
 
   isGateway(dataId: number) {
@@ -250,6 +269,11 @@ export class Store implements iStore {
     return randTileName
   }
 
+  private get nextTile(): [Tiles, RouteTileIds] {
+    const nextTile = this.randomTile as NonNullable<Tiles>
+    return [nextTile, weirdMap[nextTile]]
+  }
+
   private defaultRouteTileProps: RouteTile = {
     tile: null,
     uses: ['hex-default-bg'] as Uses[],
@@ -257,23 +281,26 @@ export class Store implements iStore {
     player: null,
   }
 
-  routeTileIds: Ids[][] = [
-    [18, 19, 20, 21, 22],
-    [30, 31, 32, 33, 34, 35, 36],
-    [42, 43, 44, 45, 46, 47, 48, 49, 50],
-    [55, 56, 57, 58],
-    [60, 61, 62, 63],
-    [68, 69, 70, 71, 72, 73, 74, 75, 76],
-    [82, 83, 84, 85, 86, 87, 88],
-    [95, 96, 97, 98, 99, 100, 101],
-    [110],
-    [112],
-  ]
+  get routeTileIds(): Ids[] {
+    return [
+      18, 19, 20, 21, 22,
+      30, 31, 32, 33, 34, 35, 36,
+      42, 43, 44, 45, 46, 47, 48, 49, 50,
+      55, 56, 57, 58, 60, 61, 62, 63,
+      68, 69, 70, 71, 72, 73, 74, 75, 76,
+      82, 83, 84, 85, 86, 87, 88,
+      95, 96, 97, 98, 99, 100, 101,
+      110, 112,
+    ]
+  }
+
+  get playerSitIds(): PlayerSitIds[] {
+    return [1, 13, 79, 91]
+  }
 
   private defaultRouteTiles: Record<Ids, RouteTile> = (() => {
-    // @ts-ignore TODO
-    const res: Record<Ids, RouteTile> = {}
-    this.routeTileIds.flat().forEach((id) => res[id] = this.defaultRouteTileProps)
+    const res = {} as Record<Ids, RouteTile>
+    this.routeTileIds.forEach((id) => res[id] = this.defaultRouteTileProps)
     return res
   })()
 
@@ -287,11 +314,11 @@ export class Store implements iStore {
     ...this.fillWithIds([4, 10, 53, 65, 121, 127], HexType.decorator),
     ...this.fillWithIds([6, 8, 16, 24, 41, 51, 80, 94, 90, 102, 123, 125], HexType.decorator),
     ...this.fillWithIds([7, 29, 37, 59, 81, 89, 111], HexType.treasure),
-    ...this.fillWithIds([18, 19, 20, 21, 22, 30, 31, 32, 33, 34, 35, 36, 42, 43, 44, 45, 46, 47, 48, 49, 50, 55, 56, 57, 58, 60, 61, 62, 63, 68, 69, 70, 71, 72, 73, 74, 75, 76, 82, 83, 84, 85, 86, 87, 88, 95, 96, 97, 98, 99, 100, 101, 110, 112], HexType.route),
+    ...this.fillWithIds(this.playerSitIds, HexType.seat),
+    ...this.fillWithIds(this.routeTileIds, HexType.route),
   }
 
   routeTiles = getOrApply<Record<Ids, RouteTile>>('route-tiles', () => this.defaultRouteTiles)
-  // routeTiles = this.defaultRouteTiles
 
   private _preSit = getOrApply<PreSit>('pre-sit', () => null)
 
@@ -317,9 +344,7 @@ export class Store implements iStore {
   setPreSit(id: Ids) {
     this.preSit = id
     this.routeTiles[id] = {
-      // @ts-ignore
-      tile: this.playerMove[1],
-      // @ts-ignore
+      tile: this.playerMove[1] as RouteTileIds,
       player: this.playerMove[0],
       preSit: true,
       uses: abstractRouteTileIds[this.playerMove[1] as NonNullable<Tiles>],
@@ -340,6 +365,17 @@ export class Store implements iStore {
     setItem('route-tiles', this.routeTiles)
   }
 
+  rotateLeft() {
+    console.log('rotateLeft')
+
+    console.log(toJS(this.playerMove))
+
+  }
+
+  rotateRight() {
+    console.log('rotateRight')
+  }
+
   sitMouseEnter(id: Ids) {
     this.routeTiles[id].uses = abstractRouteTileIds[this.playerMove[1] as NonNullable<Tiles>]
   }
@@ -347,5 +383,4 @@ export class Store implements iStore {
   sitMouseLeave(id: Ids) {
     this.routeTiles[id].uses = ['hex-default-bg']
   }
-
 }

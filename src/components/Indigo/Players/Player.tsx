@@ -9,7 +9,7 @@ import { RemoveButton } from './RemoveButton'
 import { useStore } from '../Store/Provider'
 
 interface PlayerProps {
-  id: string
+  id: PlayerId
 }
 
 export enum PlayerId {
@@ -28,13 +28,11 @@ export const playerIdToSVGMap: Record<string, string> = {
 
 export const Player: FC<PlayerProps> = ({ id }) => {
   const store = useStore()
-  const onRemove = useCallback(() => {
-    store.removePlayerById(id)
-  }, [])
+  const onRemove = useCallback(() => store.removePlayerById(id), [id])
 
   return (
     <PlayerWrapper>
-      {store.players.length > 2 && (
+      {Object.keys(store.players).length > 2 && (
         <RemoveButton onClick={onRemove} />
       )}
       <img src={playerIdToSVGMap[id]} alt="" />
