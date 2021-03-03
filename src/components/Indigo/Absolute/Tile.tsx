@@ -17,7 +17,7 @@ const map: {
   [HexType.route]: 'hex-tile-huji',
   [HexType.treasure]: 'hex-tile-hex-treasure-bg',
   [HexType.center]: 'hex-tile-hex-center',
-  [HexType.decorator]: '',
+  [HexType.decorator]: 'hex-tile-crossroad',
   [HexType.seat]: '',
   [HexType.gateway]: '',
   [HexType.corner]: '',

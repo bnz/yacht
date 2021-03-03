@@ -138,6 +138,8 @@ export type Uses =
   | 'hex-decorator-gateway-left'
 
 
+export type OrientationType = 'flat' | 'pointy'
+
 export interface Tile {
   hex: Hex
   type: HexType

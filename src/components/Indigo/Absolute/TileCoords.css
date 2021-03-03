@@ -1,3 +1,15 @@
+.pointy [data-q="-5"][data-r="4"] {
+  transform: translate(calc(-6.196152422706631 * var(--R)), calc(12.1339746 * var(--R))) rotate(-30deg)
+}
+
+.pointy [data-q="2"][data-r="-5"] {
+  transform: translate(calc(-1.8660254037844384 * var(--R)), calc(-1.3660253999999998 * var(--R))) rotate(-30deg)
+}
+
+.pointy [data-q="0"][data-r="5"] {
+  transform: translate(calc(3.3301270189221928 * var(--R)), calc(13.6339746 * var(--R))) rotate(-30deg)
+}
+
 .pointy [data-q="-4"][data-r="0"] {
   transform: translate(calc(-7.928203230275509 * var(--R)), calc(6.1339746 * var(--R))) rotate(-30deg)
 }
@@ -240,6 +252,17 @@
 
 .pointy [data-q="4"][data-r="0"] {
   transform: translate(calc(5.928203230275509 * var(--R)), calc(6.1339746 * var(--R))) rotate(-30deg)
+}
+.flat [data-q="-5"][data-r="4"] {
+  transform: translate(calc(-8.5 * var(--R)), calc(9.526279411353316 * var(--R)))
+}
+
+.flat [data-q="2"][data-r="-5"] {
+  transform: translate(calc(2 * var(--R)), calc(-3.0275509321775473e-8 * var(--R)))
+}
+
+.flat [data-q="0"][data-r="5"] {
+  transform: translate(calc(-1 * var(--R)), calc(15.588457237844386 * var(--R)))
 }
 
 .flat [data-q="-4"][data-r="0"] {

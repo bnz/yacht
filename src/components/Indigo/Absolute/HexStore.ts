@@ -5,8 +5,10 @@ import { Point } from '../Hexagons/Point'
 import { Orientation } from '../Hexagons/Orientation'
 import { HexType } from '../Store/Store'
 import { Hex } from '../Hexagons/Hex'
-import { Tile } from '../Ids'
+import { OrientationType, Tile } from '../Ids'
 import { debounce } from '../../../helpers/debounce'
+import { getOrApply } from '../Store/getItem'
+import { setItem } from '../Store/setItem'
 
 export interface iHexStore {
   layout: Layout
@@ -15,8 +17,8 @@ export interface iHexStore {
   arenaElement: HTMLDivElement | null
   R: number
   isPointy: boolean
-
   tiles: Tile[]
+  orientationType: OrientationType
 
   dispose(): void
 
@@ -29,14 +31,20 @@ export class HexStore implements iHexStore {
 
   private readonly ratio = 0.8660254
 
+  private width = 0
+
+  private height = 0
+
+  private largeSide = 7
+
+  private smallSide = 9 * this.ratio
+
   constructor() {
     makeAutoObservable(this)
-
-    // console.log(this.generateCoords('pointy'))
-    // console.log(this.generateCoords('flat'))
+    console.log(`${this.generateCoords('pointy')}${this.generateCoords('flat')}`)
   }
 
-  private generateCoords(orientation: 'flat' | 'pointy'): string {
+  private generateCoords(orientation: OrientationType): string {
     const layout = new Layout(
       Layout[orientation],
       new Point(1, 1),
@@ -80,7 +88,7 @@ export class HexStore implements iHexStore {
     window.addEventListener('resize', this.debounce, false)
   }
 
-  private onWindowResize() {
+  private onWindowResize = () => {
     const [width, height] = this.elSizes
     if (this.width !== width || this.height !== height) {
       this.recalc(width, height)
@@ -106,7 +114,7 @@ export class HexStore implements iHexStore {
     this.updateLayout()
   }
 
-  private debounce = debounce(() => this.onWindowResize(), 400)
+  private debounce = debounce(this.onWindowResize, 400)
 
   private _hoveredTile = ''
 
@@ -117,14 +125,6 @@ export class HexStore implements iHexStore {
   set hoveredTile(hoveredTile) {
     this._hoveredTile = hoveredTile
   }
-
-  private width = 0
-
-  private height = 0
-
-  private largeSide = 7
-
-  private smallSide = 9 * this.ratio
 
   private _R = 0
 
@@ -140,7 +140,7 @@ export class HexStore implements iHexStore {
     return this.orientation.start_angle === 0.5
   }
 
-  private _orientation = Layout.pointy
+  private _orientation = Layout[getOrApply<OrientationType>('orientation', () => 'pointy')]
 
   get orientation() {
     return this._orientation
@@ -148,6 +148,11 @@ export class HexStore implements iHexStore {
 
   set orientation(orientation) {
     this._orientation = orientation
+    setItem('orientation', this.orientationType)
+  }
+
+  get orientationType(): OrientationType {
+    return this.isPointy ? 'pointy' : 'flat'
   }
 
   toggleOrientation() {
@@ -162,9 +167,7 @@ export class HexStore implements iHexStore {
       new Point(this.R, this.R),
       new Point(
         this.width / 2,
-        this.isPointy
-          ? this.R * this.largeSide
-          : this.R * this.smallSide,
+        this.R * (this.isPointy ? this.largeSide : this.smallSide),
       ),
     )
   }
@@ -197,6 +200,11 @@ export class HexStore implements iHexStore {
   private toHex = (q: number, r: number) => new Hex(q, r, (q + r) * -1)
 
   tiles: Tile[] = [
+    { hex: this.toHex(-5, 4), type: HexType.decorator },
+    { hex: this.toHex(2, -5), type: HexType.decorator },
+    { hex: this.toHex(0, 5), type: HexType.decorator },
+
+
     { hex: this.toHex(-4, 0), type: HexType.treasure },
     { hex: this.toHex(-4, 1), type: HexType.route },
     { hex: this.toHex(-4, 2), type: HexType.route },

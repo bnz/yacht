@@ -1,6 +1,6 @@
 import { LocalStorageKeys } from './getItem'
 import { BoardTile, PreSit, RouteTile, Tiles } from './Store'
-import { GamePhase, Ids, PlayerMove, Players } from '../Ids'
+import { GamePhase, Ids, OrientationType, PlayerMove, Players } from '../Ids'
 
 export type Value =
   | GamePhase
@@ -10,6 +10,7 @@ export type Value =
   | BoardTile[]
   | PreSit
   | Record<Ids, RouteTile>
+  | OrientationType
 
 export const setItem = (key: LocalStorageKeys, value: Value) => {
   const data = localStorage.getItem('indigo-data')

@@ -17,7 +17,7 @@ export const Arena: FC = observer(() => {
   return (
     <div
       ref={arenaRef}
-      className={store.isPointy ? 'pointy' : 'flat'}
+      className={store.orientationType}
       onMouseMove={onMouseMove}
       // @ts-ignore
       style={{ '--R': `${store.R}px` }}
