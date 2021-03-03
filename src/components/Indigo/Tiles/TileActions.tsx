@@ -9,18 +9,14 @@ import RotateRightIcon from '@material-ui/icons/RotateRight'
 import RotateLeftIcon from '@material-ui/icons/RotateLeft'
 import { observer } from 'mobx-react'
 import { useStore } from '../Store/Provider'
-import { Ids } from './RouteTile'
 import { RoundButton } from './TileActionsParts'
+import { hexRationDiff } from '../Store/Store'
 
-interface TileActionsProps extends StyledProps {
-  id: Ids
-}
-
-const TileActions: FC<TileActionsProps> = observer(({ id, className }) => {
+const TileActions: FC<StyledProps> = observer(({ className }) => {
   const store = useStore()
 
   useEffect(() => {
-    const fn = (e: KeyboardEvent) => {
+    function fn(e: KeyboardEvent) {
       switch (e.code) {
         case 'Escape':
           store.cancelPreSit()
@@ -31,71 +27,79 @@ const TileActions: FC<TileActionsProps> = observer(({ id, className }) => {
           break
       }
     }
+
     document.addEventListener('keydown', fn, false)
     return () => {
       document.removeEventListener('keydown', fn, false)
     }
   }, [])
 
-  const crossroad = store.routeTiles[id].tile === 'crossroad'
-
   return (
     <div className={className}>
-      <RoundButton
-        disabled={crossroad}
-        onClick={
-          useCallback(() => store.rotateLeft(), [])
-        }
-      >
-        <RotateLeftIcon {...(crossroad ? { color: 'disabled' } : {})} />
-      </RoundButton>
-      <RoundButton
-        disabled={crossroad}
-        onClick={
-          useCallback(() => store.rotateRight(), [])
-        }
-      >
-        <RotateRightIcon {...(crossroad ? { color: 'disabled' } : {})} />
-      </RoundButton>
-      <RoundButton
-        onClick={
-          useCallback(() => store.cancelPreSit(), [])
-        }
-      >
+      {store.isCrossroad ? (
+        <>
+          <div />
+          <div />
+          <div />
+        </>
+      ) : (
+        <>
+          <RoundButton onClick={useCallback(() => store.rotateLeft(), [])}>
+            <RotateLeftIcon />
+          </RoundButton>
+          <div />
+          <RoundButton onClick={useCallback(() => store.rotateRight(), [])}>
+            <RotateRightIcon />
+          </RoundButton>
+        </>
+      )}
+      <div />
+      <div />
+      <div />
+      <RoundButton onClick={useCallback(() => store.cancelPreSit(), [])}>
         <CloseIcon color="secondary" />
       </RoundButton>
-      <RoundButton
-        onClick={
-          useCallback(() => store.applySit(), [])
-        }
-      >
+      <div />
+      <RoundButton onClick={useCallback(() => store.applySit(), [])}>
         <CheckIcon color="primary" />
       </RoundButton>
     </div>
   )
 })
 
+TileActions.displayName = 'TileActions'
+
 export const TileActionsStyled = styled(TileActions)(({
   theme: {
-    palette: { background: { paper: backgroundColor } },
-    shadows: { 10: boxShadow },
+    palette: { background: { paper: borderColor } },
+    shadows: { 24: boxShadow },
     breakpoints: { down },
+    shape: { borderRadius },
   },
 }: Themed) => {
-  let size = window.matchMedia(down('xs').split(' ')[1]).matches ? 500 : 150
+  let size = window.matchMedia(down('xs').split(' ')[1]).matches ? 500 : 200
 
   return {
     position: 'absolute',
     left: `-${(size - 100) / 2}%`,
+    top: `-${(size / hexRationDiff * 100) / 3.5}%`,
     width: `${size}%`,
-    top: '110%',
-    height: `${size / 86.60254 * 100}%`,
+    height: `${size / hexRationDiff * 100}%`,
     display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gridTemplateRows: '1fr 1fr',
+    gridTemplateColumns: '35% 1fr 35%',
+    gridTemplateRows: '35% 1fr 35%',
     justifyItems: 'center',
-    borderRadius: '25%',
-    backgroundColor,
+    borderRadius,
     boxShadow,
+    border: `1px solid ${borderColor}`,
+
+    '& + svg': {
+      position: 'relative',
+    },
+
+    '&:hover button': {
+      visibility: 'visible',
+      opacity: 1,
+    },
   }
 })

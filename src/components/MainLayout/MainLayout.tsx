@@ -7,7 +7,7 @@ import { useGlobalStyles } from './useGlobalStyles'
 import { Drawer } from '../Drawer/Drawer'
 
 export const MainLayout: FC = ({ children }) => {
-  useGlobalStyles({ foo: 'bar' })
+  useGlobalStyles()
 
   return (
     <>

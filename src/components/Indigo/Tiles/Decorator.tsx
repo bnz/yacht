@@ -1,18 +1,19 @@
 import React, { FC } from 'react'
-import { decorators, DecoratorsIds } from '../Ids'
+import { EmptyLineIds } from '../Ids'
 import { SVG } from '../SVG'
-import { TileWrapper } from './TileWrapper'
+import { useStore } from '../Store/Provider'
 
 interface DecoratorProps {
-  id: DecoratorsIds
+  id: EmptyLineIds
 }
 
 export const Decorator: FC<DecoratorProps> = ({ id }) => {
-  // console.log('Decorator:::render')
+  const store = useStore()
 
   return (
-    <TileWrapper dataId={id}>
-      <SVG uses={[decorators[id]]} />
-    </TileWrapper>
+    <SVG
+      uses={store.decoratorEmptyLine[id]}
+      fill={store.gatewaysColors[id]}
+    />
   )
 }

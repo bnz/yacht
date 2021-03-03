@@ -1,16 +1,20 @@
 import { CSSProperties } from 'react'
 import { AlignItemsProperty, JustifyContentProperty } from 'csstype'
 
-type Stretch4 = (top?: number | string, right?: number | string, bottom?: number | string, left?: number | string) => CSSProperties
+type StretchArg = number | string
 
 const iU = (value: number | string | undefined): boolean => value === undefined
 
-export const stretch: Stretch4 = (
-  top = 0,
-  right,
-  bottom,
-  left,
-) => {
+export function stretch(): CSSProperties
+export function stretch(value: StretchArg): CSSProperties
+export function stretch(topBottom: StretchArg, rightLeft: StretchArg): CSSProperties
+export function stretch(top: StretchArg, rightLeft: StretchArg, bottom: StretchArg): CSSProperties
+export function stretch(top: StretchArg, right: StretchArg, bottom: StretchArg, left: StretchArg): CSSProperties
+
+export function stretch(top?: StretchArg, right?: StretchArg, bottom?: StretchArg, left?: StretchArg): CSSProperties {
+  if (top === undefined) {
+    top = 0
+  }
 
   if (iU(right) && iU(bottom) && iU(left)) {
     left = right = bottom = top

@@ -1,0 +1,14 @@
+[data-q][data-r] {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: drop-shadow(0 0 1em rgba(68, 68, 68, .08));
+  transition-property: transform;
+  transition-duration: 0.5s;
+
+  width: calc(var(--R) * 2);
+  height: calc(var(--R) * 2 * 0.8660254);
+}

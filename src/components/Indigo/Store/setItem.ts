@@ -1,10 +1,14 @@
 import { LocalStorageKeys } from './getItem'
-import { BoardTile, GamePhase, PlayerMove, Players, PreSit, RouteTile, Tiles } from './Store'
-import { Ids } from '../Tiles/RouteTile'
+import { BoardTile, PreSit, RouteTile, Tiles } from './Store'
+import { GamePhase, Ids, PlayerMove, Players } from '../Ids'
 
 export type Value =
-  | GamePhase | Players | Record<Tiles, number>
-  | PlayerMove | BoardTile[] | PreSit
+  | GamePhase
+  | Players
+  | Record<Tiles, number>
+  | PlayerMove
+  | BoardTile[]
+  | PreSit
   | Record<Ids, RouteTile>
 
 export const setItem = (key: LocalStorageKeys, value: Value) => {

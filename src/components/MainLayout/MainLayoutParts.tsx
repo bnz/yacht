@@ -4,40 +4,58 @@ import { replaceKeysInObject } from '../../helpers/replaceKeysInObject'
 import { DrawerOpenedConnectorProps } from './MainLayoutConnected'
 import { cwp } from '../../helpers/cwp'
 import { conditionalCSS } from '../../helpers/conditionalCSS'
+import React, { FC } from 'react'
+import { stretch } from '../../helpers/css'
 
-export const Wrapper = styled(
-  cwp()<DrawerOpenedConnectorProps>('drawer'),
-)(({
+const WrapperComponent: FC = cwp()<DrawerOpenedConnectorProps>('drawer')
+
+WrapperComponent.displayName = 'Wrapper'
+
+export const Wrapper = styled(WrapperComponent)(({
   theme: {
+    game,
     spacing,
     transitions: { create, easing, duration },
     drawerWidth,
     mainLayout: { footerHeight },
   },
   drawer,
-}: Themed<DrawerOpenedConnectorProps>) => ({
-  minHeight: '100%',
+}: Themed<DrawerOpenedConnectorProps>) => conditionalCSS([
+  {
+    minHeight: '100%',
 
-  // Equal to height of footer
-  // But also accounting for potential margin-bottom of last child
-  marginBottom: spacing(footerHeight) * -1,
+    // Equal to height of footer
+    // But also accounting for potential margin-bottom of last child
+    marginBottom: spacing(footerHeight) * -1,
 
-  marginLeft: drawer ? spacing(drawerWidth) : 0,
-  transition: create('margin-left', {
-    easing: easing.sharp,
-    duration: duration.enteringScreen,
-  }),
-}))
+    marginLeft: drawer ? spacing(drawerWidth) : 0,
+    transition: create('margin-left', {
+      easing: easing.sharp,
+      duration: duration.enteringScreen,
+    }),
+  },
+  [game === 'indigo', {
+    // height: '100%',
+  }],
+]))
 
-export const Push = styled('div')(({
+const PushComponent: FC = (props) => (
+  <div {...props} />
+)
+
+PushComponent.displayName = 'Push'
+
+export const Push = styled(PushComponent)(({
   theme: { spacing, mainLayout: { footerHeight } },
 }: Themed) => ({
   height: spacing(footerHeight),
 }))
 
-export const Footer = styled(
-  cwp('footer')<DrawerOpenedConnectorProps>('drawer'),
-)(({
+const FooterComponent: FC = cwp('footer')<DrawerOpenedConnectorProps>('drawer')
+
+FooterComponent.displayName = 'Footer'
+
+export const Footer = styled(FooterComponent)(({
   theme: {
     spacing, transitions: { create, easing, duration },
     breakpoints: { down },
@@ -61,15 +79,22 @@ export const Footer = styled(
   },
 }))
 
-export const Inner = styled('div')(({
+const InnerComponent: FC = (props) => (
+  <div {...props} />
+)
+
+InnerComponent.displayName = 'Inner'
+
+export const Inner = styled(InnerComponent)(({
   theme: {
     game,
     spacing, mixins: { toolbar },
     breakpoints: { down },
-    mainLayout: { innerPadding, innerPaddingMobile },
+    mainLayout: { innerPadding, innerPaddingMobile, footerHeight },
   },
 }: Themed) => conditionalCSS([
-  {
+  [game === 'yacht', {
+    maxWidth: spacing(130),
     padding: spacing(2, innerPadding),
     ...replaceKeysInObject(
       toolbar,
@@ -77,17 +102,20 @@ export const Inner = styled('div')(({
       'paddingTop',
       (value: number): number => spacing(value / 6),
     ),
-    maxWidth: spacing(130),
-  },
-  [game === 'yacht', {
     [down('xs')]: {
       paddingLeft: spacing(innerPaddingMobile),
       paddingRight: spacing(innerPaddingMobile),
     },
   }, {
     margin: '0 auto',
-    maxWidth: spacing(150),
-    // paddingLeft: 0,
-    // paddingRight: 0,
+    // maxWidth: spacing(150),
+    padding: 0,
+    ...stretch(0, 0, spacing(footerHeight)),
+    ...replaceKeysInObject(
+      toolbar,
+      'minHeight',
+      'top',
+      (value: number): number => spacing(value / 6),
+    ),
   }],
 ]))

@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
-import { SVG, Uses } from '../SVG'
-import { TileWrapper } from './TileWrapper'
+import { SVG} from '../SVG'
+import { Uses } from '../Ids'
 
 export type TreasureCenterTileIds = 59
 
@@ -31,8 +31,6 @@ export const TreasureTile: FC<TreasureTileProps> = ({ id }) => {
   // console.log('TreasureTile:::render')
 
   return (
-    <TileWrapper dataId={id}>
-      <SVG uses={tilesMap[id]} />
-    </TileWrapper>
+    <SVG uses={tilesMap[id]} />
   )
 }

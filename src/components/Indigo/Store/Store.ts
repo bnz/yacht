@@ -1,27 +1,28 @@
-import { makeAutoObservable, runInAction, toJS } from 'mobx'
+import { makeAutoObservable, runInAction } from 'mobx'
 import { setItem } from './setItem'
 import { getOrApply } from './getItem'
 import { getRandomInt } from '../../../helpers/random'
-import { PlayerId } from '../Players/Player'
-import { abstractRouteTileIds, RouteTileIds, Uses, weirdMap } from '../SVG'
-import { Ids } from '../Tiles/RouteTile'
-import { gateways } from '../Ids'
-
-export interface Player {
-  id: PlayerId
-}
-
-export type PlayerSitIds = 1 | 13 | 79 | 91
-
-export type Players = Record<PlayerSitIds, Player>
-
-export enum GamePhase {
-  PRE_GAME,
-  PLAYERS_SELECTION,
-  IN_PLAY,
-}
-
-export type PlayerMove = [PlayerId, Tiles | null, RouteTileIds | null]
+import football from '../Players/assets/football.svg'
+import hockey from '../Players/assets/hockey.svg'
+import tennis from '../Players/assets/tennis.svg'
+import motorcyclist from '../Players/assets/motorcyclist.svg'
+import {
+  CornerIds,
+  EmptyLineIds,
+  GamePhase,
+  GatewaysBgIds,
+  GatewaysIds,
+  Ids,
+  PlayerColors,
+  PlayerId,
+  PlayerMove,
+  Players,
+  PlayerSitIds,
+  RouteTileNames,
+  TreasureCenterTileIds,
+  TreasureTilesIds,
+  Uses,
+} from '../Ids'
 
 export type Tiles =
   | 'shuriken' // l r
@@ -40,53 +41,62 @@ export interface BoardTile {
 export type PreSit = Ids | null
 
 export interface RouteTile {
-  tile: RouteTileIds | null,
   uses: Uses[]
   player: PlayerId | null
   preSit: boolean
+  usesName: RouteTileNames | null
 }
 
 export enum HexType {
   decorator,
+  corner,
   treasure,
   route,
   seat,
+  gateway,
+  center
 }
 
+type Gateways = Record<GatewaysIds | EmptyLineIds, PlayerColors>
+
 export interface iStore {
+  colsAmount: number
+  itemsCount: any[]
+  helpingToolVisible: boolean
+  gamePhase: GamePhase
+  players: Players
+  playerMove: PlayerMove
+  tiles: Record<Tiles, number>
+  routeTiles: Record<Ids, RouteTile>
+  idsToTypeMap: Record<number, HexType>
+  preSit: PreSit
+  routeTileForSeat: Uses[]
+  gatewaysColors: Gateways
+  playersKeys: PlayerSitIds[]
+  corners: Record<CornerIds, Uses[]>
+  preSitRouteTileUses: Uses[]
+  isCrossroad: boolean
+  decoratorGateway: Record<GatewaysBgIds, Uses>
+  playerIdToColorMap: Record<PlayerId, PlayerColors>
+  decoratorEmptyLine: Record<EmptyLineIds, Uses[]>
+  playerIdToSVGMap: Record<PlayerId, string>
+  hexDefaultBg: Uses
+
   dispose(): void
+
+  goToPreGame(): void
+
+  goToPlayersSelection(): void
 
   startGame(): void
 
-  colsAmount: number
-
-  itemsCount: any[]
-
   getItemLocation(dataId: number): string
-
-  helpingToolVisible: boolean
-
-  gamePhase: GamePhase
-
-  players: Players
 
   addPlayer(): void
 
   removePlayerById(playerId: PlayerId): void
 
-  playerMove: PlayerMove
-
   nextMove(): void
-
-  isGateway(dataId: number): boolean
-
-  tiles: Record<Tiles, number>
-
-  routeTiles: Record<Ids, RouteTile>
-
-  idsToTypeMap: Record<number, HexType>
-
-  preSit: PreSit
 
   applySit(): void
 
@@ -105,6 +115,8 @@ export interface iStore {
 
 export const AM = 13
 
+export const hexRationDiff = 86.60254
+
 export class Store implements iStore {
 
   dispose(): void {
@@ -115,9 +127,18 @@ export class Store implements iStore {
     makeAutoObservable(this)
   }
 
+  goToPreGame() {
+    this.gamePhase = GamePhase.PRE_GAME
+    localStorage.removeItem('indigo-data')
+  }
+
+  goToPlayersSelection() {
+    this.gamePhase = GamePhase.PLAYERS_SELECTION
+  }
+
   startGame() {
     this.gamePhase = GamePhase.IN_PLAY
-    this.playerMove = [this.players[1].id, this.nextTile[0], this.nextTile[1]]
+    this.playerMove = [this.players[1].id, this.nextTile]
     this.tiles = this.defaultTiles
     this.routeTiles = this.defaultRouteTiles
   }
@@ -135,6 +156,10 @@ export class Store implements iStore {
   }
 
   helpingToolVisible = localStorage.getItem('indigo-helpingToolVisible') === 'true'
+
+  get hexDefaultBg(): Uses {
+    return 'hex-default-bg'
+  }
 
   private _gamePhase = getOrApply<GamePhase>('phase', () => GamePhase.PRE_GAME)
 
@@ -164,7 +189,7 @@ export class Store implements iStore {
     } as Players
   })
 
-  private get playersKeys(): PlayerSitIds[] {
+  get playersKeys(): PlayerSitIds[] {
     // @ts-ignore
     return Object.keys(this.players)
   }
@@ -187,7 +212,7 @@ export class Store implements iStore {
       } as Record<number, PlayerId>)[index],
     }
     this.savePlayers()
-    this.playerMove = [this.players[1].id, null, null]
+    this.playerMove = [this.players[1].id, null]
     return this.players
   }
 
@@ -196,12 +221,12 @@ export class Store implements iStore {
     runInAction(() => {
       delete this.players[this.playersKeys[this.playersKeys.length - 1]]
       this.playersKeys.forEach((id, i) => this.players[id].id = newPlayers[i])
-      this.playerMove = [this.players[1].id, null, null]
+      this.playerMove = [this.players[1].id, null]
       this.savePlayers()
     })
   }
 
-  private _playerMove = getOrApply<PlayerMove>('player-move', () => [this.players[1].id, null, null])
+  private _playerMove = getOrApply<PlayerMove>('player-move', () => [this.players[1].id, null])
 
   get playerMove() {
     return this._playerMove
@@ -212,25 +237,198 @@ export class Store implements iStore {
     setItem('player-move', this.playerMove)
   }
 
+  get playerIdToSVGMap(): Record<PlayerId, string> {
+    return {
+      [PlayerId.Player1]: football,
+      [PlayerId.Player2]: hockey,
+      [PlayerId.Player3]: tennis,
+      [PlayerId.Player4]: motorcyclist,
+    }
+  }
+
+  private static get weirdMap(): Record<Tiles, RouteTileNames> {
+    return {
+      shuriken: 'shuriken-0',
+      crossroad: 'crossroad',
+      turtle: 'turtle-0',
+      lizard: 'lizard-0',
+      human: 'human-0',
+    }
+  }
+
   nextMove() {
     const index = Object.entries(this.players).findIndex(([, { id }]) => id === this.playerMove[0])
     const keys = Object.keys(this.players)
     const nextKey = parseInt(keys[keys.length - 1 > index ? index + 1 : 0], 10) as PlayerSitIds
-
     const nextTile = this.randomTile as NonNullable<Tiles>
-    this.playerMove = [this.players[nextKey].id, nextTile, weirdMap[nextTile]]
+    this.playerMove = [this.players[nextKey].id, Store.weirdMap[nextTile]]
   }
 
   private savePlayers() {
     setItem('players', this.players)
   }
 
-  private get gatewayKeys(): string[] {
-    return Object.keys(gateways[this.playersKeys.length])
+  private saveRouteTiles() {
+    setItem('route-tiles', this.routeTiles)
   }
 
-  isGateway(dataId: number) {
-    return this.gatewayKeys.indexOf(`${dataId}`) !== -1
+  get playerIdToColorMap(): Record<PlayerId, PlayerColors> {
+    return {
+      [PlayerId.Player1]: PlayerColors.Player1,
+      [PlayerId.Player2]: PlayerColors.Player2,
+      [PlayerId.Player3]: PlayerColors.Player3,
+      [PlayerId.Player4]: PlayerColors.Player4,
+    }
+  }
+
+  get gatewaysColors(): Gateways {
+    const ids = Object.entries(this.players).map(([, { id }]) => id) as PlayerId[]
+    const p1 = this.playerIdToColorMap[ids[0]]
+    const p2 = this.playerIdToColorMap[ids[1]]
+
+    switch (ids.length) {
+      case 2:
+      default:
+        return {
+          // decorators
+          6: p1,
+          16: p1,
+          51: p1,
+          90: p1,
+          94: p1,
+          8: p2,
+          24: p2,
+          41: p2,
+          80: p2,
+          102: p2,
+          123: p1,
+          125: p2,
+
+          // gateways
+          5: p1,
+          17: p1,
+          9: p2,
+          23: p2,
+          64: p1,
+          77: p1,
+          113: p2,
+          114: p2,
+          54: p2,
+          67: p2,
+          108: p1,
+          109: p1,
+        }
+      case 3: {
+        const p3 = this.playerIdToColorMap[ids[2]]
+        return {
+          // decorators
+          6: p1,
+          8: p1,
+          16: p1,
+          102: p1,
+          24: p2,
+          80: p2,
+          94: p2,
+          41: p2,
+          51: p3,
+          90: p3,
+          123: p3,
+          125: p3,
+
+          // gateways
+          5: p1,
+          17: p1,
+          9: p1,
+          23: p2,
+          64: p3,
+          77: p3,
+          113: p3,
+          114: p1,
+          54: p2,
+          67: p2,
+          108: p2,
+          109: p3,
+        }
+      }
+      case 4: {
+        const p3 = this.playerIdToColorMap[ids[2]]
+        const p4 = this.playerIdToColorMap[ids[3]]
+        return {
+          // decorators
+          6: p1,
+          51: p1,
+          80: p1,
+          8: p2,
+          16: p2,
+          102: p2,
+          24: p3,
+          41: p3,
+          94: p3,
+          90: p4,
+          123: p4,
+          125: p4,
+
+          // gateways
+          5: p1,
+          17: p2,
+          9: p2,
+          23: p3,
+          64: p1,
+          77: p4,
+          113: p4,
+          114: p2,
+          54: p3,
+          67: p1,
+          108: p3,
+          109: p4,
+        }
+      }
+    }
+  }
+
+  get corners(): Record<CornerIds, Uses[]> {
+    return {
+      4: ['hex-decorator-corner-top-left'],
+      10: ['hex-decorator-corner-top-right'],
+      53: ['hex-decorator-corner-left'],
+      65: ['hex-decorator-corner-right'],
+      121: ['hex-decorator-corner-bottom-left'],
+      127: ['hex-decorator-corner-bottom-right'],
+    }
+  }
+
+  get decoratorGateway(): Record<GatewaysBgIds, Uses> {
+    return {
+      5: 'hex-decorator-gateway-top-left',
+      17: 'hex-decorator-gateway-top-left',
+      9: 'hex-decorator-gateway-top-right',
+      23: 'hex-decorator-gateway-top-right',
+      54: 'hex-decorator-gateway-left',
+      67: 'hex-decorator-gateway-left',
+      64: 'hex-decorator-gateway-right',
+      77: 'hex-decorator-gateway-right',
+      113: 'hex-decorator-gateway-bottom-right',
+      114: 'hex-decorator-gateway-bottom-right',
+      108: 'hex-decorator-gateway-bottom-left',
+      109: 'hex-decorator-gateway-bottom-left',
+    }
+  }
+
+  get decoratorEmptyLine(): Record<EmptyLineIds, Uses[]> {
+    return {
+      6: ['hex-decorator-line-empty-top'],
+      8: ['hex-decorator-line-empty-top'],
+      16: ['hex-decorator-line-empty-right-top'],
+      24: ['hex-decorator-line-empty-left-top'],
+      41: ['hex-decorator-line-empty-right-top'],
+      51: ['hex-decorator-line-empty-left-top'],
+      80: ['hex-decorator-line-empty-right-bottom'],
+      94: ['hex-decorator-line-empty-right-bottom'],
+      90: ['hex-decorator-line-empty-left-bottom'],
+      102: ['hex-decorator-line-empty-left-bottom'],
+      123: ['hex-decorator-line-empty-bottom'],
+      125: ['hex-decorator-line-empty-bottom'],
+    }
   }
 
   private defaultTiles: Record<Tiles, number> = {
@@ -269,16 +467,38 @@ export class Store implements iStore {
     return randTileName
   }
 
-  private get nextTile(): [Tiles, RouteTileIds] {
+  private get nextTile(): RouteTileNames {
     const nextTile = this.randomTile as NonNullable<Tiles>
-    return [nextTile, weirdMap[nextTile]]
+    return Store.weirdMap[nextTile]
   }
 
-  private defaultRouteTileProps: RouteTile = {
-    tile: null,
-    uses: ['hex-default-bg'] as Uses[],
-    preSit: false,
-    player: null,
+  private get defaultRouteTileProps(): RouteTile {
+    return {
+      uses: [this.hexDefaultBg],
+      preSit: false,
+      player: null,
+      usesName: null,
+    }
+  }
+
+  private static get routeTileNames(): Record<RouteTileNames, Uses[]> {
+    return {
+      'crossroad': ['hex-main-bg', 'hex-line-0', 'hex-line-60', 'hex-line-120'],
+      'shuriken-0': ['hex-main-bg', 'hex-circle-top-right', 'hex-circle-bottom-right', 'hex-circle-center-left'],
+      'shuriken-60': ['hex-main-bg', 'hex-circle-top-left', 'hex-circle-bottom-left', 'hex-circle-center-right'],
+      'turtle-0': ['hex-main-bg', 'hex-line-0', 'hex-circle-center-left', 'hex-circle-center-right'],
+      'turtle-60': ['hex-main-bg', 'hex-line-60', 'hex-circle-top-left', 'hex-circle-bottom-right'],
+      'turtle-120': ['hex-main-bg', 'hex-line-120', 'hex-circle-bottom-left', 'hex-circle-top-right'],
+      'lizard-0': ['hex-main-bg', 'hex-line-0', 'hex-arc-top', 'hex-arc-bottom'],
+      'lizard-60': ['hex-main-bg', 'hex-line-60', 'hex-arc-top-right', 'hex-arc-bottom-left'],
+      'lizard-120': ['hex-main-bg', 'hex-line-120', 'hex-arc-bottom-right', 'hex-arc-top-left'],
+      'human-0': ['hex-main-bg', 'hex-arc-bottom', 'hex-arc-bottom-right', 'hex-circle-top-left'],
+      'human-60': ['hex-main-bg', 'hex-arc-bottom', 'hex-arc-bottom-left', 'hex-circle-top-right'],
+      'human-120': ['hex-main-bg', 'hex-arc-bottom-left', 'hex-arc-top-left', 'hex-circle-center-right'],
+      'human-180': ['hex-main-bg', 'hex-arc-top-left', 'hex-arc-top', 'hex-circle-bottom-right'],
+      'human-240': ['hex-main-bg', 'hex-arc-top', 'hex-arc-top-right', 'hex-circle-bottom-left'],
+      'human-300': ['hex-main-bg', 'hex-arc-top-right', 'hex-arc-bottom-right', 'hex-circle-center-left'],
+    }
   }
 
   get routeTileIds(): Ids[] {
@@ -298,24 +518,41 @@ export class Store implements iStore {
     return [1, 13, 79, 91]
   }
 
+  get gatewayIds(): GatewaysIds[] {
+    return [5, 17, 9, 23, 64, 77, 113, 114, 54, 67, 108, 109]
+  }
+
+  get treasureIds(): Array<TreasureTilesIds | TreasureCenterTileIds> {
+    return [7, 29, 37, 59, 81, 89, 111]
+  }
+
+  get cornerIds(): CornerIds[] {
+    return [4, 10, 53, 65, 121, 127]
+  }
+
+  get decoratorEmptyIds(): EmptyLineIds[] {
+    return [6, 8, 16, 24, 41, 51, 80, 94, 90, 102, 123, 125]
+  }
+
   private defaultRouteTiles: Record<Ids, RouteTile> = (() => {
     const res = {} as Record<Ids, RouteTile>
     this.routeTileIds.forEach((id) => res[id] = this.defaultRouteTileProps)
     return res
   })()
 
-  private fillWithIds<T>(ids: number[], type: HexType): Record<number, HexType> {
+  private fillWithIds(ids: number[], type: HexType): Record<number, HexType> {
     const res: Record<number, HexType> = {}
     ids.forEach((id) => res[id] = type)
     return res
   }
 
   idsToTypeMap: Record<number, HexType> = {
-    ...this.fillWithIds([4, 10, 53, 65, 121, 127], HexType.decorator),
-    ...this.fillWithIds([6, 8, 16, 24, 41, 51, 80, 94, 90, 102, 123, 125], HexType.decorator),
-    ...this.fillWithIds([7, 29, 37, 59, 81, 89, 111], HexType.treasure),
-    ...this.fillWithIds(this.playerSitIds, HexType.seat),
+    ...this.fillWithIds(this.cornerIds, HexType.corner),
+    ...this.fillWithIds(this.decoratorEmptyIds, HexType.decorator),
+    ...this.fillWithIds(this.treasureIds, HexType.treasure),
+    // ...this.fillWithIds(this.playerSitIds, HexType.seat),
     ...this.fillWithIds(this.routeTileIds, HexType.route),
+    ...this.fillWithIds(this.gatewayIds, HexType.gateway),
   }
 
   routeTiles = getOrApply<Record<Ids, RouteTile>>('route-tiles', () => this.defaultRouteTiles)
@@ -337,50 +574,102 @@ export class Store implements iStore {
       this.routeTiles[this.preSit].uses[0] = 'hex-main-bg'
       this.preSit = null
     }
-    setItem('route-tiles', this.routeTiles)
+    this.saveRouteTiles()
     this.nextMove()
   }
 
   setPreSit(id: Ids) {
     this.preSit = id
-    this.routeTiles[id] = {
-      tile: this.playerMove[1] as RouteTileIds,
+    this.routeTiles[this.preSit] = {
       player: this.playerMove[0],
       preSit: true,
-      uses: abstractRouteTileIds[this.playerMove[1] as NonNullable<Tiles>],
+      uses: this.routeTileForSeat,
+      usesName: this.playerMove[1],
     }
-    setItem('route-tiles', this.routeTiles)
+    this.saveRouteTiles()
   }
 
   cancelPreSit() {
     if (this.preSit !== null) {
       this.routeTiles[this.preSit] = {
-        tile: null,
-        uses: ['hex-default-bg'],
+        uses: [this.hexDefaultBg],
         player: null,
         preSit: false,
+        usesName: null,
       }
       this.preSit = null
     }
-    setItem('route-tiles', this.routeTiles)
+    this.saveRouteTiles()
+  }
+
+  private static get routeTileKeys(): RouteTileNames[] {
+    return Object.keys(Store.routeTileNames) as RouteTileNames[]
+  }
+
+  private static getPrefix(arg: NonNullable<RouteTileNames>): string {
+    return arg.split('-')[0]
+  }
+
+  private get toRight(): RouteTileNames {
+    const curr = this.playerMove[1] as NonNullable<RouteTileNames>
+    const prefix = Store.getPrefix(curr)
+    const index = Store.routeTileKeys.findIndex((id) => id === curr)
+    const nextId = Store.routeTileKeys[index + 1]
+    if (nextId && Store.getPrefix(nextId) === prefix) {
+      return nextId
+    }
+    return `${prefix}-0` as RouteTileNames
+  }
+
+  private get toLeft(): RouteTileNames {
+    const curr = this.playerMove[1] as NonNullable<RouteTileNames>
+    const prefix = Store.getPrefix(curr)
+    const index = Store.routeTileKeys.findIndex((id) => id === curr)
+    const prevId = Store.routeTileKeys[index - 1]
+    if (prevId && Store.getPrefix(prevId) === prefix) {
+      return prevId
+    }
+    const availableKeys = Store.routeTileKeys.filter((id) => Store.getPrefix(id) === prefix)
+    return availableKeys[availableKeys.length - 1]
+  }
+
+  private rotateRouteTile(nextTile: RouteTileNames) {
+    this.playerMove = [this.playerMove[0], nextTile]
+    const nextUses = Store.routeTileNames[nextTile]
+    nextUses[0] = this.hexDefaultBg
+    this.routeTiles[this.preSit as NonNullable<PreSit>].uses = nextUses
+    this.saveRouteTiles()
   }
 
   rotateLeft() {
-    console.log('rotateLeft')
-
-    console.log(toJS(this.playerMove))
-
+    this.rotateRouteTile(this.toLeft)
   }
 
   rotateRight() {
-    console.log('rotateRight')
+    this.rotateRouteTile(this.toRight)
   }
 
   sitMouseEnter(id: Ids) {
-    this.routeTiles[id].uses = abstractRouteTileIds[this.playerMove[1] as NonNullable<Tiles>]
+    this.routeTiles[id].uses = this.routeTileForSeat
+    this.routeTiles[id].usesName = this.playerMove[1]
   }
 
   sitMouseLeave(id: Ids) {
-    this.routeTiles[id].uses = ['hex-default-bg']
+    this.routeTiles[id].uses = [this.hexDefaultBg]
+    this.routeTiles[id].usesName = null
+  }
+
+  get routeTileForSeat(): Uses[] {
+    const uses = Store.routeTileNames[this.playerMove[1] as NonNullable<RouteTileNames>]
+    uses[0] = this.hexDefaultBg
+    return uses
+  }
+
+  get preSitRouteTileUses(): Uses[] {
+    return this.routeTiles[this.preSit as NonNullable<Ids>].uses
+  }
+
+  get isCrossroad(): boolean {
+    return this.preSitRouteTileUses.join('_') === `${this.hexDefaultBg}_hex-line-0_hex-line-60_hex-line-120`
   }
 }

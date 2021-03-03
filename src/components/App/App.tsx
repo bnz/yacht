@@ -5,6 +5,8 @@ import { Yacht } from './Yacht'
 import { Indigo } from '../Indigo/Indigo'
 import { Store } from '../Indigo/Store/Store'
 import { Provider } from '../Indigo/Store/Provider'
+import { HexProvider } from '../Indigo/Absolute/HexProvider'
+import { HexStore } from '../Indigo/Absolute/HexStore'
 
 export const App: FC = () => {
   const game = getItem('game', false)
@@ -16,7 +18,9 @@ export const App: FC = () => {
           <Yacht />
         )}
         {game === 'indigo' && (
-          <Indigo />
+          <HexProvider store={new HexStore()}>
+            <Indigo />
+          </HexProvider>
         )}
       </MainLayout>
     </Provider>

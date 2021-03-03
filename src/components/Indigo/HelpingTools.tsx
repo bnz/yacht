@@ -6,6 +6,7 @@ import { observer } from 'mobx-react'
 import { useStore } from './Store/Provider'
 import Typography from '@material-ui/core/Typography'
 import { Themed } from '../../helpers/types'
+import { hexRationDiff } from './Store/Store'
 
 const w = 100
 
@@ -17,7 +18,7 @@ const Column = styled('div')({
 
 const Wrap = styled('div')({
   width: w,
-  height: `${w * 86.60254 / 100}px`,
+  height: `${w * hexRationDiff / 100}px`,
 })
 
 const Label = styled('div')({
@@ -65,37 +66,37 @@ export const HelpingTools: FC = observer(() => {
           <Heading>6</Heading>
           <Wrap>
             <SVG uses={['hex-main-bg', 'hex-circle-top-right', 'hex-circle-bottom-right', 'hex-circle-center-left']} />
-            <Label>shuriken-l</Label>
+            <Label>shuriken-0</Label>
             <SVG uses={['hex-main-bg', 'hex-circle-top-left', 'hex-circle-bottom-left', 'hex-circle-center-right']} />
-            <Label>shuriken-r</Label>
+            <Label>shuriken-60</Label>
           </Wrap>
         </Column>
         <Column>
           <Heading>6</Heading>
           <Wrap>
-            <SVG uses={['hex-main-bg', 'hex-line-0deg', 'hex-line-60deg', 'hex-line-120deg']} />
+            <SVG uses={['hex-main-bg', 'hex-line-0', 'hex-line-60', 'hex-line-120']} />
             <Label>crossroad</Label>
           </Wrap>
         </Column>
         <Column>
           <Heading>14</Heading>
           <Wrap>
-            <SVG uses={['hex-main-bg', 'hex-line-0deg', 'hex-circle-center-left', 'hex-circle-center-right']} />
+            <SVG uses={['hex-main-bg', 'hex-line-0', 'hex-circle-center-left', 'hex-circle-center-right']} />
             <Label>turtle-0</Label>
-            <SVG uses={['hex-main-bg', 'hex-line-60deg', 'hex-circle-top-left', 'hex-circle-bottom-right']} />
+            <SVG uses={['hex-main-bg', 'hex-line-60', 'hex-circle-top-left', 'hex-circle-bottom-right']} />
             <Label>turtle-60</Label>
-            <SVG uses={['hex-main-bg', 'hex-line-120deg', 'hex-circle-bottom-left', 'hex-circle-top-right']} />
+            <SVG uses={['hex-main-bg', 'hex-line-120', 'hex-circle-bottom-left', 'hex-circle-top-right']} />
             <Label>turtle-120</Label>
           </Wrap>
         </Column>
         <Column>
           <Heading>14</Heading>
           <Wrap>
-            <SVG uses={['hex-main-bg', 'hex-line-0deg', 'hex-arc-top', 'hex-arc-bottom']} />
+            <SVG uses={['hex-main-bg', 'hex-line-0', 'hex-arc-top', 'hex-arc-bottom']} />
             <Label>lizard-0</Label>
-            <SVG uses={['hex-main-bg', 'hex-line-60deg', 'hex-arc-top-right', 'hex-arc-bottom-left']} />
+            <SVG uses={['hex-main-bg', 'hex-line-60', 'hex-arc-top-right', 'hex-arc-bottom-left']} />
             <Label>lizard-60</Label>
-            <SVG uses={['hex-main-bg', 'hex-line-120deg', 'hex-arc-bottom-right', 'hex-arc-top-left']} />
+            <SVG uses={['hex-main-bg', 'hex-line-120', 'hex-arc-bottom-right', 'hex-arc-top-left']} />
             <Label>lizard-120</Label>
           </Wrap>
         </Column>
@@ -103,17 +104,17 @@ export const HelpingTools: FC = observer(() => {
           <Heading>14</Heading>
           <Wrap>
             <SVG uses={['hex-main-bg', 'hex-arc-bottom', 'hex-arc-bottom-right', 'hex-circle-top-left']} />
-            <Label>human-1</Label>
+            <Label>human-0</Label>
             <SVG uses={['hex-main-bg', 'hex-arc-bottom', 'hex-arc-bottom-left', 'hex-circle-top-right']} />
-            <Label>human-2</Label>
+            <Label>human-60</Label>
             <SVG uses={['hex-main-bg', 'hex-arc-bottom-left', 'hex-arc-top-left', 'hex-circle-center-right']} />
-            <Label>human-3</Label>
+            <Label>human-120</Label>
             <SVG uses={['hex-main-bg', 'hex-arc-top-left', 'hex-arc-top', 'hex-circle-bottom-right']} />
-            <Label>human-4</Label>
+            <Label>human-180</Label>
             <SVG uses={['hex-main-bg', 'hex-arc-top', 'hex-arc-top-right', 'hex-circle-bottom-left']} />
-            <Label>human-5</Label>
+            <Label>human-240</Label>
             <SVG uses={['hex-main-bg', 'hex-arc-top-right', 'hex-arc-bottom-right', 'hex-circle-center-left']} />
-            <Label>human-6</Label>
+            <Label>human-300</Label>
           </Wrap>
         </Column>
       </div>
