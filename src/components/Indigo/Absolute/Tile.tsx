@@ -1,52 +1,40 @@
 import React, { FC } from 'react'
 import { observer } from 'mobx-react'
 import { useStore } from './HexProvider'
-import { HexType } from '../Store/Store'
-import svg from '../hex.svg'
 import './Tile.css'
-import './TileCoords.css'
+// import './TileCoords.css'
 import { stretch } from '../../../helpers/css'
 
 interface TileProps {
-  index: number
+  id: string
 }
 
-const map: {
-  [key in HexType]: string
-} = {
-  [HexType.route]: 'hex-tile-huji',
-  [HexType.treasure]: 'hex-tile-hex-treasure-bg',
-  [HexType.center]: 'hex-tile-hex-center',
-  [HexType.decorator]: 'hex-tile-crossroad',
-  [HexType.seat]: '',
-  [HexType.gateway]: '',
-  [HexType.corner]: '',
-}
-
-export const Tile: FC<TileProps> = observer(({ index }) => {
+export const Tile: FC<TileProps> = observer(({ id }) => {
   const store = useStore()
-  const hex = store.tiles[index].hex
-  const type = store.tiles[index].type
+  const hex = store.tiles[id].hex
+  const hovered = store.tiles[id].hovered
+
+  // console.log('Tile:::RENDER')
 
   return (
     <div
       data-q={hex.q}
       data-r={hex.r}
-      style={{ backgroundImage: `url(${svg}#${map[type]})` }}
+      style={{
+        ...(hovered ? {} : {
+          backgroundImage: hovered ? '' : `url(${store.getBackgroundUrl(id)})`,
+        }),
+      }}
     >
       <div style={{
         ...stretch(),
-        display: 'flex',
+        // display: 'flex',
+        display: 'none',
         alignItems: 'center',
         justifyContent: 'center',
-        transitionProperty: 'transform',
-        transitionDuration: '0.5s',
-        transform: `rotate(${store.isPointy ? 30 : 0}deg)`,
       }}>
         {hex.q}, {hex.r}
       </div>
     </div>
   )
 })
-
-Tile.displayName = 'Tile'

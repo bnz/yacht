@@ -140,8 +140,63 @@ export type Uses =
 
 export type OrientationType = 'flat' | 'pointy'
 
+export enum TreasureT {
+  'hex-tile-hex-center',
+  'hex-tile-treasure-bottom',
+  'hex-tile-treasure-bottom-left',
+  'hex-tile-treasure-bottom-right',
+  'hex-tile-treasure-top',
+  'hex-tile-treasure-top-left',
+  'hex-tile-treasure-top-right',
+}
+
+export enum CornersTiles {
+  'hex-tile-decorator-corner-right' = 7,
+  'hex-tile-decorator-corner-left',
+  'hex-tile-decorator-corner-top-left',
+  'hex-tile-decorator-corner-top-right',
+  'hex-tile-decorator-corner-bottom-left',
+  'hex-tile-decorator-corner-bottom-right',
+}
+
+export enum LineEmptyTiles {
+  'hex-tile-decorator-line-empty-top' = 13,
+  'hex-tile-decorator-line-empty-bottom',
+  'hex-tile-decorator-line-empty-left-top',
+  'hex-tile-decorator-line-empty-left-bottom',
+  'hex-tile-decorator-line-empty-right-bottom',
+  'hex-tile-decorator-line-empty-right-top',
+}
+
+export enum GatewayTiles {
+  'hex-tile-decorator-gateway-left' = 19,
+  'hex-tile-decorator-gateway-top-left',
+  'hex-tile-decorator-gateway-top-right',
+  'hex-tile-decorator-gateway-right',
+  'hex-tile-decorator-gateway-bottom-right',
+  'hex-tile-decorator-gateway-bottom-left',
+}
+
+export type RouteTiles =
+  | 'hex-tile-lizard-0'
+  | 'hex-tile-lizard-60'
+  | 'hex-tile-lizard-120'
+
+export const AllTiles = {
+  ...CornersTiles,
+  ...TreasureT,
+  ...LineEmptyTiles,
+  ...GatewayTiles,
+}
+
+export type AllT = CornersTiles | TreasureT | LineEmptyTiles | GatewayTiles
+
+export type TileItems<T> = [number, number, T][]
+
 export interface Tile {
   hex: Hex
   type: HexType
-  rotate?: 0 | 30 | 60 | 90 | 120
+  tile?: AllT
+  rotate?: 0 | 60 | 120
+  hovered?: boolean
 }

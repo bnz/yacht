@@ -3,6 +3,11 @@
         <style>
             .img { display: none }
             .img:target { display: inline }
+            .line-color-player1 { fill: #ffbe37; }
+            .line-color-player2 { fill: #5f87b9; }
+            .line-color-player3 { fill: #e6ebf0; }
+            .line-color-player4 { fill: #ff6955; }
+            .line-color { fill: #f99; }
         </style>
 
         <path id="hex-main-bg"
@@ -293,22 +298,25 @@
         </g>
     </defs>
 
-    <use id="hex-tile-huji" class="img" href="#hex-default-bg"/>
-
-    <use id="hex-tile-hex-treasure-bg" class="img" href="#hex-treasure-bg"/>
-
-    <use id="hex-tile-center" class="img" href="#hex-center"/>
-
-    <g id="hex-tile-hex-center" class="img">
-        <use href="#hex-treasure-bg"/>
-        <use href="#hex-center"/>
-    </g>
-
     <g id="hex-tile-lizard-0" class="img">
-        <use href="#hex-default-bg"/>
+        <use href="#hex-main-bg"/>
         <use href="#hex-line-0"/>
         <use href="#hex-arc-top"/>
         <use href="#hex-arc-bottom"/>
+    </g>
+
+    <g id="hex-tile-lizard-60" class="img">
+        <use href="#hex-main-bg"/>
+        <use href="#hex-line-60"/>
+        <use href="#hex-arc-top-right"/>
+        <use href="#hex-arc-bottom-left"/>
+    </g>
+
+    <g id="hex-tile-lizard-120" class="img">
+        <use href="#hex-main-bg"/>
+        <use href="#hex-line-120"/>
+        <use href="#hex-arc-bottom-right"/>
+        <use href="#hex-arc-top-left"/>
     </g>
 
     <g id="hex-tile-crossroad" class="img">
@@ -318,4 +326,83 @@
         <use href="#hex-line-120"/>
     </g>
 
+    <use id="hex-tile-default-bg" class="img" href="#hex-default-bg"/>
+
+    <g id="hex-tile-hex-center" class="img">
+        <use href="#hex-treasure-bg"/>
+        <use href="#hex-center"/>
+    </g>
+
+    <g id="hex-tile-treasure-bottom" class="img">
+        <use href="#hex-treasure-bg"/>
+        <use href="#hex-treasure-bottom"/>
+    </g>
+
+    <g id="hex-tile-treasure-bottom-right" class="img">
+        <use href="#hex-treasure-bg"/>
+        <use href="#hex-treasure-bottom-right"/>
+    </g>
+
+    <g id="hex-tile-treasure-bottom-left" class="img">
+        <use href="#hex-treasure-bg"/>
+        <use href="#hex-treasure-bottom-left"/>
+    </g>
+
+    <g id="hex-tile-treasure-top" class="img">
+        <use href="#hex-treasure-bg"/>
+        <use href="#hex-treasure-top"/>
+    </g>
+
+    <g id="hex-tile-treasure-top-left" class="img">
+        <use href="#hex-treasure-bg"/>
+        <use href="#hex-treasure-top-left"/>
+    </g>
+
+    <g id="hex-tile-treasure-top-right" class="img">
+        <use href="#hex-treasure-bg"/>
+        <use href="#hex-treasure-top-right"/>
+    </g>
+
+    <use id="hex-tile-decorator-corner-right" class="img" href="#hex-decorator-corner-right"/>
+    <use id="hex-tile-decorator-corner-left" class="img" href="#hex-decorator-corner-left"/>
+    <use id="hex-tile-decorator-corner-top-left" class="img" href="#hex-decorator-corner-top-left"/>
+    <use id="hex-tile-decorator-corner-top-right" class="img" href="#hex-decorator-corner-top-right"/>
+    <use id="hex-tile-decorator-corner-bottom-left" class="img" href="#hex-decorator-corner-bottom-left"/>
+    <use id="hex-tile-decorator-corner-bottom-right" class="img" href="#hex-decorator-corner-bottom-right"/>
+
+    <use id="hex-tile-decorator-line-empty-top" class="img line-color" href="#hex-decorator-line-empty-top"/>
+    <use id="hex-tile-decorator-line-empty-bottom" class="img line-color" href="#hex-decorator-line-empty-bottom"/>
+    <use id="hex-tile-decorator-line-empty-left-top" class="img line-color" href="#hex-decorator-line-empty-left-top"/>
+    <use id="hex-tile-decorator-line-empty-left-bottom" class="img line-color" href="#hex-decorator-line-empty-left-bottom"/>
+    <use id="hex-tile-decorator-line-empty-right-bottom" class="img line-color" href="#hex-decorator-line-empty-right-bottom"/>
+    <use id="hex-tile-decorator-line-empty-right-top" class="img line-color" href="#hex-decorator-line-empty-right-top"/>
+
+    <g id="hex-tile-decorator-gateway-left" class="img line-color-player1">
+        <use href="#hex-decorator-gateway-left" />
+        <use href="#token-place" />
+    </g>
+    <g id="hex-tile-decorator-gateway-top-left" class="img line-color-player2">
+        <use href="#hex-decorator-gateway-top-left" />
+        <use href="#token-place" />
+    </g>
+    <g id="hex-tile-decorator-gateway-top-right" class="img line-color-player3">
+        <use href="#hex-decorator-gateway-top-right" />
+        <use href="#token-place" />
+    </g>
+    <g id="hex-tile-decorator-gateway-right" class="img line-color-player4">
+        <use href="#hex-decorator-gateway-right" />
+        <use href="#token-place" />
+    </g>
+    <g id="hex-tile-decorator-gateway-bottom-right" class="img line-color">
+        <use href="#hex-decorator-gateway-bottom-right" />
+        <use href="#token-place" />
+    </g>
+    <g id="hex-tile-decorator-gateway-bottom-left" class="img line-color">
+        <use href="#hex-decorator-gateway-bottom-left" />
+        <use href="#token-place" />
+    </g>
+    <g id="hex-tile-decorator-gateway-left" class="img line-color">
+        <use href="#hex-decorator-gateway-left" />
+        <use href="#token-place" />
+    </g>
 </svg>

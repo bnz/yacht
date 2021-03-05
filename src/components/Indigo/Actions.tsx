@@ -8,8 +8,9 @@ import RotateRightIcon from '@material-ui/icons/RotateRight'
 import RotateLeftIcon from '@material-ui/icons/RotateLeft'
 import { useStore as useHexStore } from './Absolute/HexProvider'
 import { useStore } from './Store/Provider'
+import { observer } from 'mobx-react'
 
-export const Actions: FC = () => {
+export const Actions: FC = observer(() => {
   const store = useStore()
   const hexStore = useHexStore()
   const rotate = useCallback(() => hexStore.toggleOrientation(), [])
@@ -58,5 +59,4 @@ export const Actions: FC = () => {
       </StartGameButtonWrapper>
     </div>
   )
-}
-
+})

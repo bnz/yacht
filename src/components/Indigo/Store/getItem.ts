@@ -9,6 +9,7 @@ export type LocalStorageKeys =
   | 'history'
   | 'pre-sit'
   | 'orientation'
+  | 'tiles'
 
 export const getItem = (key: LocalStorageKeys) => {
   const data = localStorage.getItem('indigo-data')

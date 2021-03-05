@@ -8,22 +8,21 @@ import './Arena.css'
 export const Arena: FC = observer(() => {
   const store = useStore()
   const arenaRef = useRef<HTMLDivElement | null>(null)
-  const onMouseMove = useCallback((e) => store.onMouseMove(e), [])
+  const onMouseMove = useCallback(store.onMouseMove, [])
 
   useEffect(() => {
     store.arenaElement = arenaRef.current
-  }, [])
+  }, [store.arenaElement])
 
   return (
     <div
       ref={arenaRef}
       className={store.orientationType}
       onMouseMove={onMouseMove}
-      // @ts-ignore
-      style={{ '--R': `${store.R}px` }}
+      style={{ ['--R' as string]: `${store.R}px` }}
     >
-      {store.arenaElement === null ? null : store.tiles.map((_, i) => (
-        <Tile key={i} index={i} />
+      {store.arenaElement === null ? null : Object.entries(store.tiles).map(([id]) => (
+        <Tile key={id} id={id} />
       ))}
     </div>
   )
