@@ -1,13 +1,17 @@
 /*tslint:disable:no-magic-numbers*/
 import styled from '@material-ui/styles/styled'
 import { Themed } from '../../../helpers/types'
+import React, { FC } from 'react'
 
-export const PlayersWrapper = styled('div')(({ theme: { spacing } }: Themed) => ({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(2, 1fr)',
-  gridTemplateRows: 'repeat(2, 1fr)',
-  gap: spacing(3, 3),
-  maxWidth: spacing(100),
+const PlayersWrapperComponent: FC = (props) => <div {...props} />
+
+PlayersWrapperComponent.displayName = 'PlayersWrapper'
+
+export const PlayersWrapper = styled(PlayersWrapperComponent)(({
+  theme: { spacing },
+}: Themed) => ({
   margin: '0 auto',
-  padding: spacing(3),
+  padding: spacing(3, 0),
+  display: 'flex',
+  flexWrap: 'wrap',
 }))

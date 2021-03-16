@@ -2,10 +2,11 @@
 import styled from '@material-ui/styles/styled'
 import { conditionalCSS } from '../../../helpers/conditionalCSS'
 import { Themed } from '../../../helpers/types'
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 interface PlayerSeatWrapperProps {
   selected?: boolean
+  children?: ReactNode
 }
 
 export const PlayerSeatWrapper = styled(

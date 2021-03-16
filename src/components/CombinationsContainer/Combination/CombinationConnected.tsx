@@ -10,9 +10,9 @@ import { CheckMatch, checkMatch } from '../../../helpers/checkMatch'
 import { saveCombinationThunk, SaveCombinationThunk } from '../../../redux/actions/saveCombinationThunk'
 import { Combination } from './Combination'
 
-type Combination = Pick<CombinationInfo, 'combination'>;
+type iCombination = Pick<CombinationInfo, 'combination'>;
 
-interface MapStateToProps extends DicesState, Combination {
+interface MapStateToProps extends DicesState, iCombination {
   activePlayerId: Move[0]
   existingCombination: number | EMPTY_CELL
 }
@@ -21,7 +21,7 @@ interface MapDispatchToProps {
   saveCombinationThunk: SaveCombinationThunk
 }
 
-interface OwnProps extends Combination {
+interface OwnProps extends iCombination {
   playerId: Player['id']
   isMoveAvailable: boolean
 }

@@ -5,7 +5,7 @@ import { Themed } from '../../helpers/types'
 export const StartGameButtonWrapper = styled('div')(({
   theme: { spacing, breakpoints: { down }, mainLayout: { innerPadding } },
 }: Themed) => ({
-  padding: spacing(2, innerPadding),
+  padding: spacing(2, 0, 4),
   [down('xs')]: {
     textAlign: 'center',
   },

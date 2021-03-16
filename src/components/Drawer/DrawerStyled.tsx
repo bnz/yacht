@@ -24,6 +24,7 @@ const useStyles = makeStyles(({
   },
   drawer: {
     width: spacing(drawerWidth),
+    userSelect: 'none',
   },
   paper: {
     overflowX: 'hidden',

@@ -5,4 +5,5 @@ import AppBar from '@material-ui/core/AppBar'
 
 export const AppBarStyled = styled(AppBar)(({ theme }: Themed) => ({
   zIndex: theme.zIndex.drawer + 1,
+  userSelect: 'none',
 }))

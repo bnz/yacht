@@ -4,7 +4,7 @@ import { TableSizes } from '../../../../redux/reducers/tableSize'
 import React from 'react'
 import { stretch } from '../../../../helpers/css'
 
-interface ButtonStyledProps extends Pick<ButtonProps, 'size' | 'color' | 'onClick'> {
+interface ButtonStyledProps extends Pick<ButtonProps, 'size' | 'color' | 'onClick' | 'children'> {
 }
 
 export const Button = styled(

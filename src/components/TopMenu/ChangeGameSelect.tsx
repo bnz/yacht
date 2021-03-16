@@ -8,6 +8,7 @@ import { StyledProps } from '@material-ui/core/styles'
 import { getItem } from '../../helpers/getItem'
 import { setItem } from '../../helpers/setItem'
 import { Themed } from '../../helpers/types'
+import { stretch } from '../../helpers/css'
 
 const ChangeGameSelect: FC<StyledProps> = ({ className }) => {
   const [age, setAge] = useState(getItem('game', false) || 'yacht')
@@ -37,6 +38,9 @@ export const ChangeGameSelectStyled = styled(ChangeGameSelect)(({
 }: Themed) => ({
   flex: 1,
   [down('xs')]: {
-    textAlign: 'center',
+    ...stretch(),
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
 }))

@@ -1,18 +1,25 @@
 import React, { FC } from 'react'
-import { HelpingTools } from './HelpingTools'
 import { observer } from 'mobx-react'
-import { useStore } from './Store/Provider'
 import { PlayerManager } from './Players/PlayerManager'
-import { GamePhase } from './Ids'
-import { Arena } from './Absolute/Arena'
+import { GamePhase } from './types'
+import { Arena } from './Arena/Arena'
 import { Actions } from './Actions'
+import { useStore } from './Store/HexProvider'
+import { Rules } from './Rules/Rules'
+import { StartGameButtonWrapper } from '../StartGameButton/StartGameButtonWrapper'
+import { StartButton } from './Rules/StartButton'
 
 export const Indigo: FC = observer(() => (
   <>
     <Actions />
     {{
       [GamePhase.PRE_GAME]: (
-        <>PRE_GAME</>
+        <>
+          <StartGameButtonWrapper>
+            <StartButton />
+          </StartGameButtonWrapper>
+        <Rules />
+        </>
       ),
       [GamePhase.PLAYERS_SELECTION]: (
         <PlayerManager />
@@ -20,7 +27,6 @@ export const Indigo: FC = observer(() => (
       [GamePhase.IN_PLAY]: (
         <Arena />
       ),
-    }[useStore().gamePhase]}
-    <HelpingTools />
+    }[useStore().gamePhase.phase]}
   </>
 ))

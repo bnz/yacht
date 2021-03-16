@@ -25,6 +25,7 @@ export enum Combination {
 
 export type EMPTY_CELL = '—'
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const EMPTY_CELL: EMPTY_CELL = '—'
 
 export const BONUS_CONDITION = 63

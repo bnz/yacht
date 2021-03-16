@@ -1,0 +1,43 @@
+.playerActionButton {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50% !important;
+  width: 100%;
+  cursor: pointer !important;
+  transition-property: opacity;
+  transition-duration: .2s;
+  display: flex !important;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center !important;
+}
+
+.playerActionButton > svg {
+  color: red;
+  border-radius: 50%;
+  width: 50%;
+  height: 50%;
+}
+
+.playerActionButton.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.playerActionButton.hidden > svg {
+  color: red;
+  border-radius: 50%;
+  width: 50%;
+  height: 50%;
+}
+
+.playerActionButton.hidden.dark {
+  background-color: rgba(0, 0, 0, .9);
+}
+
+.playerActionButton.hidden.light {
+  background-color: rgba(255, 255, 255, .9);
+}

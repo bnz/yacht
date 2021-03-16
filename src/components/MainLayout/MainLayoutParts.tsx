@@ -22,7 +22,9 @@ export const Wrapper = styled(WrapperComponent)(({
   drawer,
 }: Themed<DrawerOpenedConnectorProps>) => conditionalCSS([
   {
+    position: 'relative',
     minHeight: '100%',
+    userSelect: 'none',
 
     // Equal to height of footer
     // But also accounting for potential margin-bottom of last child
@@ -64,6 +66,7 @@ export const Footer = styled(FooterComponent)(({
   },
   drawer,
 }: Themed<DrawerOpenedConnectorProps>) => ({
+  userSelect: 'none',
   display: 'flex',
   alignItems: 'center',
   height: spacing(footerHeight),
@@ -107,15 +110,31 @@ export const Inner = styled(InnerComponent)(({
       paddingRight: spacing(innerPaddingMobile),
     },
   }, {
-    margin: '0 auto',
-    // maxWidth: spacing(150),
-    padding: 0,
-    ...stretch(0, 0, spacing(footerHeight)),
-    ...replaceKeysInObject(
-      toolbar,
-      'minHeight',
-      'top',
-      (value: number): number => spacing(value / 6),
-    ),
+    'body.rules &': {
+      maxWidth: spacing(130),
+      padding: spacing(2, innerPadding),
+      ...replaceKeysInObject(
+        toolbar,
+        'minHeight',
+        'paddingTop',
+        (value: number): number => spacing(value / 6),
+      ),
+      [down('xs')]: {
+        paddingLeft: spacing(innerPaddingMobile),
+        paddingRight: spacing(innerPaddingMobile),
+      },
+    },
+
+    'body:not(.rules) &': {
+      margin: '0 auto',
+      paddingTop: 0,
+      ...stretch(0, 0, spacing(footerHeight)),
+      ...replaceKeysInObject(
+        toolbar,
+        'minHeight',
+        'top',
+        (value: number): number => spacing(value / 6),
+      ),
+    }
   }],
 ]))

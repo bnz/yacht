@@ -4,10 +4,14 @@
             .img { display: none }
             .img:target { display: inline }
             .line-color-player1 { fill: #ffbe37; }
-            .line-color-player2 { fill: #5f87b9; }
+            .line-color-player2 { fill: #388e3c; }
             .line-color-player3 { fill: #e6ebf0; }
             .line-color-player4 { fill: #ff6955; }
             .line-color { fill: #f99; }
+
+            .treasure-bg { fill: #4682b4; }
+
+            .line-color2 { fill: #daa520; }
         </style>
 
         <path id="hex-main-bg"
@@ -15,8 +19,8 @@
               fill="olive"
         />
         <path id="hex-treasure-bg"
+              class="treasure-bg"
               d="M75.012 0l25.004 43.308-25.004 43.309H25.004L0 43.308 25.004 0h50.008z"
-              fill="steelblue"
         />
         <path id="hex-default-bg"
               d="M75.012 0l25.004 43.308-25.004 43.309H25.004L0 43.308 25.004 0h50.008z"
@@ -211,42 +215,48 @@
         <g id="hex-decorator-line-empty-top">
             <path d="M.00019 43.308h100.016l-17.786 30.806h-64.444L.00019 43.308z"
                   fill="rgba(0, 0, 0, 0.3)"/>
-            <path d="M25.004 86.617l-7.218-12.503H82.23l-7.218 12.503H25.004zm25.004-12.503l-9.639 12.443h19.29l-9.651-12.443z"/>
+            <path d="M25.004 86.617l-7.218-12.503H82.23l-7.218 12.503H25.004zm25.004-12.503l-9.639 12.443h19.29l-9.651-12.443z"
+                  class="line-color2"/>
             <path d="M50.008 74.11410498l-9.639 12.44237473h19.29l-9.651-12.44237473z"
                   fill="#000"/>
         </g>
         <g id="hex-decorator-line-empty-left-top">
             <path d="M25.00481933-.00002002l50.008 86.6163564-35.57176615-.00012065-32.222-55.8101151L25.00481933-.00002002z"
                   fill="rgba(0, 0, 0, 0.3)"/>
-            <path d="M.0000476 43.30840453l7.21891058-12.50246845 32.222 55.8101151-14.43691058.00053155-25.004-43.3081782zm23.32991058 15.4025891L7.7345091 56.58487866l9.645 16.70562225 5.95044908-14.57950728z"/>
+            <path d="M.0000476 43.30840453l7.21891058-12.50246845 32.222 55.8101151-14.43691058.00053155-25.004-43.3081782zm23.32991058 15.4025891L7.7345091 56.58487866l9.645 16.70562225 5.95044908-14.57950728z"
+                  class="line-color2"/>
             <path d="M23.32986726 58.71104612L7.7349597 56.58461852l9.645 16.70562224 5.94990757-14.57919464z"
                   fill="#000"/>
         </g>
         <g id="hex-decorator-line-empty-left-bottom">
             <path d="M74.99989933.00087998l-50.008 86.6163564L7.20613318 55.81111573l32.222-55.8101151L74.99989933.00087998z"
                   fill="rgba(0, 0, 0, 0.3)"/>
-            <path d="M24.9913176.00030453l14.43691058.00053155-32.222 55.8101151L-.0126824 43.30848273l25.004-43.3081782zm-1.67408942 27.9055891L17.3607791 13.33677866l-9.645 16.70562225 15.60144908-2.13650728z"/>
+            <path d="M24.9913176.00030453l14.43691058.00053155-32.222 55.8101151L-.0126824 43.30848273l25.004-43.3081782zm-1.67408942 27.9055891L17.3607791 13.33677866l-9.645 16.70562225 15.60144908-2.13650728z"
+                  class="line-color2"/>
             <path d="M23.31713726 27.90584114L17.3612297 13.3370388l-9.645 16.70562225 15.60090757-2.1368199z"
                   fill="#000"/>
         </g>
         <g id="hex-decorator-line-empty-bottom">
             <path d="M100.01578 43.3091H-.00022l17.786-30.806h64.444l17.786 30.806z"
                   fill="rgba(0, 0, 0, 0.3)"/>
-            <path d="M75.01197.0001l7.218 12.503h-64.444l7.218-12.503h50.008zm-25.004 12.503l9.639-12.443h-19.29l9.651 12.443z"/>
+            <path d="M75.01197.0001l7.218 12.503h-64.444l7.218-12.503h50.008zm-25.004 12.503l9.639-12.443h-19.29l9.651 12.443z"
+                  class="line-color2"/>
             <path d="M50.00797 12.50299502l9.639-12.44237473h-19.29l9.651 12.44237473z"
                   fill="#000"/>
         </g>
         <g id="hex-decorator-line-empty-right-bottom">
             <path d="M75.01598067 86.61662002l-50.008-86.6163564 35.57176615.00012065 32.222 55.8101151-17.78576615 30.80612065z"
                   fill="rgba(0, 0, 0, 0.3)"/>
-            <path d="M100.0207524 43.30819547l-7.21891058 12.50246845-32.222-55.8101151L75.0167524.00001727l25.004 43.3081782zm-23.32991058-15.4025891l15.59544908 2.12611497-9.645-16.70562225-5.95044908 14.57950728z"/>
+            <path d="M100.0207524 43.30819547l-7.21891058 12.50246845-32.222-55.8101151L75.0167524.00001727l25.004 43.3081782zm-23.32991058-15.4025891l15.59544908 2.12611497-9.645-16.70562225-5.95044908 14.57950728z"
+                  class="line-color2"/>
             <path d="M76.69093274 27.90555388l15.59490757 2.1264276-9.645-16.70562224-5.94990757 14.57919464z"
                   fill="#000"/>
         </g>
         <g id="hex-decorator-line-empty-right-top">
             <path d="M25.00820067 86.61642002l50.008-86.6163564 17.78576615 30.80612065-32.222 55.8101151-35.57176615.00012065z"
                   fill="rgba(0, 0, 0, 0.3)"/>
-            <path d="M75.0167824 86.61699547l-14.43691058-.00053155 32.222-55.8101151 7.21891058 12.50246845-25.004 43.3081782zm1.67408942-27.9055891l5.95644908 14.56911497 9.645-16.70562225-15.60144908 2.13650728z"/>
+            <path d="M75.0167824 86.61699547l-14.43691058-.00053155 32.222-55.8101151 7.21891058 12.50246845-25.004 43.3081782zm1.67408942-27.9055891l5.95644908 14.56911497 9.645-16.70562225-15.60144908 2.13650728z"
+                  class="line-color2"/>
             <path d="M76.69096274 58.71145886L82.6468703 73.2802612l9.645-16.70562225-15.60090757 2.1368199z"
                   fill="#000"/>
         </g>
@@ -257,42 +267,48 @@
         <g id="hex-decorator-gateway-top-left">
             <path d="M75.012 0L93.76 32.415 0 43.308 25.004 0h50.008zM93.76 32.415l-6.246 10.893-17.729 30.806H17.786L0 43.308l93.76-10.893z"
                   fill="rgba(0, 0, 0, 0.3)"/>
-            <path d="M93.76 32.415l6.256 10.893-25.004 43.309H25.004l-7.218-12.503h51.999L93.76 32.415zM50.008 74.114l-9.639 12.443h19.29l-9.651-12.443zM78.204 59.52l5.145 12.584 8.33-14.429-13.475 1.845z"/>
+            <path d="M93.76 32.415l6.256 10.893-25.004 43.309H25.004l-7.218-12.503h51.999L93.76 32.415zM50.008 74.114l-9.639 12.443h19.29l-9.651-12.443zM78.204 59.52l5.145 12.584 8.33-14.429-13.475 1.845z"
+                  class="line-color2"/>
             <path d="M50.008 74.11410498l-9.639 12.44237473h19.29l-9.651-12.44237473zM78.2047587 59.52038221l5.14427221 12.58329787 8.33052153-14.42888142-13.47479374 1.84558355z"
                   fill="#000"/>
         </g>
         <g id="hex-decorator-gateway-top-right">
             <path d="M100.01620503 43.30808273l-18.69820038 32.4437367-56.31361032-75.752004 50.0078107.0000891 25.004 43.3081782zm-18.69820038 32.4437367l-12.55661032.03730785-35.54326615.04924278-25.9995-45.03243398L25.00439433-.00018457l56.31361032 75.752004z"
                   fill="rgba(0, 0, 0, 0.3)"/>
-            <path d="M81.31800465 75.75181943l-6.30561032 10.8643524-50.00867673.0004109-25.004-43.3081782 7.21891058-12.50246845 25.9995 45.03243398 48.09987647-.08655063zm-57.98837647-17.0408258L7.7341791 56.58487866l9.645 16.70562225 5.95044908-14.57950728zm26.73676885 17.1214409l-8.3255586 10.74769863 16.66087472-.00051175-8.33531612-10.74718688z"/>
+            <path d="M81.31800465 75.75181943l-6.30561032 10.8643524-50.00867673.0004109-25.004-43.3081782 7.21891058-12.50246845 25.9995 45.03243398 48.09987647-.08655063zm-57.98837647-17.0408258L7.7341791 56.58487866l9.645 16.70562225 5.95044908-14.57950728zm26.73676885 17.1214409l-8.3255586 10.74769863 16.66087472-.00051175-8.33531612-10.74718688z"
+                  class="line-color2"/>
             <path d="M23.32953726 58.71104612L7.7346297 56.58461852l9.645 16.70562224 5.94990757-14.57919464zM50.06644537 75.83328269l-8.32531443 10.74671728 16.6610328-8e-7-8.33571837-10.74671648z"
                   fill="#000"/>
         </g>
         <g id="hex-decorator-gateway-right">
             <path d="M75.01280503 86.61648273l-37.44620038.0287367L75.01299433.00021543l25.0038107 43.3080891-25.004 43.3081782zm-37.44620038.0287367l-6.31061032-10.85569215-17.81426615-30.75675722 25.9995-45.03243398L75.01299433.00021543l-37.44638968 86.645004z"
                   fill="rgba(0, 0, 0, 0.3)"/>
-            <path d="M37.56660465 86.64521943l-12.56161032-.0286476L.0003176 43.30798273l25.004-43.3081782 14.43691058.00053155-25.9995 45.03243398 24.12487647 41.61244937zm-14.23637647-58.7398258L17.3737791 13.33627866l-9.645 16.70562225 15.60144908-2.13650728zm-1.45923115 31.7154409l-13.4705586-1.83630137 8.33087472 14.42848825 5.13968388-12.59218688z"/>
+            <path d="M37.56660465 86.64521943l-12.56161032-.0286476L.0003176 43.30798273l25.004-43.3081782 14.43691058.00053155-25.9995 45.03243398 24.12487647 41.61244937zm-14.23637647-58.7398258L17.3737791 13.33627866l-9.645 16.70562225 15.60144908-2.13650728zm-1.45923115 31.7154409l-13.4705586-1.83630137 8.33087472 14.42848825 5.13968388-12.59218688z"
+                  class="line-color2"/>
             <path d="M23.33013726 27.90534114L17.3742297 13.3365388l-9.645 16.70562225 15.60090757-2.1368199zM21.87028667 59.62130047L8.40070003 57.7847199 16.7312113 72.2136005l5.13907537-12.59230004z"
                   fill="#000"/>
         </g>
         <g id="hex-decorator-gateway-bottom-right">
             <path d="M25.00397 86.6171l-18.748-32.415 93.76-10.893-25.004 43.308h-50.008zm-18.748-32.415l6.246-10.893 17.729-30.806h51.999l17.786 30.806-93.76 10.893z"
                   fill="rgba(0, 0, 0, 0.3)"/>
-            <path d="M6.25597 54.2021l-6.256-10.893 25.004-43.309h50.008l7.218 12.503h-51.999l-23.975 41.699zm43.752-41.699l9.639-12.443h-19.29l9.651 12.443zm-28.196 14.594l-5.145-12.584-8.33 14.429 13.475-1.845z"/>
+            <path d="M6.25597 54.2021l-6.256-10.893 25.004-43.309h50.008l7.218 12.503h-51.999l-23.975 41.699zm43.752-41.699l9.639-12.443h-19.29l9.651 12.443zm-28.196 14.594l-5.145-12.584-8.33 14.429 13.475-1.845z"
+                  class="line-color2"/>
             <path d="M50.00797 12.50299502l9.639-12.44237473h-19.29l9.651 12.44237473zM21.8112113 27.09671779L16.6669391 14.51341992 8.33641756 28.94230134l13.47479374-1.84558355z"
                   fill="#000"/>
         </g>
         <g id="hex-decorator-gateway-bottom-left">
             <path d="M.00016497 43.30851727l18.69820038-32.4437367 56.31361032 75.752004-50.0078107-.0000891-25.004-43.3081782zm18.69820038-32.4437367l12.55661032-.03730785 35.54326615-.04924278 25.9995 45.03243398-17.78576615 30.80612065-56.31361032-75.752004z"
                   fill="rgba(0, 0, 0, 0.3)"/>
-            <path d="M18.69836535 10.86478057L25.00397567.00042817 75.0126524.00001727l25.004 43.3081782-7.21891058 12.50246845-25.9995-45.03243398-48.09987647.08655063zm57.98837647 17.0408258l15.59544908 2.12611497-9.645-16.70562225-5.95044908 14.57950728zm-26.73676885-17.1214409L58.27553157.03646684 41.61465685.0369786l8.33531612 10.74718688z"/>
+            <path d="M18.69836535 10.86478057L25.00397567.00042817 75.0126524.00001727l25.004 43.3081782-7.21891058 12.50246845-25.9995-45.03243398-48.09987647.08655063zm57.98837647 17.0408258l15.59544908 2.12611497-9.645-16.70562225-5.95044908 14.57950728zm-26.73676885-17.1214409L58.27553157.03646684 41.61465685.0369786l8.33531612 10.74718688z"
+                  class="line-color2"/>
             <path d="M76.68683274 27.90555388l15.59490757 2.1264276-9.645-16.70562224-5.94990757 14.57919464zM49.94992463 10.78331731L58.27523906.03660003l-16.6610328 8e-7 8.33571837 10.74671648z"
                   fill="#000"/>
         </g>
         <g id="hex-decorator-gateway-left">
             <path d="M25.00399497.00031727l37.44620038-.0287367-37.44638968 86.645004-25.0038107-43.3080891 25.004-43.3081782zm37.44620038-.0287367l6.31061032 10.85569215 17.81426615 30.75675722-25.9995 45.03243398-35.57176615.00012065 37.44638968-86.645004z"
                   fill="rgba(0, 0, 0, 0.3)"/>
-            <path d="M62.45019535-.02841943l12.56161032.0286476 25.00467673 43.3085891-25.004 43.3081782-14.43691058-.00053155 25.9995-45.03243398L62.45019535-.02841943zm14.23637647 58.7398258l5.95644908 14.56911497 9.645-16.70562225-15.60144908 2.13650728zm1.45923115-31.7154409l13.4705586 1.83630137-8.33087472-14.42848825-5.13968388 12.59218688z"/>
+            <path d="M62.45019535-.02841943l12.56161032.0286476 25.00467673 43.3085891-25.004 43.3081782-14.43691058-.00053155 25.9995-45.03243398L62.45019535-.02841943zm14.23637647 58.7398258l5.95644908 14.56911497 9.645-16.70562225-15.60144908 2.13650728zm1.45923115-31.7154409l13.4705586 1.83630137-8.33087472-14.42848825-5.13968388 12.59218688z"
+                  class="line-color2"/>
             <path d="M76.68666274 58.71145886L82.6425703 73.2802612l9.645-16.70562225-15.60090757 2.1368199zM78.14651333 26.99549953l13.46958664 1.83658058L83.2855887 14.4031995l-5.13907537 12.59230004z"
                   fill="#000"/>
         </g>
@@ -319,7 +335,14 @@
         <use href="#hex-arc-top-left"/>
     </g>
 
-    <g id="hex-tile-crossroad" class="img">
+    <g id="hexTileCrossroad" class="img">
+        <use href="#hex-main-bg"/>
+        <use href="#hex-line-0"/>
+        <use href="#hex-line-60"/>
+        <use href="#hex-line-120"/>
+    </g>
+
+    <g id="hexTileCrossroadHovered" class="img">
         <use href="#hex-default-bg"/>
         <use href="#hex-line-0"/>
         <use href="#hex-line-60"/>
@@ -328,81 +351,77 @@
 
     <use id="hex-tile-default-bg" class="img" href="#hex-default-bg"/>
 
-    <g id="hex-tile-hex-center" class="img">
+    <g id="hexTileHexCenter" class="img">
         <use href="#hex-treasure-bg"/>
         <use href="#hex-center"/>
     </g>
 
-    <g id="hex-tile-treasure-bottom" class="img">
+    <g id="hexTileTreasureBottom" class="img">
         <use href="#hex-treasure-bg"/>
         <use href="#hex-treasure-bottom"/>
     </g>
 
-    <g id="hex-tile-treasure-bottom-right" class="img">
+    <g id="hexTileTreasureBottomRight" class="img">
         <use href="#hex-treasure-bg"/>
         <use href="#hex-treasure-bottom-right"/>
     </g>
 
-    <g id="hex-tile-treasure-bottom-left" class="img">
+    <g id="hexTileTreasureBottomLeft" class="img">
         <use href="#hex-treasure-bg"/>
         <use href="#hex-treasure-bottom-left"/>
     </g>
 
-    <g id="hex-tile-treasure-top" class="img">
+    <g id="hexTileTreasureTop" class="img">
         <use href="#hex-treasure-bg"/>
         <use href="#hex-treasure-top"/>
     </g>
 
-    <g id="hex-tile-treasure-top-left" class="img">
+    <g id="hexTileTreasureTopLeft" class="img">
         <use href="#hex-treasure-bg"/>
         <use href="#hex-treasure-top-left"/>
     </g>
 
-    <g id="hex-tile-treasure-top-right" class="img">
+    <g id="hexTileTreasureTopRight" class="img">
         <use href="#hex-treasure-bg"/>
         <use href="#hex-treasure-top-right"/>
     </g>
 
-    <use id="hex-tile-decorator-corner-right" class="img" href="#hex-decorator-corner-right"/>
-    <use id="hex-tile-decorator-corner-left" class="img" href="#hex-decorator-corner-left"/>
-    <use id="hex-tile-decorator-corner-top-left" class="img" href="#hex-decorator-corner-top-left"/>
-    <use id="hex-tile-decorator-corner-top-right" class="img" href="#hex-decorator-corner-top-right"/>
-    <use id="hex-tile-decorator-corner-bottom-left" class="img" href="#hex-decorator-corner-bottom-left"/>
-    <use id="hex-tile-decorator-corner-bottom-right" class="img" href="#hex-decorator-corner-bottom-right"/>
+    <use id="hexTileDecoratorCornerRight" class="img" href="#hex-decorator-corner-right"/>
+    <use id="hexTileDecoratorCornerLeft" class="img" href="#hex-decorator-corner-left"/>
+    <use id="hexTileDecoratorCornerTopLeft" class="img" href="#hex-decorator-corner-top-left"/>
+    <use id="hexTileDecoratorCornerTopRight" class="img" href="#hex-decorator-corner-top-right"/>
+    <use id="hexTileDecoratorCornerBottomLeft" class="img" href="#hex-decorator-corner-bottom-left"/>
+    <use id="hexTileDecoratorCornerBottomRight" class="img" href="#hex-decorator-corner-bottom-right"/>
 
-    <use id="hex-tile-decorator-line-empty-top" class="img line-color" href="#hex-decorator-line-empty-top"/>
-    <use id="hex-tile-decorator-line-empty-bottom" class="img line-color" href="#hex-decorator-line-empty-bottom"/>
-    <use id="hex-tile-decorator-line-empty-left-top" class="img line-color" href="#hex-decorator-line-empty-left-top"/>
-    <use id="hex-tile-decorator-line-empty-left-bottom" class="img line-color" href="#hex-decorator-line-empty-left-bottom"/>
-    <use id="hex-tile-decorator-line-empty-right-bottom" class="img line-color" href="#hex-decorator-line-empty-right-bottom"/>
-    <use id="hex-tile-decorator-line-empty-right-top" class="img line-color" href="#hex-decorator-line-empty-right-top"/>
+    <use id="hexTileDecoratorLineEmptyTop" class="img line-color" href="#hex-decorator-line-empty-top"/>
+    <use id="hexTileDecoratorLineEmptyBottom" class="img line-color" href="#hex-decorator-line-empty-bottom"/>
+    <use id="hexTileDecoratorLineEmptyLeftTop" class="img line-color" href="#hex-decorator-line-empty-left-top"/>
+    <use id="hexTileDecoratorLineEmptyLeftBottom" class="img line-color" href="#hex-decorator-line-empty-left-bottom"/>
+    <use id="hexTileDecoratorLineEmptyRightBottom" class="img line-color" href="#hex-decorator-line-empty-right-bottom"/>
+    <use id="hexTileDecoratorLineEmptyRightTop" class="img line-color" href="#hex-decorator-line-empty-right-top"/>
 
-    <g id="hex-tile-decorator-gateway-left" class="img line-color-player1">
+    <g id="hexTileDecoratorGatewayLeft" class="img line-color-player1">
         <use href="#hex-decorator-gateway-left" />
         <use href="#token-place" />
     </g>
-    <g id="hex-tile-decorator-gateway-top-left" class="img line-color-player2">
+    <g id="hexTileDecoratorGatewayTopLeft" class="img line-color-player2">
         <use href="#hex-decorator-gateway-top-left" />
         <use href="#token-place" />
     </g>
-    <g id="hex-tile-decorator-gateway-top-right" class="img line-color-player3">
+    <g id="hexTileDecoratorGatewayTopRight" class="img line-color-player3">
         <use href="#hex-decorator-gateway-top-right" />
         <use href="#token-place" />
     </g>
-    <g id="hex-tile-decorator-gateway-right" class="img line-color-player4">
+    <g id="hexTileDecoratorGatewayRight" class="img line-color-player4">
         <use href="#hex-decorator-gateway-right" />
         <use href="#token-place" />
     </g>
-    <g id="hex-tile-decorator-gateway-bottom-right" class="img line-color">
+    <g id="hexTileDecoratorGatewayBottomRight" class="img line-color">
         <use href="#hex-decorator-gateway-bottom-right" />
         <use href="#token-place" />
     </g>
-    <g id="hex-tile-decorator-gateway-bottom-left" class="img line-color">
+    <g id="hexTileDecoratorGatewayBottomLeft" class="img line-color">
         <use href="#hex-decorator-gateway-bottom-left" />
-        <use href="#token-place" />
-    </g>
-    <g id="hex-tile-decorator-gateway-left" class="img line-color">
-        <use href="#hex-decorator-gateway-left" />
         <use href="#token-place" />
     </g>
 </svg>

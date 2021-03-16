@@ -1,22 +1,34 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styled from '@material-ui/styles/styled'
 import { Themed } from '../../../helpers/types'
 import { conditionalCSS } from '../../../helpers/conditionalCSS'
+import { green } from '@material-ui/core/colors'
 
-export const PlayerWrapper = styled(({ alt, ...props }) => <div {...props} />)(({
-  theme: { shape: { borderRadius }, shadows, spacing, breakpoints: { down } },
+interface PlayerProps {
+  alt?: boolean
+
+  onClick?(): void
+}
+
+const Player: FC<PlayerProps> = ({ alt, ...props }) => <div {...props} />
+
+Player.displayName = 'Player'
+
+export const PlayerWrapper = styled(Player)(({
+  theme: { shadows, spacing, breakpoints: { down } },
   alt,
-}: Themed<{ alt?: boolean }>) => conditionalCSS([
+}: Themed<PlayerProps>) => conditionalCSS([
   {
     position: 'relative',
-    borderRadius: borderRadius,
-    boxShadow: shadows[5],
+    borderRadius: '50%',
     boxSizing: 'border-box',
 
-    padding: spacing(4),
+    flex: 1,
+    padding: '1%',
 
     [down('xs')]: {
-      padding: spacing(1),
+      flex: '50%',
+      width: '50%',
     },
 
     '& > svg': {
@@ -26,24 +38,34 @@ export const PlayerWrapper = styled(({ alt, ...props }) => <div {...props} />)((
       },
     },
 
-    '& > img': {
-      display: 'block',
+    '&:hover > button': {
+      opacity: 1,
+      visibility: 'visible',
     },
 
-    '& > div': {
-      textAlign: 'center',
+    '@media (hover: none)': {
+      '&:hover > button': {
+        opacity: 0,
+        visibility: 'hidden',
+      },
+      '& > button': {
+        opacity: 1,
+        visibility: 'visible',
+        backgroundColor: 'transparent',
+      },
     },
   },
   [alt, {
-    cursor: 'pointer',
-
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column',
-
+    '& svg': {
+      color: green.A700
+    },
     '&:hover': {
       boxShadow: shadows[10],
     },
+    '@media (hover: none)': {
+      '&:hover': {
+        boxShadow: 'none',
+      },
+    }
   }],
 ]))

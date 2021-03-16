@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import styled from '@material-ui/styles/styled'
 import { Themed } from '../../../helpers/types'
 import { conditionalCSS } from '../../../helpers/conditionalCSS'
@@ -13,6 +13,7 @@ export interface TableCellStyledProps {
   empty?: boolean
   active?: boolean
   large?: boolean
+  children?: ReactNode
 }
 
 export const TableCellStyled = styled(
