@@ -5,6 +5,7 @@ import { useStore } from '../Store/HexProvider'
 import './Arena.css'
 import { Tile } from '../Tile/Tile'
 import { Seats } from '../Seats/Seats'
+import { GatewaySeats } from '../GatewaySeats/GatewaySeats'
 
 export const Arena: FC = observer(() => {
   const store = useStore()
@@ -30,6 +31,7 @@ export const Arena: FC = observer(() => {
         <Tile key={id} id={id} />
       ))}
       <Seats />
+      <GatewaySeats />
     </div>
   )
 })

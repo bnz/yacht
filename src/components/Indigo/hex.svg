@@ -397,31 +397,27 @@
     <use id="hexTileDecoratorLineEmptyBottom" class="img line-color" href="#hex-decorator-line-empty-bottom"/>
     <use id="hexTileDecoratorLineEmptyLeftTop" class="img line-color" href="#hex-decorator-line-empty-left-top"/>
     <use id="hexTileDecoratorLineEmptyLeftBottom" class="img line-color" href="#hex-decorator-line-empty-left-bottom"/>
-    <use id="hexTileDecoratorLineEmptyRightBottom" class="img line-color" href="#hex-decorator-line-empty-right-bottom"/>
+    <use id="hexTileDecoratorLineEmptyRightBottom" class="img line-color"
+         href="#hex-decorator-line-empty-right-bottom"/>
     <use id="hexTileDecoratorLineEmptyRightTop" class="img line-color" href="#hex-decorator-line-empty-right-top"/>
 
     <g id="hexTileDecoratorGatewayLeft" class="img line-color-player1">
-        <use href="#hex-decorator-gateway-left" />
-        <use href="#token-place" />
+        <use href="#hex-decorator-gateway-left"/>
+        <use href="#token-place"/>
     </g>
-    <g id="hexTileDecoratorGatewayTopLeft" class="img line-color-player2">
-        <use href="#hex-decorator-gateway-top-left" />
-        <use href="#token-place" />
-    </g>
-    <g id="hexTileDecoratorGatewayTopRight" class="img line-color-player3">
-        <use href="#hex-decorator-gateway-top-right" />
-        <use href="#token-place" />
-    </g>
+
+    <use id="hexTileDecoratorGatewayTopLeft" class="img" href="#hex-decorator-gateway-top-left"/>
+    <use id="hexTileDecoratorGatewayTopRight" class="img" href="#hex-decorator-gateway-top-right"/>
+
     <g id="hexTileDecoratorGatewayRight" class="img line-color-player4">
-        <use href="#hex-decorator-gateway-right" />
-        <use href="#token-place" />
+        <use href="#hex-decorator-gateway-right"/>
     </g>
     <g id="hexTileDecoratorGatewayBottomRight" class="img line-color">
-        <use href="#hex-decorator-gateway-bottom-right" />
-        <use href="#token-place" />
+        <use href="#hex-decorator-gateway-bottom-right"/>
+        <use href="#token-place"/>
     </g>
     <g id="hexTileDecoratorGatewayBottomLeft" class="img line-color">
-        <use href="#hex-decorator-gateway-bottom-left" />
-        <use href="#token-place" />
+        <use href="#hex-decorator-gateway-bottom-left"/>
+        <use href="#token-place"/>
     </g>
 </svg>
