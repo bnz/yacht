@@ -4,6 +4,7 @@ import { observer } from 'mobx-react'
 import { useStore } from '../Store/HexProvider'
 import './Arena.css'
 import { Tile } from '../Tile/Tile'
+import { Seats } from '../Seats/Seats'
 
 export const Arena: FC = observer(() => {
   const store = useStore()
@@ -28,6 +29,7 @@ export const Arena: FC = observer(() => {
       {store.arenaElement === null ? null : store.tileEntries.map(([id]) => (
         <Tile key={id} id={id} />
       ))}
+      <Seats />
     </div>
   )
 })

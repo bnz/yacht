@@ -40,6 +40,7 @@ export interface iHexStore {
   orientationType: OrientationType
   gamePhase: iGamePhaseStore
   playersStore: iPlayersStore
+  playerMove: PlayerMove
 
   dispose(): void
 

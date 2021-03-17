@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
-import './AspectRatio.css'
+import style from './AspectRatio.module.css'
 
 export const AspectRatio: FC = ({ children }) => (
-  <div className="aspect-ratio-container">
-    <div className="aspect-ratio-inner">
+  <div className={style.container}>
+    <div className={style.inner}>
       {children}
     </div>
   </div>

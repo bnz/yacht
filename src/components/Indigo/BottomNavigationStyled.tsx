@@ -16,7 +16,6 @@ export const BottomNavigationStyled = styled(BottomNavigation)(({
     bottom: `-${spacing(footerHeight)}px`,
     left: 0,
     right: 0,
-    outline: '1px solid #f00',
   },
   [up('sm')]: {
     height: spacing(footerHeight) - spacing(4),
@@ -25,6 +24,5 @@ export const BottomNavigationStyled = styled(BottomNavigation)(({
     transform: 'translate(-50%, 0)',
     borderRadius,
     width: spacing(75),
-    outline: '1px solid #00f',
   },
 }))

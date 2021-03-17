@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import './Sphere.css'
+import style from './Sphere.module.css'
 import { AspectRatio } from '../AspectRatio/AspectRatio'
 import cx from 'classnames'
 import { PlayerId } from '../types'
@@ -10,6 +10,6 @@ interface PlayerPurpleProps {
 
 export const Sphere: FC<PlayerPurpleProps> = ({ color }) => (
   <AspectRatio>
-    <div className={cx('sphere-wrapper', color)} />
+    <div className={cx(style.wrapper, style[color])} />
   </AspectRatio>
 )

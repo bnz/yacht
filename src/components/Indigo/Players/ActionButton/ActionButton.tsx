@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import ButtonBase from '@material-ui/core/ButtonBase'
-import './ActionButton.css'
+import style from './ActionButton.module.css'
 import cx from 'classnames'
 import useTheme from '@material-ui/core/styles/useTheme'
 
@@ -9,7 +9,7 @@ interface PlayerActionProps {
 }
 
 export const ActionButton: FC<PlayerActionProps> = ({ hidden, children }) => (
-  <ButtonBase className={cx('playerActionButton', { hidden }, useTheme().palette.type)}>
+  <ButtonBase className={cx(style.button, { [style.hidden]: hidden }, style[useTheme().palette.type])}>
     {children}
   </ButtonBase>
 )

@@ -7,7 +7,7 @@
   background-size: contain;
   filter: drop-shadow(0 0 1em rgba(68, 68, 68, .08));
   transition-property: transform, width, height;
-  transition-duration: 0.5s;
+  transition-duration: .2s;
   width: calc(var(--R) * 2);
   height: calc(var(--R) * 2 * 0.8660254);
 }

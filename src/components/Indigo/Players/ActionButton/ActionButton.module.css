@@ -1,4 +1,4 @@
-.playerActionButton {
+.button {
   position: absolute !important;
   top: 0;
   left: 0;
@@ -15,29 +15,29 @@
   justify-content: center !important;
 }
 
-.playerActionButton > svg {
+.button > svg {
   color: red;
   border-radius: 50%;
   width: 50%;
   height: 50%;
 }
 
-.playerActionButton.hidden {
+.button.hidden {
   opacity: 0;
   visibility: hidden;
 }
 
-.playerActionButton.hidden > svg {
+.button.hidden > svg {
   color: red;
   border-radius: 50%;
   width: 50%;
   height: 50%;
 }
 
-.playerActionButton.hidden.dark {
+.button.hidden.dark {
   background-color: rgba(0, 0, 0, .9);
 }
 
-.playerActionButton.hidden.light {
+.button.hidden.light {
   background-color: rgba(255, 255, 255, .9);
 }

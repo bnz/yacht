@@ -1,4 +1,4 @@
-.sphere-wrapper {
+.wrapper {
   --margin: 3%;
 
   position: relative;
@@ -10,7 +10,7 @@
   background-color: #daa520;
 }
 
-.sphere-wrapper::before {
+.wrapper::before {
   content: "";
   display: block;
   position: absolute;
@@ -21,23 +21,23 @@
   border-radius: 50%;
 }
 
-.sphere-wrapper.p-1::before {
+.wrapper.p-1::before {
   background: radial-gradient(circle, rgba(202, 0, 203, 1) 0%, rgba(128, 0, 128, 1) 31%, rgba(18, 0, 115, 1) 100%);
 }
 
-.sphere-wrapper.p-2::before {
+.wrapper.p-2::before {
   background: radial-gradient(circle, rgba(64, 224, 208, 1) 0%, rgba(64, 165, 224, 1) 100%);
 }
 
-.sphere-wrapper.p-3::before {
+.wrapper.p-3::before {
   background: radial-gradient(circle, rgba(255, 127, 80, 1) 0%, rgba(255, 80, 80, 1) 100%);
 }
 
-.sphere-wrapper.p-4::before {
+.wrapper.p-4::before {
   background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 215, 0, 1) 100%);
 }
 
-.sphere-wrapper::after {
+.wrapper::after {
   content: "";
   display: block;
   position: absolute;
@@ -52,27 +52,27 @@
 }
 
 @media (min-width: 600px) {
-  .sphere-wrapper::after {
+  .wrapper::after {
     box-shadow: inset 0 0 3em rgba(0, 0, 0, 1);
   }
 }
 
-.sphere-wrapper.p-1::after {
+.wrapper.p-1::after {
   background-image: url("./assets/purple.svg");
   background-size: 70% 70%;
 }
 
-.sphere-wrapper.p-2::after {
+.wrapper.p-2::after {
   background-image: url("./assets/turquoise.svg");
   background-size: 80% 80%;
 }
 
-.sphere-wrapper.p-3::after {
+.wrapper.p-3::after {
   background-image: url("./assets/coral.svg");
   background-size: 90% 90%;
 }
 
-.sphere-wrapper.p-4::after {
+.wrapper.p-4::after {
   background-image: url("./assets/white.svg");
   background-size: 75% 75%;
 }
