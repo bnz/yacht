@@ -13,7 +13,7 @@ export const Tile: FC<TileProps> = observer(({ id }) => {
   const store = useStore()
   const hex = store.tiles[id].hex
 
-  console.log('Tile:::render')
+  // console.log('Tile:::render')
 
   return (
     <div

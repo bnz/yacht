@@ -13,7 +13,7 @@ export const Arena: FC = observer(() => {
   const onMouseMove = useCallback(store.onMouseMove, [])
   const onClick = useCallback(store.onClick, [])
 
-  console.log('Arena:::render')
+  // console.log('Arena:::render')
 
   useEffect(() => {
     store.arenaElement = arenaRef.current

@@ -12,6 +12,7 @@ import {
   HexType,
   LineEmptyTiles,
   OrientationType,
+  PlayerId,
   PlayerMove,
   RouteTiles,
   Tile,
@@ -41,6 +42,7 @@ export interface iHexStore {
   gamePhase: iGamePhaseStore
   playersStore: iPlayersStore
   playerMove: PlayerMove
+  gates: Record<number, number>
 
   dispose(): void
 
@@ -55,6 +57,8 @@ export interface iHexStore {
   getBackgroundUrl(id: string): string
 
   startGame(): void
+
+  getGateway(position: number): PlayerId
 }
 
 export class HexStore implements iHexStore {
@@ -81,7 +85,8 @@ export class HexStore implements iHexStore {
       | 'routes'
       | '_leftTiles'
       | '_leftTilesInitialSet'
-      | 'storage'>(this, {
+      | 'storage'
+      | '_gates'>(this, {
       ratio: false,
       corners: false,
       emptyLines: false,
@@ -93,6 +98,7 @@ export class HexStore implements iHexStore {
       _leftTiles: false,
       _leftTilesInitialSet: false,
       storage: false,
+      _gates: false,
     })
 
     if (process.env.NODE_ENV === 'development') {
@@ -323,7 +329,7 @@ export class HexStore implements iHexStore {
     console.log('onClick')
 
     this.unHover()
-    this.tiles[this.hoveredTile].tile = RouteTiles.hexTileCrossroadHovered
+    this.tiles[this.hoveredTile].tile = RouteTiles.hexTileCrossroad
     this.tiles[this.hoveredTile].preSit = true
     this.saveTiles()
   }
@@ -419,8 +425,6 @@ export class HexStore implements iHexStore {
     ...this.storage.getOrApply<Tiles>('tiles', () => this.generateTiles(this.routes, HexType.route)),
   }
 
-  // tiles: Tiles = this._tiles
-
   get tileEntries(): [string, Tile][] {
     return Object.entries(this.tiles)
   }
@@ -433,6 +437,20 @@ export class HexStore implements iHexStore {
       }
     })
     this.storage.set('tiles', tilesToSave)
+  }
+
+  private _gates: Record<number, Record<number, number>> = {
+    2: { 1: 0, 2: 0, 3: 1, 4: 1, 5: 0, 6: 0, 7: 1, 8: 1, 9: 0, 10: 0, 11: 1, 12: 1 },
+    3: { 1: 0, 2: 0, 3: 0, 4: 1, 5: 2, 6: 2, 7: 2, 8: 0, 9: 1, 10: 1, 11: 1, 12: 2 },
+    4: { 1: 0, 2: 1, 3: 1, 4: 2, 5: 0, 6: 3, 7: 3, 8: 1, 9: 2, 10: 0, 11: 2, 12: 3 },
+  }
+
+  get gates(): Record<number, number> {
+    return this._gates[this.playersStore.players.length]
+  }
+
+  getGateway(position: number): PlayerId {
+    return this.playersStore.players[this.gates[position]].id
   }
 
 }

@@ -1,12 +1,11 @@
 .item {
   --S: calc(var(--R) * 2.5);
   --x: calc(var(--S) * 0.5);
-
   --X: calc(var(--x) * -1);
   --Y: var(--S);
-
   --y-margin: 0.1;
 
+  pointer-events: none;
   position: absolute;
   top: 0;
   left: 50%;
@@ -17,42 +16,42 @@
   transform: translate(var(--X), var(--Y));
 }
 
-.flat.item.p-1 {
+:global(.flat) .item.p-1 {
   --X: calc(var(--x) * -7);
   --Y: calc(var(--S) * var(--y-margin));
 }
 
-.pointy.item.p-1 {
+:global(.pointy) .item.p-1 {
   --X: calc(var(--x) * -6);
   --Y: calc(var(--S) * var(--y-margin));
 }
 
-.flat.item.p-2 {
+:global(.flat) .item.p-2 {
   --X: calc(var(--x) * 5);
   --Y: calc(var(--S) * var(--y-margin));
 }
 
-.pointy.item.p-2 {
+:global(.pointy) .item.p-2 {
   --X: calc(var(--x) * 4);
   --Y: calc(var(--S) * var(--y-margin));
 }
 
-.flat.item.p-3 {
+:global(.flat) .item.p-3 {
   --X: calc(var(--x) * 5);
   --Y: calc(var(--S) * (5 + var(--y-margin)));
 }
 
-.pointy.item.p-3 {
+:global(.pointy) .item.p-3 {
   --X: calc(var(--x) * 4);
   --Y: calc(var(--S) * 6);
 }
 
-.flat.item.p-4 {
+:global(.flat) .item.p-4 {
   --X: calc(var(--x) * -7);
   --Y: calc(var(--S) * (5 + var(--y-margin)));
 }
 
-.pointy.item.p-4 {
+:global(.pointy) .item.p-4 {
   --X: calc(var(--x) * -6);
   --Y: calc(var(--S) * 6);
 }
@@ -68,6 +67,7 @@
   --y: 0;
   --bg-color: rgba(0, 0, 0, 0.3);
 
+  pointer-events: none;
   position: absolute;
   top: 0;
   left: 50%;
@@ -76,53 +76,53 @@
   transform: translate(var(--x), var(--y));
 }
 
-.flat.highlight.visible {
+:global(.flat) .highlight.visible {
   width: var(--width);
   height: var(--height);
 }
 
-.pointy.highlight.visible {
+:global(.pointy) .highlight.visible {
   width: var(--height);
   height: var(--width);
 }
 
-.flat.highlight.p-1.visible {
+:global(.flat) .highlight.p-1.visible {
   --x: calc(var(--width) * -2);
   background: linear-gradient(120deg, var(--bg-color) 50%, transparent 50%);
 }
 
-.pointy.highlight.p-1.visible {
+:global(.pointy) .highlight.p-1.visible {
   --x: calc(var(--width) * -2 * var(--ratio));
   background: linear-gradient(150deg, var(--bg-color) 50%, transparent 50%);
 }
 
-.flat.highlight.p-2.visible {
+:global(.flat) .highlight.p-2.visible {
   --x: var(--width);
   background: linear-gradient(60deg, transparent 50%, var(--bg-color) 50%);
 }
 
-.pointy.highlight.p-2.visible {
+:global(.pointy) .highlight.p-2.visible {
   background: linear-gradient(30deg, transparent 50%, var(--bg-color) 50%);
 }
 
-.flat.highlight.p-3.visible {
+:global(.flat) .highlight.p-3.visible {
   --x: var(--width);
   --y: var(--height);
   background: linear-gradient(120deg, transparent 50%, var(--bg-color) 50%);
 }
 
-.pointy.highlight.p-3.visible {
+:global(.pointy) .highlight.p-3.visible {
   --y: calc(var(--height) * 2 * var(--ratio));
   background: linear-gradient(150deg, transparent 50%, var(--bg-color) 50%);
 }
 
-.flat.highlight.p-4.visible {
+:global(.flat) .highlight.p-4.visible {
   --x: calc(var(--width) * -2);
   --y: var(--height);
   background: linear-gradient(60deg, var(--bg-color) 50%, transparent 50%);
 }
 
-.pointy.highlight.p-4.visible {
+:global(.pointy) .highlight.p-4.visible {
   --x: calc(var(--width) * -2 * var(--ratio));
   --y: calc(var(--height) * 2 * var(--ratio));
   background: linear-gradient(30deg, var(--bg-color) 50%, transparent 50%);

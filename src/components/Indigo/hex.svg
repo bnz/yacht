@@ -401,23 +401,10 @@
          href="#hex-decorator-line-empty-right-bottom"/>
     <use id="hexTileDecoratorLineEmptyRightTop" class="img line-color" href="#hex-decorator-line-empty-right-top"/>
 
-    <g id="hexTileDecoratorGatewayLeft" class="img line-color-player1">
-        <use href="#hex-decorator-gateway-left"/>
-        <use href="#token-place"/>
-    </g>
-
+    <use id="hexTileDecoratorGatewayLeft" class="img" href="#hex-decorator-gateway-left"/>
     <use id="hexTileDecoratorGatewayTopLeft" class="img" href="#hex-decorator-gateway-top-left"/>
     <use id="hexTileDecoratorGatewayTopRight" class="img" href="#hex-decorator-gateway-top-right"/>
-
-    <g id="hexTileDecoratorGatewayRight" class="img line-color-player4">
-        <use href="#hex-decorator-gateway-right"/>
-    </g>
-    <g id="hexTileDecoratorGatewayBottomRight" class="img line-color">
-        <use href="#hex-decorator-gateway-bottom-right"/>
-        <use href="#token-place"/>
-    </g>
-    <g id="hexTileDecoratorGatewayBottomLeft" class="img line-color">
-        <use href="#hex-decorator-gateway-bottom-left"/>
-        <use href="#token-place"/>
-    </g>
+    <use id="hexTileDecoratorGatewayRight" class="img" href="#hex-decorator-gateway-right"/>
+    <use id="hexTileDecoratorGatewayBottomRight" class="img" href="#hex-decorator-gateway-bottom-right"/>
+    <use id="hexTileDecoratorGatewayBottomLeft" class="img" href="#hex-decorator-gateway-bottom-left"/>
 </svg>

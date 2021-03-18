@@ -1,4 +1,5 @@
 .item {
+  pointer-events: none;
   position: absolute;
   top: 0;
   left: 50%;
@@ -6,11 +7,8 @@
   flex-direction: column;
   justify-content: center;
   transform: translate(var(--X), var(--Y));
-
   transition-duration: .2s;
   transition-property: transform, width, height;
-
-  /*background-color: rgba(255, 153, 153, .5);*/
 }
 
 :global(.flat) .item {
@@ -53,7 +51,7 @@
 }
 
 :global(.pointy) .item.g-3 {
-  --X: calc(var(--x));
+  --X: calc(var(--x) * -3);
   --Y: calc(var(--y));
 }
 
@@ -63,10 +61,9 @@
 }
 
 :global(.pointy) .item.g-4 {
-  --X: calc(var(--x) * -3);
+  --X: calc(var(--x));
   --Y: calc(var(--y));
 }
-
 
 :global(.flat) .item.g-5 {
   --X: calc(var(--x) * -14);
@@ -78,7 +75,6 @@
   --Y: calc(var(--y) * 7);
 }
 
-
 :global(.flat) .item.g-6 {
   --X: calc(var(--x) * -14);
   --Y: calc(var(--y) * 9);
@@ -87,4 +83,64 @@
 :global(.pointy) .item.g-6 {
   --X: calc(var(--x) * 15);
   --Y: calc(var(--y) * 10);
+}
+
+:global(.flat) .item.g-7 {
+  --X: calc(var(--x) * -8);
+  --Y: calc(var(--y) * 15);
+}
+
+:global(.pointy) .item.g-7 {
+  --X: calc(var(--x) * 15);
+  --Y: calc(var(--y) * 22);
+}
+
+:global(.flat) .item.g-8 {
+  --X: calc(var(--x) * -5);
+  --Y: calc(var(--y) * 16);
+}
+
+:global(.pointy) .item.g-8 {
+  --X: calc(var(--x) * 13);
+  --Y: calc(var(--y) * 25);
+}
+
+:global(.flat) .item.g-9 {
+  --X: calc(var(--x) * 7);
+  --Y: calc(var(--y) * 16);
+}
+
+:global(.pointy) .item.g-9 {
+  --X: calc(var(--x) * 1);
+  --Y: calc(var(--y) * 31);
+}
+
+:global(.flat) .item.g-10 {
+  --X: calc(var(--x) * 10);
+  --Y: calc(var(--y) * 15);
+}
+
+:global(.pointy) .item.g-10 {
+  --X: calc(var(--x) * -3);
+  --Y: calc(var(--y) * 31);
+}
+
+:global(.flat) .item.g-11 {
+  --X: calc(var(--x) * 16);
+  --Y: calc(var(--y) * 9);
+}
+
+:global(.pointy) .item.g-11 {
+  --X: calc(var(--x) * -15);
+  --Y: calc(var(--y) * 25);
+}
+
+:global(.flat) .item.g-12 {
+  --X: calc(var(--x) * 16);
+  --Y: calc(var(--y) * 7);
+}
+
+:global(.pointy) .item.g-12 {
+  --X: calc(var(--x) * -17);
+  --Y: calc(var(--y) * 22);
 }

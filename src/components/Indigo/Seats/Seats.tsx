@@ -8,25 +8,29 @@ import cx from 'classnames'
 export const Seats: FC = observer(() => {
   const store = useStore()
 
+  // console.log('SEATS:::render')
+
   return (
     <>
-      {store.playersStore.entries.map(([, player], index) => (
-        <Fragment key={player.id}>
-          <div className={cx(
-            style.highlight,
-            style[`p-${index + 1}`],
-            style[store.orientationType],
-            { [style.visible]: player.id === store.playerMove[0] },
-          )} />
-          <div className={cx(
-            style.item,
-            style[`p-${index + 1}`],
-            style[store.orientationType],
-          )}>
-            <Sphere color={player.id} />
-          </div>
-        </Fragment>
-      ))}
+      {store.playersStore.entries.map(([, player], index) => {
+        // console.log('Seat:::render')
+
+        return (
+          <Fragment key={player.id}>
+            <div className={cx(
+              style.highlight,
+              style[`p-${index + 1}`],
+              { [style.visible]: player.id === store.playerMove[0] },
+            )} />
+            <div className={cx(
+              style.item,
+              style[`p-${index + 1}`],
+            )}>
+              <Sphere color={player.id} />
+            </div>
+          </Fragment>
+        )
+      })}
     </>
   )
 })
