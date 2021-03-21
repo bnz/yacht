@@ -1,7 +1,7 @@
 import { PaletteType } from '@material-ui/core'
 import { CommonColors } from '@material-ui/core/styles/createPalette'
 import { CSSProperties } from 'react'
-import { getItem } from '../../helpers/getItem'
+import { commonSettingsStorage } from '../../index'
 
 declare module '@material-ui/core/styles/createMuiTheme' {
 
@@ -41,7 +41,7 @@ export const myTheme = (theme: PaletteType, white: CommonColors['white']) => {
   const mainDarkBGColor = '#333'
 
   return {
-    game: getItem('game', false),
+    game: commonSettingsStorage.get('game', 'yacht'),
 
     drawerTabsCount: 4,
     drawerWidth: 42,

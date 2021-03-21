@@ -1,5 +1,21 @@
 import { Hex } from './Hexagons/Hex'
 
+export type Keys =
+  | 'orientation'
+  | 'phase'
+  | 'player-move'
+  | 'players'
+  | 'tiles'
+  | 'tiles-left'
+
+export type Values =
+  | OrientationType
+  | GamePhase
+  | PlayerMove
+  | Players
+  | Tiles
+  | TileNames[]
+
 export enum PlayerId {
   Player1 = 'p-1',
   Player2 = 'p-2',

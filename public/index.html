@@ -11,18 +11,20 @@
     <script>
       document.addEventListener('gesturestart', (e) => e.preventDefault(), false)
 
-      const game = localStorage.getItem('game')
+      const commonSettings = JSON.parse(localStorage.getItem('common-settings')) || {}
+
+      const game = commonSettings['game'] || 'yacht'
       if (game === 'indigo') {
-        document.title = 'Indigo board game'
+        document.title = 'Indigo'
       }
       if (game === 'yacht') {
-        document.title = 'Yacht dice game'
+        document.title = 'Yacht'
       }
 
       window.isDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
-      if (localStorage.getItem('theme-auto') === 'true') {
+      if (commonSettings['theme-auto']) {
         document.body.style.background = window.isDarkTheme ? '#303030' : '#fafafa'
-      } else if (localStorage.getItem('theme') === 'dark') {
+      } else if (commonSettings['theme'] && commonSettings['theme'] === 'dark') {
         document.body.style.background = '#303030'
       }
     </script>

@@ -1,6 +1,6 @@
 import { getRandomInt } from '../../../helpers/random'
 import { iLocalStorageMgmnt } from './LocalStorageMgmnt'
-import { Player, PlayerId, Players } from '../types'
+import { Keys, Player, PlayerId, Players, Values } from '../types'
 import { makeAutoObservable, runInAction } from 'mobx'
 import { arrayDiff } from '../../../helpers/arrayDiff'
 
@@ -22,7 +22,7 @@ export interface iPlayersStore {
 export class PlayersStore implements iPlayersStore {
 
   constructor(
-    private storage: iLocalStorageMgmnt,
+    private storage: iLocalStorageMgmnt<Keys, Values>,
   ) {
     makeAutoObservable<PlayersStore, 'playerIdToSVGMap'>(this, {
       playerIdToSVGMap: false,

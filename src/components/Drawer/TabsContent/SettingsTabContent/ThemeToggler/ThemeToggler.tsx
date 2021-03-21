@@ -5,18 +5,17 @@ import { ListItem } from '../ListParts/ListItem'
 import Switch from '@material-ui/core/Switch'
 import Checkbox from '@material-ui/core/Checkbox'
 import Tooltip from '@material-ui/core/Tooltip'
-import { getBooleanItem } from '../../../../../helpers/getItem'
-import { setItem } from '../../../../../helpers/setItem'
+import { commonSettingsStorage } from '../../../../../index'
 
 export const ThemeToggler: FC = () => {
-  const [checked, setChecked] = useState(getBooleanItem('theme-auto', true))
+  const [checked, setChecked] = useState(commonSettingsStorage.get('theme-auto', true))
   const cb = useCallback((fn) => {
     if (fn) {
       fn()
     }
-    const auto = getBooleanItem('theme-auto', true)
+    const auto = commonSettingsStorage.get('theme-auto', true)
     setChecked(!auto)
-    setItem('theme-auto', `${!auto}`)
+    commonSettingsStorage.set('theme-auto', !auto)
   }, [])
 
   return (

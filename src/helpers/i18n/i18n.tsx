@@ -1,4 +1,3 @@
-import { getItem } from '../getItem'
 import { Language, languageDefaultState } from '../../redux/reducers/language'
 import { i18nKeys } from './i18nKeys'
 import { rus } from './rus'
@@ -6,14 +5,15 @@ import { eng } from './eng'
 
 type I18n = (key: i18nKeys | string) => string
 
-const lang: Language = getItem('language') || languageDefaultState
+const commonSettings = JSON.parse(localStorage.getItem('common-settings') || JSON.stringify({
+  language: languageDefaultState,
+}))
 
-export type LanguageMap = {
-  [key in i18nKeys]: string
-}
+const lang: Language = commonSettings.language || languageDefaultState
 
-type LanguagesMap = {
-  [lang in Language]: LanguageMap}
+export type LanguageMap = Record<i18nKeys, string>
+
+type LanguagesMap = Record<Language, LanguageMap>
 
 const languagesMap: LanguagesMap = {
   rus,

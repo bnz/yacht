@@ -20,7 +20,7 @@ export interface Move {
   dicesSelected: Dices[]
 }
 
-interface History {
+export interface History {
   [playerId: string]: Move[]
 }
 

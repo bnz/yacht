@@ -1,50 +1,32 @@
-import { GamePhase, OrientationType, PlayerMove, Players, TileNames, Tiles } from '../types'
+export interface iLocalStorageMgmnt<K, V> {
+  get(key: K, fallback?: V): any | null
 
-type Keys =
-  | 'orientation'
-  | 'phase'
-  | 'player-move'
-  | 'players'
-  | 'tiles'
-  | 'tiles-left'
+  set(key: K, value: V): void
 
-type Value =
-  | OrientationType
-  | GamePhase
-  | PlayerMove
-  | Players
-  | Tiles
-  | TileNames[]
-
-export interface iLocalStorageMgmnt {
-  get(key: Keys): any | null
-
-  set(key: Keys, value: Value): void
-
-  getOrApply<T>(key: Keys, callback: () => T): T
+  getOrApply<T>(key: K, callback: () => T): T
 
   destroy(): void
 }
 
-export class LocalStorageMgmnt implements iLocalStorageMgmnt {
+export class LocalStorageMgmnt<K, V> implements iLocalStorageMgmnt<K, V> {
 
   constructor(
     private storageName: string,
   ) {
   }
 
-  get(key: Keys) {
+  get(key: K, fallback?: V) {
     const data = localStorage.getItem(this.storageName)
 
     if (data !== null) {
       const d = JSON.parse(data)
-      return d[key] === undefined ? null : d[key]
+      return d[key] === undefined ? fallback || null : d[key]
     }
 
-    return null
+    return fallback || null
   }
 
-  getOrApply<T>(key: Keys, callback: () => T): T {
+  getOrApply<T>(key: K, callback: () => T): T {
     if (this.get(key) !== null) {
       return this.get(key)
     }
@@ -54,11 +36,12 @@ export class LocalStorageMgmnt implements iLocalStorageMgmnt {
     return res
   }
 
-  set(key: Keys, value: Value) {
+  set(key: K, value: V) {
     const data = localStorage.getItem(this.storageName)
 
     if (data === null) {
       localStorage.setItem(this.storageName, JSON.stringify({
+        // @ts-ignore FIXME
         [key]: value,
       }))
     } else {

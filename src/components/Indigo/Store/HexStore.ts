@@ -10,7 +10,7 @@ import {
   Angles,
   CornersTiles,
   GatewayTiles,
-  HexType,
+  HexType, Keys,
   LineEmptyTiles,
   OrientationType,
   PlayerId,
@@ -21,6 +21,7 @@ import {
   TileNames,
   Tiles,
   TreasureT,
+  Values,
 } from '../types'
 import { debounce } from '../../../helpers/debounce'
 import svg from '../hex.svg'
@@ -116,7 +117,7 @@ export class HexStore implements iHexStore {
     console.log(toJS(this.playerMove))
   }
 
-  private storage: iLocalStorageMgmnt = new LocalStorageMgmnt('indigo-data')
+  private storage: iLocalStorageMgmnt<Keys, Values> = new LocalStorageMgmnt<Keys, Values>('indigo')
 
   playersStore: iPlayersStore = new PlayersStore(this.storage)
 

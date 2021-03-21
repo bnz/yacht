@@ -5,16 +5,15 @@ import MenuItem from '@material-ui/core/MenuItem'
 import { i18n } from '../../helpers/i18n/i18n'
 import Select from '@material-ui/core/Select'
 import { StyledProps } from '@material-ui/core/styles'
-import { getItem } from '../../helpers/getItem'
-import { setItem } from '../../helpers/setItem'
 import { Themed } from '../../helpers/types'
 import { stretch } from '../../helpers/css'
+import { commonSettingsStorage } from '../../index'
 
 const ChangeGameSelect: FC<StyledProps> = ({ className }) => {
-  const [age, setAge] = useState(getItem('game', false) || 'yacht')
+  const [age, setAge] = useState(commonSettingsStorage.get('game', 'yacht'))
   const handleChange = useCallback(({ target: { value } }: ChangeEvent<{ name?: string; value: unknown }>) => {
     setAge(value)
-    setItem('game', value as 'yacht' | 'indigo')
+    commonSettingsStorage.set('game', value as 'yacht' | 'indigo')
     // eslint-disable-next-line no-self-assign
     window.location = window.location
   }, [])

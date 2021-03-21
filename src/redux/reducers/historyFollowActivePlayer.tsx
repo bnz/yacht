@@ -7,7 +7,7 @@ enum Constants {
   TOGGLE_HISTORY_FOLLOW_ACTIVE_PLAYER = 'TOGGLE_HISTORY_FOLLOW_ACTIVE_PLAYER',
 }
 
-type HistoryFollowActivePlayer = boolean
+export type HistoryFollowActivePlayer = boolean
 
 export interface HistoryFollowActivePlayerState {
   historyFollowActivePlayer: HistoryFollowActivePlayer

@@ -1,7 +1,7 @@
 import { Store, Unsubscribe } from 'redux'
 import { State } from './defaultState'
-import { toString } from '../helpers/toString'
-import { setItem } from '../helpers/setItem'
+import { commonSettingsStorage } from '../index'
+import { yachtStorage } from '../components/App/Yacht'
 
 type Subscriptions = (store: Store<State>) => Unsubscribe
 
@@ -12,18 +12,18 @@ export const subscriptions: Subscriptions = ({ subscribe, getState }) => subscri
     historyFollowActivePlayer, activeFirst,
   } = getState()
 
-  setItem('gamePhase', gamePhase)
-  setItem('players', toString(players))
-  setItem('dices', toString(dices))
-  setItem('dicesSelected', toString(dicesSelected))
-  setItem('diceSize', toString(diceSize))
-  setItem('playerMove', toString(playerMove))
-  setItem('tableSize', toString(tableSize))
-  setItem('drawerOpened', toString(drawerOpened))
-  setItem('playerPoints', toString(playerPoints))
-  setItem('language', toString(language))
-  setItem('activeTab', toString(activeTab))
-  setItem('history', toString(history))
-  setItem('historyFollowActivePlayer', toString(historyFollowActivePlayer))
-  setItem('activeFirst', toString(activeFirst))
+  yachtStorage.set('gamePhase', gamePhase)
+  yachtStorage.set('players', players)
+  yachtStorage.set('dices', dices)
+  yachtStorage.set('dicesSelected', dicesSelected)
+  yachtStorage.set('diceSize', diceSize)
+  yachtStorage.set('playerMove', playerMove)
+  yachtStorage.set('history', history)
+  yachtStorage.set('tableSize', tableSize)
+  yachtStorage.set('playerPoints', playerPoints)
+  yachtStorage.set('activeTab', activeTab)
+  yachtStorage.set('historyFollowActivePlayer', historyFollowActivePlayer)
+  yachtStorage.set('activeFirst', activeFirst)
+  commonSettingsStorage.set('drawerOpened', drawerOpened)
+  commonSettingsStorage.set('language', language)
 })

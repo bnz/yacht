@@ -2,7 +2,7 @@ import { gamePhaseDefaultState } from './reducers/gamePhase'
 import { playersDefaultState } from './reducers/players'
 import { dicesDefaultState } from './reducers/dices'
 import { dicesSelectedDefaultState } from './reducers/dicesSelected'
-import { getBooleanItem, getItem } from '../helpers/getItem'
+import { getBooleanItem } from '../helpers/getItem'
 import { loadingDefaultState } from './reducers/loading'
 import { diceSizeDefaultState } from './reducers/diceSize'
 import { combinationsDefaultState } from './reducers/combinations'
@@ -35,24 +35,42 @@ export let historyFollowActivePlayer: boolean
 export let activeFirst: boolean
 
 try {
-  gamePhase = getItem('gamePhase', false) || gamePhase
-  players = getItem('players') || players
-  dices = getItem('dices') || dices
-  dicesSelected = getItem('dicesSelected') || dicesSelected
-  diceSize = getItem('diceSize') || diceSize
-  combinations = getItem('combinations') || combinations
-  playerMove = getItem('playerMove') || playerMove
-  tableSize = getItem('tableSize') || tableSize
-  playerPoints = getItem('playerPoints') || playerPoints
-  language = getItem('language') || language
-  activeTab = getItem('activeTab') || activeTab
-  history = getItem('history') || history
+  const commonSettings = JSON.parse(localStorage.getItem('common-settings') || JSON.stringify({
+    language,
+    drawerOpened: drawerOpenedDefaultState,
+  }))
 
+  language = commonSettings.language || language
+  drawerOpened = commonSettings.drawerOpened || drawerOpenedDefaultState
+
+  const yacht = JSON.parse(localStorage.getItem('yacht') || JSON.stringify({
+    gamePhase,
+    history,
+    players,
+    dices,
+    dicesSelected,
+    diceSize,
+    playerMove,
+    combinations,
+    tableSize,
+    playerPoints,
+    activeTab,
+  }))
+
+  gamePhase = yacht.gamePhase || gamePhase
+  players = yacht.players || players
+  dices = yacht.dices || dices
+  dicesSelected = yacht.dicesSelected || dicesSelected
+  diceSize = yacht.diceSize || diceSize
+  combinations = yacht.combinations || combinations
+  playerMove = yacht.playerMove || playerMove
+  tableSize = yacht.tableSize || tableSize
+  playerPoints = yacht.playerPoints || playerPoints
+  activeTab = yacht.activeTab || activeTab
+  history = yacht.history || history
+  historyFollowActivePlayer = yacht.historyFollowActivePlayer || historyFollowActivePlayerDefaultState
+  activeFirst = yacht.activeFirst || activeFirstDefaultState
   loading = getBooleanItem('loading', loadingDefaultState)
-  drawerOpened = getBooleanItem('drawerOpened', drawerOpenedDefaultState)
-  historyFollowActivePlayer = getBooleanItem('historyFollowActivePlayer', historyFollowActivePlayerDefaultState)
-  activeFirst = getBooleanItem('activeFirst', activeFirstDefaultState)
-
 } catch (e) {
   console.error(e)
 }
