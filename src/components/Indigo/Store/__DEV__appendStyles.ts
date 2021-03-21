@@ -8,7 +8,7 @@ export class __DEV__appendStyles {
     private smallSide: number,
     private largeSide: number,
     private ratio: number,
-    private tiles: Tiles
+    private tiles: Tiles,
   ) {
     this.appendStyles()
   }
@@ -42,7 +42,7 @@ export class __DEV__appendStyles {
 
     Object.entries(this.tiles).forEach(([, { hex }]) => {
       const { x, y } = layout.hexToPixel(hex)
-      arr.push(`.${orientation} [data-q="${hex.q}"][data-r="${hex.r}"] { transform: translate(calc(${x - 1} * var(--R)), calc(${y - this.ratio} * var(--R))${isPointy ? `) rotate(-30deg)` : ')'}; }`,)
+      arr.push(`.${orientation} [data-q="${hex.q}"][data-r="${hex.r}"] { transform: translate(calc(${x - 1} * var(--R)), calc(${y - this.ratio} * var(--R))${isPointy ? `) rotate(-30deg)` : ')'}; }`)
     })
 
     return arr.join('\n')

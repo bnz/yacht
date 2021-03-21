@@ -8,23 +8,20 @@ import cx from 'classnames'
 export const Seats: FC = observer(() => {
   const store = useStore()
 
-  // console.log('SEATS:::render')
-
   return (
     <>
       {store.playersStore.entries.map(([, player], index) => {
-        // console.log('Seat:::render')
         const playerClass = style[`p-${index + 1}`]
-        const visible = player.id === store.playerMove[0]
+        const visible = { [style.visible]: player.id === store.playerMove[0] }
 
         return (
           <Fragment key={player.id}>
-            <div className={cx(style.highlight, playerClass, { [style.visible]: visible })} />
+            <div className={cx(style.highlight, playerClass, visible)} />
             <div className={cx(style.item, playerClass)}>
               <Sphere color={player.id} />
             </div>
             <div
-              className={cx(style.hex, playerClass, { [style.visible]: visible })}
+              className={cx(style.hex, playerClass, visible)}
               style={store.playerMoveRouteTile}
             />
           </Fragment>

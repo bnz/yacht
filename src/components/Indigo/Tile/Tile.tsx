@@ -2,8 +2,7 @@ import React, { FC } from 'react'
 import { observer } from 'mobx-react'
 import { useStore } from '../Store/HexProvider'
 import './Tile.css'
-
-// import './TileCoords.css'
+import './TileCoords.css'
 
 interface TileProps {
   id: string

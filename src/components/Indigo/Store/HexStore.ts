@@ -7,10 +7,11 @@ import { Hex } from '../Hexagons/Hex'
 import {
   AllT,
   AllTiles,
-  Angles,
+  Angle,
   CornersTiles,
   GatewayTiles,
-  HexType, Keys,
+  HexType,
+  Keys,
   LineEmptyTiles,
   OrientationType,
   PlayerId,
@@ -27,11 +28,9 @@ import { debounce } from '../../../helpers/debounce'
 import svg from '../hex.svg'
 import { iLocalStorageMgmnt, LocalStorageMgmnt } from './LocalStorageMgmnt'
 import { GamePhaseStore, iGamePhaseStore } from './GamePhase'
-import { __DEV__appendStyles } from './__DEV__appendStyles'
 import { shuffle } from '../../../helpers/shuffle'
 import { iPlayersStore, PlayersStore } from './PlayersStore'
-import capitalize from '@material-ui/core/utils/capitalize'
-import { getRandomInt } from '../../../helpers/random'
+import { getRandomInt as rand } from '../../../helpers/random'
 
 export interface iHexStore {
   layout: Layout
@@ -48,6 +47,8 @@ export interface iHexStore {
   playerMove: PlayerMove
   gates: Record<number, number>
   playerMoveRouteTile: CSSProperties | undefined
+  hoveredPoints: { x: number; y: number }
+  preSit: boolean
 
   dispose(): void
 
@@ -58,6 +59,22 @@ export interface iHexStore {
   onMouseMove(event: MouseEvent<HTMLDivElement>): void
 
   onClick(): void
+
+  cancelPreSitButton(e: MouseEvent<HTMLButtonElement>): void
+
+  cancelPreSit(): void
+
+  applySitButton(e: MouseEvent<HTMLButtonElement>): void
+
+  applySit(): void
+
+  rotateLeftButton(e: MouseEvent<HTMLButtonElement>): void
+
+  rotateLeft(): void
+
+  rotateRightButton(e: MouseEvent<HTMLButtonElement>): void
+
+  rotateRight(): void
 
   toggleOrientation(): void
 
@@ -110,11 +127,9 @@ export class HexStore implements iHexStore {
       tileNameToAngle: false,
     })
 
-    if (process.env.NODE_ENV === 'development') {
-      new __DEV__appendStyles(this.smallSide, this.largeSide, this.ratio, this.tiles)
-    }
-
-    console.log(toJS(this.playerMove))
+    // if (process.env.NODE_ENV === 'development') {
+    //   new __DEV__appendStyles(this.smallSide, this.largeSide, this.ratio, this.tiles)
+    // }
   }
 
   private storage: iLocalStorageMgmnt<Keys, Values> = new LocalStorageMgmnt<Keys, Values>('indigo')
@@ -143,37 +158,39 @@ export class HexStore implements iHexStore {
   }
 
   private leftTilesInitialSet: Record<TileNames, 6 | 14> = {
-    shuriken: 6,
-    crossroad: 6,
-    turtle: 14,
-    lizard: 14,
-    human: 14,
+    Shuriken: 6,
+    Crossroad: 6,
+    Turtle: 14,
+    Lizard: 14,
+    Human: 14,
   }
 
-  private tileNameToAngle: Record<TileNames, Angles[]> = {
-    lizard: [0, 60, 120],
-    shuriken: [0, 60],
-    crossroad: [],
-    turtle: [0, 60, 120],
-    human: [0, 60, 120, 180, 240, 300],
+  private tileNameToAngle: Record<TileNames, Angle[]> = {
+    Shuriken: [0, 60],
+    Crossroad: [],
+    Turtle: [0, 60, 120],
+    Lizard: [0, 60, 120],
+    Human: [0, 60, 120, 180, 240, 300],
+  }
+
+  private randAngle(tile: TileNames): number {
+    return rand(0, this.tileNameToAngle[tile].length - 1)
   }
 
   private leftTiles = this.storage.getOrApply<TileNames[]>('tiles-left', this.generateLeftTiles)
 
-  get randomTile(): RouteTiles | undefined {
+  get randomTile(): string | undefined {
     const tile = this.leftTiles.pop()
-    let angle: Angles | string = ''
-
     this.storage.set('tiles-left', this.leftTiles)
 
-    if (tile && this.tileNameToAngle[tile].length) {
-      angle = this.tileNameToAngle[tile][getRandomInt(0, this.tileNameToAngle[tile].length - 1)]
-      const key = ['hexTile', capitalize(tile), angle,
-        // 'Hovered',
-      ].join('')
-
-      // @ts-ignore
-      return RouteTiles[key]
+    if (tile) {
+      if (this.tileNameToAngle[tile].length) {
+        return [
+          tile,
+          this.tileNameToAngle[tile][this.randAngle(tile)],
+        ].join('-')
+      }
+      return tile
     }
 
     return undefined
@@ -181,9 +198,7 @@ export class HexStore implements iHexStore {
 
   private _playerMove = this.storage.getOrApply<PlayerMove>(
     'player-move',
-    () => {
-      return [this.playersStore.players[0].id, this.randomTile]
-    },
+    () => [this.playersStore.players[0].id, this.randomTile],
   )
 
   get playerMove() {
@@ -193,6 +208,10 @@ export class HexStore implements iHexStore {
   set playerMove(move: PlayerMove) {
     this._playerMove = move
     this.storage.set('player-move', this.playerMove)
+  }
+
+  private get playerMoveTile() {
+    return this.playerMove[1] ? ['hexTile', this.playerMove[1].replace('-', '')].join('') : undefined
   }
 
   private _arenaElement: HTMLDivElement | null = null
@@ -254,6 +273,12 @@ export class HexStore implements iHexStore {
     this._hoveredTile = hoveredTile
   }
 
+  get hoveredPoints() {
+    const [_q, _r] = this.hoveredTile.split(',')
+    const { x, y } = this.layout.hexToPixel(this.toHex(parseInt(_q, 10) || 0, parseInt(_r, 10) || 0))
+    return { x, y }
+  }
+
   private _R = 0
 
   get R() {
@@ -262,6 +287,16 @@ export class HexStore implements iHexStore {
 
   set R(R) {
     this._R = R
+  }
+
+  private _preSit = false
+
+  get preSit() {
+    return this._preSit
+  }
+
+  set preSit(preSit) {
+    this._preSit = preSit
   }
 
   get isPointy() {
@@ -322,27 +357,17 @@ export class HexStore implements iHexStore {
 
   getBackgroundUrl(id: string): CSSProperties {
     const tile = this.tiles[id].tile
-    return this.cssBgUrl(`${svg}#${(tile !== undefined && AllTiles[tile] && AllTiles[tile]) || 'hex-tile-default-bg'}`)
+    return this.cssBgUrl([
+      svg,
+      '#',
+      (tile !== undefined && AllTiles[tile] && AllTiles[tile]) || 'hex-tile-default-bg',
+    ].join(''))
   }
 
   get playerMoveRouteTile(): CSSProperties | undefined {
-    // if (this.playerMove[1] !== null) {
-    //   const tile = this.playerMove[1]
-    //   const angle = this.tileNameToAngle[tile].length
-    //     ? this.tileNameToAngle[tile][getRandomInt(0, this.tileNameToAngle[tile].length - 1)]
-    //     : ''
-    //
-    //   return this.cssBgUrl([
-    //     svg,
-    //     '#',
-    //     [
-    //       'hexTile',
-    //       capitalize(this.playerMove[1]),
-    //       angle,
-    //       // 'Hovered',
-    //     ].join(''),
-    //   ].join(''))
-    // }
+    if (this.playerMove[1]) {
+      return this.cssBgUrl([svg, '#', this.playerMoveTile].join(''))
+    }
     return undefined
   }
 
@@ -353,7 +378,8 @@ export class HexStore implements iHexStore {
 
   private hover() {
     this.tiles[this.hoveredTile].hovered = true
-    this.tiles[this.hoveredTile].tile = RouteTiles.hexTileCrossroadHovered
+    // @ts-ignore FIXME
+    this.tiles[this.hoveredTile].tile = RouteTiles[[this.playerMoveTile, 'Hovered'].join('')]
   }
 
   private get isRouteTile(): boolean {
@@ -361,13 +387,18 @@ export class HexStore implements iHexStore {
   }
 
   nextMove = () => {
-    console.log('nextMove')
+    const index = this.playersStore.entries.findIndex(([, { id }]) => id === this.playerMove[0])
+    const keys = Object.keys(this.playersStore.players)
+    const nextKey = parseInt(keys[keys.length - 1 > index ? index + 1 : 0], 10)
+    this.playerMove = [this.playersStore.players[nextKey].id, this.randomTile]
   }
 
   onMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (this.preSit) {
+      return
+    }
     const rect = e.currentTarget.getBoundingClientRect() as DOMRect
     const hex = this.layout.pixelToHex({ x: e.pageX - rect.x, y: e.pageY - rect.y }).round()
-
     if (`${hex.q},${hex.r}` !== this.hoveredTile) {
       if (this.tiles[this.hoveredTile] && this.tiles[this.hoveredTile].hovered) {
         this.unHover()
@@ -380,21 +411,70 @@ export class HexStore implements iHexStore {
   }
 
   onClick = () => {
-    if (!this.isRouteTile) {
-      console.log('prevent')
+    if (this.preSit || !this.isRouteTile || !this.tiles[this.hoveredTile].hovered) {
       return
     }
+    this.preSit = true
+  }
 
-    // if (this.tiles[this.hoveredTile].preSit) {
-    // }
+  cancelPreSitButton = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
+    this.cancelPreSit()
+  }
 
-    console.log('onClick')
+  cancelPreSit = () => {
+    this.preSit = false
+    this.unHover()
+  }
 
+  applySitButton = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
+    this.applySit()
+  }
 
-    // this.unHover()
-    // this.tiles[this.hoveredTile].tile = RouteTiles.hexTileCrossroad
-    // this.tiles[this.hoveredTile].preSit = true
-    // this.saveTiles()
+  applySit = () => {
+    this.preSit = false
+    // @ts-ignore FIXME
+    this.tiles[this.hoveredTile].tile = RouteTiles[this.playerMoveTile]
+    delete this.tiles[this.hoveredTile].hovered
+    this.saveTiles()
+    this.nextMove()
+  }
+
+  rotateLeftButton = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
+    this.rotateLeft()
+  }
+
+  rotateLeft = () => {
+    if (this.playerMove[1]) {
+      const [tile, angle] = this.playerMove[1].split('-') as [TileNames, string]
+      const angles = this.tileNameToAngle[tile]
+      const index = this.tileNameToAngle[tile].findIndex((a) => a === parseInt(angle, 10) as Angle)
+      const nextAngle = angles[index === angles.length - 1 ? 0 : index + 1]
+      const nextTile = [tile, nextAngle].join('-')
+      this.playerMove = [this.playerMove[0], nextTile]
+      // @ts-ignore FIXME
+      this.tiles[this.hoveredTile].tile = RouteTiles[[this.playerMoveTile, 'Hovered'].join('')]
+    }
+  }
+
+  rotateRightButton = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
+    this.rotateRight()
+  }
+
+  rotateRight = () => {
+    if (this.playerMove[1]) {
+      const [tile, angle] = this.playerMove[1].split('-') as [TileNames, string]
+      const angles = this.tileNameToAngle[tile]
+      const index = this.tileNameToAngle[tile].findIndex((a) => a === parseInt(angle, 10) as Angle)
+      const nextAngle = angles[index === 0 ? angles.length - 1 : index - 1]
+      const nextTile = [tile, nextAngle].join('-')
+      this.playerMove = [this.playerMove[0], nextTile]
+      // @ts-ignore FIXME
+      this.tiles[this.hoveredTile].tile = RouteTiles[[this.playerMoveTile, 'Hovered'].join('')]
+    }
   }
 
   private toHex = (q: number, r: number) => new Hex(q, r, (q + r) * -1)

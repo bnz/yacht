@@ -42,24 +42,7 @@ export enum GamePhase {
   IN_PLAY,
 }
 
-export type RouteTileNames =
-  | 'shuriken-0'
-  | 'shuriken-60'
-  | 'crossroad'
-  | 'turtle-0'
-  | 'turtle-60'
-  | 'turtle-120'
-  | 'lizard-0'
-  | 'lizard-60'
-  | 'lizard-120'
-  | 'human-0'
-  | 'human-60'
-  | 'human-120'
-  | 'human-180'
-  | 'human-240'
-  | 'human-300'
-
-export type PlayerMove = [PlayerId, RouteTiles?]
+export type PlayerMove = [PlayerId, string?]
 
 export type OrientationType = 'flat' | 'pointy'
 
@@ -103,11 +86,11 @@ export enum GatewayTiles {
 export type Tiles = Record<string, Tile>
 
 export type TileNames =
-  | 'shuriken'
-  | 'crossroad'
-  | 'turtle'
-  | 'lizard'
-  | 'human'
+  | 'Shuriken'
+  | 'Crossroad'
+  | 'Turtle'
+  | 'Lizard'
+  | 'Human'
 
 export enum HexType {
   decorator,
@@ -119,7 +102,7 @@ export enum HexType {
   center
 }
 
-export type Angles = 0 | 60 | 120 | 180 | 240 | 300
+export type Angle = 0 | 60 | 120 | 180 | 240 | 300
 
 export enum RouteTiles {
   hexTileCrossroad = 25,
@@ -175,5 +158,4 @@ export interface Tile {
   type: HexType
   tile?: AllT
   hovered?: boolean
-  preSit?: boolean
 }

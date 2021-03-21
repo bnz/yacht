@@ -6,14 +6,13 @@ import './Arena.css'
 import { Tile } from '../Tile/Tile'
 import { Seats } from '../Seats/Seats'
 import { GatewaySeats } from '../GatewaySeats/GatewaySeats'
+import { TileActions } from '../TileActions/TileActions'
 
 export const Arena: FC = observer(() => {
   const store = useStore()
   const arenaRef = useRef<HTMLDivElement | null>(null)
   const onMouseMove = useCallback(store.onMouseMove, [])
   const onClick = useCallback(store.onClick, [])
-
-  // console.log('Arena:::render')
 
   useEffect(() => {
     store.arenaElement = arenaRef.current
@@ -34,6 +33,9 @@ export const Arena: FC = observer(() => {
           ))}
           <Seats />
           <GatewaySeats />
+          {store.preSit && (
+            <TileActions />
+          )}
         </>
       )}
     </div>

@@ -150,7 +150,7 @@
 
 .hex.visible {
   --s: calc(var(--R) * 1.5);
-  pointer-events: none;
+  /*pointer-events: none;*/
   background-repeat: no-repeat;
   background-size: contain;
   filter: drop-shadow(0 0 1em rgba(68, 68, 68, .08));
@@ -168,7 +168,7 @@
 }
 
 :global(.pointy) .hex {
-  transform: translate(var(--X), var(--Y)) rotate(30deg);
+  transform: translate(var(--X), var(--Y)) rotate(-30deg);
 }
 
 :global(.flat) .hex.p-1.visible {

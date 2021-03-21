@@ -1,0 +1,79 @@
+.root {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  --s: calc(var(--R) * 2);
+}
+
+.button {
+  font-size: calc(var(--R) * 0.6) !important;
+  --size: calc(var(--R) * 0.8);
+  width: var(--size) !important;
+  min-width: var(--size) !important;
+  height: var(--size) !important;
+  min-height: var(--size) !important;
+  background-color: rgba(51, 51, 51, .7) !important;
+}
+
+.button > span > svg {
+  font-size: inherit;
+}
+
+.button.left {
+  position: absolute;
+  top: 50%;
+  left: 105%;
+  transform: translate(0, -50%);
+}
+
+.button.left svg {
+  color: #43a047;
+}
+
+.button.right {
+  position: absolute;
+  top: 50%;
+  right: 105%;
+  transform: translate(0, -50%);
+}
+
+.button.right svg {
+  color: #e53935;
+}
+
+.button.top {
+  position: absolute;
+  bottom: 105%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.button.bottom {
+  position: absolute;
+  top: 105%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.button.top svg,
+.button.bottom svg {
+  color: #fdd835;
+}
+
+:global(.flat) .container {
+  width: var(--s);
+  height: calc(var(--s) * var(--ratio));
+}
+
+:global(.pointy) .container {
+  width: calc(var(--s) * var(--ratio));
+  height: var(--s);
+}

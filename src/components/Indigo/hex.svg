@@ -3,14 +3,8 @@
         <style>
             .img { display: none }
             .img:target { display: inline }
-            .line-color-player1 { fill: #ffbe37; }
-            .line-color-player2 { fill: #388e3c; }
-            .line-color-player3 { fill: #e6ebf0; }
-            .line-color-player4 { fill: #ff6955; }
             .line-color { fill: #f99; }
-
             .treasure-bg { fill: #4682b4; }
-
             .line-color2 { fill: #daa520; }
         </style>
 
