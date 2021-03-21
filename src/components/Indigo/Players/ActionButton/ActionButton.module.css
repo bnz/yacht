@@ -8,7 +8,7 @@
   width: 100%;
   cursor: pointer !important;
   transition-property: opacity;
-  transition-duration: .2s;
+  transition-duration: var(--duration);
   display: flex !important;
   flex-direction: column;
   align-content: center;

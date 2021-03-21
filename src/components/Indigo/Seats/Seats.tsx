@@ -14,20 +14,19 @@ export const Seats: FC = observer(() => {
     <>
       {store.playersStore.entries.map(([, player], index) => {
         // console.log('Seat:::render')
+        const playerClass = style[`p-${index + 1}`]
+        const visible = player.id === store.playerMove[0]
 
         return (
           <Fragment key={player.id}>
-            <div className={cx(
-              style.highlight,
-              style[`p-${index + 1}`],
-              { [style.visible]: player.id === store.playerMove[0] },
-            )} />
-            <div className={cx(
-              style.item,
-              style[`p-${index + 1}`],
-            )}>
+            <div className={cx(style.highlight, playerClass, { [style.visible]: visible })} />
+            <div className={cx(style.item, playerClass)}>
               <Sphere color={player.id} />
             </div>
+            <div
+              className={cx(style.hex, playerClass, { [style.visible]: visible })}
+              style={store.playerMoveRouteTile}
+            />
           </Fragment>
         )
       })}

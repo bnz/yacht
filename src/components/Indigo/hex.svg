@@ -314,26 +314,46 @@
         </g>
     </defs>
 
-    <g id="hex-tile-lizard-0" class="img">
+    <!-- LIZARD -->
+
+    <g id="hexTileLizard0" class="img">
         <use href="#hex-main-bg"/>
         <use href="#hex-line-0"/>
         <use href="#hex-arc-top"/>
         <use href="#hex-arc-bottom"/>
     </g>
-
-    <g id="hex-tile-lizard-60" class="img">
+    <g id="hexTileLizard0Hovered" class="img">
+        <use href="#hex-default-bg"/>
+        <use href="#hex-line-0"/>
+        <use href="#hex-arc-top"/>
+        <use href="#hex-arc-bottom"/>
+    </g>
+    <g id="hexTileLizard60" class="img">
         <use href="#hex-main-bg"/>
         <use href="#hex-line-60"/>
         <use href="#hex-arc-top-right"/>
         <use href="#hex-arc-bottom-left"/>
     </g>
-
-    <g id="hex-tile-lizard-120" class="img">
+    <g id="hexTileLizard60Hovered" class="img">
+        <use href="#hex-default-bg"/>
+        <use href="#hex-line-60"/>
+        <use href="#hex-arc-top-right"/>
+        <use href="#hex-arc-bottom-left"/>
+    </g>
+    <g id="hexTileLizard120" class="img">
         <use href="#hex-main-bg"/>
         <use href="#hex-line-120"/>
         <use href="#hex-arc-bottom-right"/>
         <use href="#hex-arc-top-left"/>
     </g>
+    <g id="hexTileLizard120Hovered" class="img">
+        <use href="#hex-default-bg"/>
+        <use href="#hex-line-120"/>
+        <use href="#hex-arc-bottom-right"/>
+        <use href="#hex-arc-top-left"/>
+    </g>
+
+    <!-- CROSSROAD -->
 
     <g id="hexTileCrossroad" class="img">
         <use href="#hex-main-bg"/>
@@ -341,7 +361,6 @@
         <use href="#hex-line-60"/>
         <use href="#hex-line-120"/>
     </g>
-
     <g id="hexTileCrossroadHovered" class="img">
         <use href="#hex-default-bg"/>
         <use href="#hex-line-0"/>
@@ -349,42 +368,183 @@
         <use href="#hex-line-120"/>
     </g>
 
+    <!-- HUMAN -->
+
+    <g id="hexTileHuman0" class="img">
+        <use href="#hex-main-bg"/>
+        <use href="#hex-arc-bottom"/>
+        <use href="#hex-arc-bottom-right"/>
+        <use href="#hex-circle-top-left"/>
+    </g>
+    <g id="hexTileHuman0Hovered" class="img">
+        <use href="#hex-default-bg"/>
+        <use href="#hex-arc-bottom"/>
+        <use href="#hex-arc-bottom-right"/>
+        <use href="#hex-circle-top-left"/>
+    </g>
+    <g id="hexTileHuman60" class="img">
+        <use href="#hex-main-bg"/>
+        <use href="#hex-arc-bottom"/>
+        <use href="#hex-arc-bottom-left"/>
+        <use href="#hex-circle-top-right"/>
+    </g>
+    <g id="hexTileHuman60Hovered" class="img">
+        <use href="#hex-default-bg"/>
+        <use href="#hex-arc-bottom"/>
+        <use href="#hex-arc-bottom-left"/>
+        <use href="#hex-circle-top-right"/>
+    </g>
+    <g id="hexTileHuman120" class="img">
+        <use href="#hex-main-bg"/>
+        <use href="#hex-arc-bottom-left"/>
+        <use href="#hex-arc-top-left"/>
+        <use href="#hex-circle-center-right"/>
+    </g>
+    <g id="hexTileHuman120Hovered" class="img">
+        <use href="#hex-default-bg"/>
+        <use href="#hex-arc-bottom-left"/>
+        <use href="#hex-arc-top-left"/>
+        <use href="#hex-circle-center-right"/>
+    </g>
+    <g id="hexTileHuman180" class="img">
+        <use href="#hex-main-bg"/>
+        <use href="#hex-arc-top-left"/>
+        <use href="#hex-arc-top"/>
+        <use href="#hex-circle-bottom-right"/>
+    </g>
+    <g id="hexTileHuman180Hovered" class="img">
+        <use href="#hex-default-bg"/>
+        <use href="#hex-arc-top-left"/>
+        <use href="#hex-arc-top"/>
+        <use href="#hex-circle-bottom-right"/>
+    </g>
+    <g id="hexTileHuman240" class="img">
+        <use href="#hex-main-bg"/>
+        <use href="#hex-arc-top"/>
+        <use href="#hex-arc-top-right"/>
+        <use href="#hex-circle-bottom-left"/>
+    </g>
+    <g id="hexTileHuman240Hovered" class="img">
+        <use href="#hex-default-bg"/>
+        <use href="#hex-arc-top"/>
+        <use href="#hex-arc-top-right"/>
+        <use href="#hex-circle-bottom-left"/>
+    </g>
+    <g id="hexTileHuman300" class="img">
+        <use href="#hex-main-bg"/>
+        <use href="#hex-arc-top-right"/>
+        <use href="#hex-arc-bottom-right"/>
+        <use href="#hex-circle-center-left"/>
+    </g>
+    <g id="hexTileHuman300Hovered" class="img">
+        <use href="#hex-default-bg"/>
+        <use href="#hex-arc-top-right"/>
+        <use href="#hex-arc-bottom-right"/>
+        <use href="#hex-circle-center-left"/>
+    </g>
+
+    <!-- TURTLE -->
+
+    <g id="hexTileTurtle0" class="img">
+        <use href="#hex-main-bg"/>
+        <use href="#hex-line-0"/>
+        <use href="#hex-circle-center-left"/>
+        <use href="#hex-circle-center-right"/>
+    </g>
+    <g id="hexTileTurtle0Hovered" class="img">
+        <use href="#hex-default-bg"/>
+        <use href="#hex-line-0"/>
+        <use href="#hex-circle-center-left"/>
+        <use href="#hex-circle-center-right"/>
+    </g>
+    <g id="hexTileTurtle60" class="img">
+        <use href="#hex-main-bg"/>
+        <use href="#hex-line-60"/>
+        <use href="#hex-circle-top-left"/>
+        <use href="#hex-circle-bottom-right"/>
+    </g>
+    <g id="hexTileTurtle60Hovered" class="img">
+        <use href="#hex-default-bg"/>
+        <use href="#hex-line-60"/>
+        <use href="#hex-circle-top-left"/>
+        <use href="#hex-circle-bottom-right"/>
+    </g>
+    <g id="hexTileTurtle120" class="img">
+        <use href="#hex-main-bg"/>
+        <use href="#hex-line-120"/>
+        <use href="#hex-circle-bottom-left"/>
+        <use href="#hex-circle-top-right"/>
+    </g>
+    <g id="hexTileTurtle120Hovered" class="img">
+        <use href="#hex-default-bg"/>
+        <use href="#hex-line-120"/>
+        <use href="#hex-circle-bottom-left"/>
+        <use href="#hex-circle-top-right"/>
+    </g>
+
+    <!-- SHURIKEN -->
+
+    <g id="hexTileShuriken0" class="img">
+        <use href="#hex-main-bg"/>
+        <use href="#hex-circle-top-right"/>
+        <use href="#hex-circle-bottom-right"/>
+        <use href="#hex-circle-center-left"/>
+    </g>
+    <g id="hexTileShuriken0Hovered" class="img">
+        <use href="#hex-default-bg"/>
+        <use href="#hex-circle-top-right"/>
+        <use href="#hex-circle-bottom-right"/>
+        <use href="#hex-circle-center-left"/>
+    </g>
+    <g id="hexTileShuriken60" class="img">
+        <use href="#hex-main-bg"/>
+        <use href="#hex-circle-top-left"/>
+        <use href="#hex-circle-bottom-left"/>
+        <use href="#hex-circle-center-right"/>
+    </g>
+    <g id="hexTileShuriken60Hovered" class="img">
+        <use href="#hex-default-bg"/>
+        <use href="#hex-circle-top-left"/>
+        <use href="#hex-circle-bottom-left"/>
+        <use href="#hex-circle-center-right"/>
+    </g>
+
+    <!-- HEX DEFAULT BG -->
+
     <use id="hex-tile-default-bg" class="img" href="#hex-default-bg"/>
+
+    <!-- TREASURE -->
 
     <g id="hexTileHexCenter" class="img">
         <use href="#hex-treasure-bg"/>
         <use href="#hex-center"/>
     </g>
-
     <g id="hexTileTreasureBottom" class="img">
         <use href="#hex-treasure-bg"/>
         <use href="#hex-treasure-bottom"/>
     </g>
-
     <g id="hexTileTreasureBottomRight" class="img">
         <use href="#hex-treasure-bg"/>
         <use href="#hex-treasure-bottom-right"/>
     </g>
-
     <g id="hexTileTreasureBottomLeft" class="img">
         <use href="#hex-treasure-bg"/>
         <use href="#hex-treasure-bottom-left"/>
     </g>
-
     <g id="hexTileTreasureTop" class="img">
         <use href="#hex-treasure-bg"/>
         <use href="#hex-treasure-top"/>
     </g>
-
     <g id="hexTileTreasureTopLeft" class="img">
         <use href="#hex-treasure-bg"/>
         <use href="#hex-treasure-top-left"/>
     </g>
-
     <g id="hexTileTreasureTopRight" class="img">
         <use href="#hex-treasure-bg"/>
         <use href="#hex-treasure-top-right"/>
     </g>
+
+    <!-- CORNER -->
 
     <use id="hexTileDecoratorCornerRight" class="img" href="#hex-decorator-corner-right"/>
     <use id="hexTileDecoratorCornerLeft" class="img" href="#hex-decorator-corner-left"/>
@@ -393,6 +553,8 @@
     <use id="hexTileDecoratorCornerBottomLeft" class="img" href="#hex-decorator-corner-bottom-left"/>
     <use id="hexTileDecoratorCornerBottomRight" class="img" href="#hex-decorator-corner-bottom-right"/>
 
+    <!-- DECORATOR LINE -->
+
     <use id="hexTileDecoratorLineEmptyTop" class="img line-color" href="#hex-decorator-line-empty-top"/>
     <use id="hexTileDecoratorLineEmptyBottom" class="img line-color" href="#hex-decorator-line-empty-bottom"/>
     <use id="hexTileDecoratorLineEmptyLeftTop" class="img line-color" href="#hex-decorator-line-empty-left-top"/>
@@ -400,6 +562,8 @@
     <use id="hexTileDecoratorLineEmptyRightBottom" class="img line-color"
          href="#hex-decorator-line-empty-right-bottom"/>
     <use id="hexTileDecoratorLineEmptyRightTop" class="img line-color" href="#hex-decorator-line-empty-right-top"/>
+
+    <!-- DECORATOR GATEWAY -->
 
     <use id="hexTileDecoratorGatewayLeft" class="img" href="#hex-decorator-gateway-left"/>
     <use id="hexTileDecoratorGatewayTopLeft" class="img" href="#hex-decorator-gateway-top-left"/>

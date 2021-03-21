@@ -7,7 +7,7 @@
   flex-direction: column;
   justify-content: center;
   transform: translate(var(--X), var(--Y));
-  transition-duration: .2s;
+  transition-duration: var(--duration);
   transition-property: transform, width, height;
 }
 

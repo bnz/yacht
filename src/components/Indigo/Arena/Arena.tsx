@@ -27,11 +27,15 @@ export const Arena: FC = observer(() => {
       onClick={onClick}
       style={{ ['--R' as string]: `${store.R}px` }}
     >
-      {store.arenaElement === null ? null : store.tileEntries.map(([id]) => (
-        <Tile key={id} id={id} />
-      ))}
-      <Seats />
-      <GatewaySeats />
+      {store.arenaElement === null ? null : (
+        <>
+          {store.tileEntries.map(([id]) => (
+            <Tile key={id} id={id} />
+          ))}
+          <Seats />
+          <GatewaySeats />
+        </>
+      )}
     </div>
   )
 })

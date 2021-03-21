@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react'
+import { CSSProperties, MouseEvent } from 'react'
 import { makeAutoObservable, toJS } from 'mobx'
 import { Layout } from '../Hexagons/Layout'
 import { Point } from '../Hexagons/Point'
@@ -7,6 +7,7 @@ import { Hex } from '../Hexagons/Hex'
 import {
   AllT,
   AllTiles,
+  Angles,
   CornersTiles,
   GatewayTiles,
   HexType,
@@ -28,6 +29,8 @@ import { GamePhaseStore, iGamePhaseStore } from './GamePhase'
 import { __DEV__appendStyles } from './__DEV__appendStyles'
 import { shuffle } from '../../../helpers/shuffle'
 import { iPlayersStore, PlayersStore } from './PlayersStore'
+import capitalize from '@material-ui/core/utils/capitalize'
+import { getRandomInt } from '../../../helpers/random'
 
 export interface iHexStore {
   layout: Layout
@@ -43,10 +46,13 @@ export interface iHexStore {
   playersStore: iPlayersStore
   playerMove: PlayerMove
   gates: Record<number, number>
+  playerMoveRouteTile: CSSProperties | undefined
 
   dispose(): void
 
   restart(): void
+
+  nextMove(): void
 
   onMouseMove(event: MouseEvent<HTMLDivElement>): void
 
@@ -54,7 +60,7 @@ export interface iHexStore {
 
   toggleOrientation(): void
 
-  getBackgroundUrl(id: string): string
+  getBackgroundUrl(id: string): CSSProperties
 
   startGame(): void
 
@@ -86,7 +92,8 @@ export class HexStore implements iHexStore {
       | '_leftTiles'
       | '_leftTilesInitialSet'
       | 'storage'
-      | '_gates'>(this, {
+      | '_gates'
+      | 'tileNameToAngle'>(this, {
       ratio: false,
       corners: false,
       emptyLines: false,
@@ -99,11 +106,14 @@ export class HexStore implements iHexStore {
       _leftTilesInitialSet: false,
       storage: false,
       _gates: false,
+      tileNameToAngle: false,
     })
 
     if (process.env.NODE_ENV === 'development') {
       new __DEV__appendStyles(this.smallSide, this.largeSide, this.ratio, this.tiles)
     }
+
+    console.log(toJS(this.playerMove))
   }
 
   private storage: iLocalStorageMgmnt = new LocalStorageMgmnt('indigo-data')
@@ -114,17 +124,13 @@ export class HexStore implements iHexStore {
 
   startGame = () => {
     this.gamePhase.startGame()
-
-    // this.playerMove = [this.players[1].id, this.nextTile]
-    // this.tiles = this._defaultTiles
-    // this.routeTiles = this.defaultRouteTiles
   }
 
   dispose(): void {
     window.removeEventListener('resize', this.debounce)
   }
 
-  private generateLeftTiles(): TileNames[] {
+  private generateLeftTiles = (): TileNames[] => {
     return shuffle<TileNames>(
       [].concat.apply(
         [] as any,
@@ -143,15 +149,41 @@ export class HexStore implements iHexStore {
     human: 14,
   }
 
-  private leftTiles = this.generateLeftTiles()
-
-  get randomTile() {
-    return this.leftTiles.pop()
+  private tileNameToAngle: Record<TileNames, Angles[]> = {
+    lizard: [0, 60, 120],
+    shuriken: [0, 60],
+    crossroad: [],
+    turtle: [0, 60, 120],
+    human: [0, 60, 120, 180, 240, 300],
   }
 
-  private _playerMove = this.storage.getOrApply<PlayerMove>('player-move', () => [this.playersStore.players[0].id, null])
+  private leftTiles = this.storage.getOrApply<TileNames[]>('tiles-left', this.generateLeftTiles)
 
-  // private _playerMove: PlayerMove = [this.playersStore.players[0].id, null]
+  get randomTile(): RouteTiles | undefined {
+    const tile = this.leftTiles.pop()
+    let angle: Angles | string = ''
+
+    this.storage.set('tiles-left', this.leftTiles)
+
+    if (tile && this.tileNameToAngle[tile].length) {
+      angle = this.tileNameToAngle[tile][getRandomInt(0, this.tileNameToAngle[tile].length - 1)]
+      const key = ['hexTile', capitalize(tile), angle,
+        // 'Hovered',
+      ].join('')
+
+      // @ts-ignore
+      return RouteTiles[key]
+    }
+
+    return undefined
+  }
+
+  private _playerMove = this.storage.getOrApply<PlayerMove>(
+    'player-move',
+    () => {
+      return [this.playersStore.players[0].id, this.randomTile]
+    },
+  )
 
   get playerMove() {
     return this._playerMove
@@ -283,9 +315,34 @@ export class HexStore implements iHexStore {
     this._layout = layout
   }
 
-  getBackgroundUrl(id: string): string {
+  private cssBgUrl = (url: string): CSSProperties => ({
+    backgroundImage: `url(${url})`,
+  })
+
+  getBackgroundUrl(id: string): CSSProperties {
     const tile = this.tiles[id].tile
-    return `${svg}#${(tile !== undefined && AllTiles[tile] && AllTiles[tile]) || 'hex-tile-default-bg'}`
+    return this.cssBgUrl(`${svg}#${(tile !== undefined && AllTiles[tile] && AllTiles[tile]) || 'hex-tile-default-bg'}`)
+  }
+
+  get playerMoveRouteTile(): CSSProperties | undefined {
+    // if (this.playerMove[1] !== null) {
+    //   const tile = this.playerMove[1]
+    //   const angle = this.tileNameToAngle[tile].length
+    //     ? this.tileNameToAngle[tile][getRandomInt(0, this.tileNameToAngle[tile].length - 1)]
+    //     : ''
+    //
+    //   return this.cssBgUrl([
+    //     svg,
+    //     '#',
+    //     [
+    //       'hexTile',
+    //       capitalize(this.playerMove[1]),
+    //       angle,
+    //       // 'Hovered',
+    //     ].join(''),
+    //   ].join(''))
+    // }
+    return undefined
   }
 
   private unHover() {
@@ -300,6 +357,10 @@ export class HexStore implements iHexStore {
 
   private get isRouteTile(): boolean {
     return this.tiles[this.hoveredTile] && this.tiles[this.hoveredTile].type === HexType.route
+  }
+
+  nextMove = () => {
+    console.log('nextMove')
   }
 
   onMouseMove = (e: MouseEvent<HTMLDivElement>) => {
@@ -328,10 +389,11 @@ export class HexStore implements iHexStore {
 
     console.log('onClick')
 
-    this.unHover()
-    this.tiles[this.hoveredTile].tile = RouteTiles.hexTileCrossroad
-    this.tiles[this.hoveredTile].preSit = true
-    this.saveTiles()
+
+    // this.unHover()
+    // this.tiles[this.hoveredTile].tile = RouteTiles.hexTileCrossroad
+    // this.tiles[this.hoveredTile].preSit = true
+    // this.saveTiles()
   }
 
   private toHex = (q: number, r: number) => new Hex(q, r, (q + r) * -1)

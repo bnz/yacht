@@ -5,6 +5,7 @@ export const useGlobalStyles = makeStyles({
 
     ':root': {
       '--ratio': 0.8660254,
+      '--duration': '.2s',
     },
 
     'html, body, #root': {

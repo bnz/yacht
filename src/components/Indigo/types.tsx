@@ -43,7 +43,7 @@ export type RouteTileNames =
   | 'human-240'
   | 'human-300'
 
-export type PlayerMove = [PlayerId, RouteTileNames | null]
+export type PlayerMove = [PlayerId, RouteTiles?]
 
 export type OrientationType = 'flat' | 'pointy'
 
@@ -103,15 +103,43 @@ export enum HexType {
   center
 }
 
-
-// export type RouteTiles =
-//   | 'hex-tile-lizard-0'
-//   | 'hex-tile-lizard-60'
-//   | 'hex-tile-lizard-120'
+export type Angles = 0 | 60 | 120 | 180 | 240 | 300
 
 export enum RouteTiles {
   hexTileCrossroad = 25,
-  hexTileCrossroadHovered
+  hexTileCrossroadHovered,
+
+  hexTileLizard0,
+  hexTileLizard0Hovered,
+  hexTileLizard60,
+  hexTileLizard60Hovered,
+  hexTileLizard120,
+  hexTileLizard120Hovered,
+
+  hexTileHuman0,
+  hexTileHuman0Hovered,
+  hexTileHuman60,
+  hexTileHuman60Hovered,
+  hexTileHuman120,
+  hexTileHuman120Hovered,
+  hexTileHuman180,
+  hexTileHuman180Hovered,
+  hexTileHuman240,
+  hexTileHuman240Hovered,
+  hexTileHuman300,
+  hexTileHuman300Hovered,
+
+  hexTileTurtle0,
+  hexTileTurtle0Hovered,
+  hexTileTurtle60,
+  hexTileTurtle60Hovered,
+  hexTileTurtle120,
+  hexTileTurtle120Hovered,
+
+  hexTileShuriken0,
+  hexTileShuriken0Hovered,
+  hexTileShuriken60,
+  hexTileShuriken60Hovered,
 }
 
 export const AllTiles = {

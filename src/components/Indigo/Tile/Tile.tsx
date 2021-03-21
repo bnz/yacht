@@ -19,9 +19,7 @@ export const Tile: FC<TileProps> = observer(({ id }) => {
     <div
       data-q={hex.q}
       data-r={hex.r}
-      style={{
-        backgroundImage: `url(${store.getBackgroundUrl(id)})`,
-      }}
+      style={store.getBackgroundUrl(id)}
     />
   )
 })

@@ -10,7 +10,7 @@
   top: 0;
   left: 50%;
   transition-property: width, height, transform;
-  transition-duration: .2s;
+  transition-duration: var(--duration);
   width: var(--S);
   height: var(--S);
   transform: translate(var(--X), var(--Y));
@@ -72,7 +72,7 @@
   top: 0;
   left: 50%;
   transition-property: width, height, transform, background, border-radius;
-  transition-duration: .2s;
+  transition-duration: var(--duration);
   transform: translate(var(--x), var(--y));
 }
 
@@ -144,4 +144,69 @@
 
 .highlight.p-4.visible {
   border-bottom-left-radius: var(--radius);
+}
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+.hex.visible {
+  --s: calc(var(--R) * 1.5);
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: drop-shadow(0 0 1em rgba(68, 68, 68, .08));
+  width: calc(var(--s));
+  height: calc(var(--s) * var(--ratio));
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transition-property: width, height, transform;
+  transition-duration: var(--duration);
+}
+
+:global(.flat) .hex {
+  transform: translate(var(--X), var(--Y));
+}
+
+:global(.pointy) .hex {
+  transform: translate(var(--X), var(--Y)) rotate(30deg);
+}
+
+:global(.flat) .hex.p-1.visible {
+  --X: calc(var(--R) * -8.75);
+  --Y: calc(var(--R) * 3);
+}
+
+:global(.pointy) .hex.p-1.visible {
+  --X: calc(var(--R) * -4.75);
+  --Y: calc(var(--R) * 0.25);
+}
+
+:global(.flat) .hex.p-2.visible {
+  --X: calc(var(--R) * 7.25);
+  --Y: calc(var(--R) * 3);
+}
+
+:global(.pointy) .hex.p-2.visible {
+  --X: calc(var(--R) * 3.25);
+  --Y: calc(var(--R) * 0.25);
+}
+
+:global(.flat) .hex.p-3.visible {
+  --X: calc(var(--R) * 7.25);
+  --Y: calc(var(--R) * 11.25);
+}
+
+:global(.pointy) .hex.p-3.visible {
+  --X: calc(var(--R) * 3.25);
+  --Y: calc(var(--R) * 16.5);
+}
+
+:global(.flat) .hex.p-4.visible {
+  --X: calc(var(--R) * -8.75);
+  --Y: calc(var(--R) * 11.25);
+}
+
+:global(.pointy) .hex.p-4.visible {
+  --X: calc(var(--R) * -4.75);
+  --Y: calc(var(--R) * 16.5);
 }

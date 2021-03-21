@@ -1,4 +1,4 @@
-import { GamePhase, OrientationType, PlayerMove, Players, Tiles } from '../types'
+import { GamePhase, OrientationType, PlayerMove, Players, TileNames, Tiles } from '../types'
 
 type Keys =
   | 'orientation'
@@ -6,6 +6,7 @@ type Keys =
   | 'player-move'
   | 'players'
   | 'tiles'
+  | 'tiles-left'
 
 type Value =
   | OrientationType
@@ -13,6 +14,7 @@ type Value =
   | PlayerMove
   | Players
   | Tiles
+  | TileNames[]
 
 export interface iLocalStorageMgmnt {
   get(key: Keys): any | null
