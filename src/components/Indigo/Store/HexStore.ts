@@ -17,6 +17,7 @@ import {
   PlayerId,
   PlayerMove,
   RouteTiles,
+  SavedTilesValue,
   Tile,
   TileItems,
   TileNames,
@@ -399,11 +400,11 @@ export class HexStore implements iHexStore {
     }
     const rect = e.currentTarget.getBoundingClientRect() as DOMRect
     const hex = this.layout.pixelToHex({ x: e.pageX - rect.x, y: e.pageY - rect.y }).round()
-    if (`${hex.q},${hex.r}` !== this.hoveredTile) {
+    if (hex.id !== this.hoveredTile) {
       if (this.tiles[this.hoveredTile] && this.tiles[this.hoveredTile].hovered) {
         this.unHover()
       }
-      this.hoveredTile = `${hex.q},${hex.r}`
+      this.hoveredTile = hex.id
       if (this.isRouteTile && this.tiles[this.hoveredTile].tile === undefined) {
         this.hover()
       }
@@ -414,6 +415,25 @@ export class HexStore implements iHexStore {
     if (this.preSit || !this.isRouteTile || !this.tiles[this.hoveredTile].hovered) {
       return
     }
+
+    const { hex } = this.tiles[this.hoveredTile]
+    const h = this.objToHex(hex)
+
+    const a = [...Array(6).keys()]
+    .filter((i) => {
+      const { type, tile } = this.tiles[h.neighbor(i).id]
+      return type === HexType.route && tile !== undefined
+    })
+    .map((i) => {
+      const n = h.neighbor(i)
+      return [
+        toJS(this.tiles[n.id]),
+        document.querySelector(`[data-q="${n.q}"][data-r="${n.r}"]`),
+      ]
+    })
+
+    console.log(a)
+
     this.preSit = true
   }
 
@@ -472,18 +492,23 @@ export class HexStore implements iHexStore {
       const nextAngle = angles[index === 0 ? angles.length - 1 : index - 1]
       const nextTile = [tile, nextAngle].join('-')
       this.playerMove = [this.playerMove[0], nextTile]
-      // @ts-ignore FIXME
-      this.tiles[this.hoveredTile].tile = RouteTiles[[this.playerMoveTile, 'Hovered'].join('')]
+      if (this.tiles[this.hoveredTile]) {
+        // @ts-ignore FIXME
+        this.tiles[this.hoveredTile].tile = RouteTiles[[this.playerMoveTile, 'Hovered'].join('')]
+      }
     }
   }
 
   private toHex = (q: number, r: number) => new Hex(q, r, (q + r) * -1)
 
-  private generateTiles(data: [number, number, AllT?][], type: HexType): Tiles {
+  private objToHex = ({ q, r }: { q: number; r: number }) => this.toHex(q, r)
+
+  private generateTiles(data: TileItems<AllT>, type: HexType): Tiles {
     const res: Tiles = {}
     data.forEach(([q, r, tile]) => {
-      res[`${q},${r}`] = {
-        hex: this.toHex(q, r),
+      const hex = this.toHex(q, r)
+      res[hex.id] = {
+        hex,
         type,
         ...(tile !== undefined ? { tile } : {}),
       }
@@ -540,7 +565,7 @@ export class HexStore implements iHexStore {
     [-2, 5, GatewayTiles.hexTileDecoratorGatewayBottomLeft],
   ]
 
-  private readonly routes: [number, number, RouteTiles?][] = [
+  private readonly routes: TileItems<RouteTiles> = [
     [-4, 1], [-4, 2], [-4, 3],
     [-3, -1], [-3, 0], [-3, 1], [-3, 2], [-3, 3], [-3, 4],
     [-2, -2], [-2, -1], [-2, 0], [-2, 1], [-2, 2], [-2, 3], [-2, 4],
@@ -565,7 +590,10 @@ export class HexStore implements iHexStore {
     ...this.generateTiles(this.emptyLines, HexType.decorator),
     ...this.generateTiles(this.treasures, HexType.treasure),
     ...this.generateTiles(this.gateways, HexType.gateway),
-    ...this.storage.getOrApply<Tiles>('tiles', () => this.generateTiles(this.routes, HexType.route)),
+    ...((): Tiles => this.generateTiles(
+      this.storage.getOrApply<TileItems<RouteTiles>>('tiles', () => this.routes),
+      HexType.route,
+    ))(),
   }
 
   get tileEntries(): [string, Tile][] {
@@ -573,10 +601,14 @@ export class HexStore implements iHexStore {
   }
 
   private saveTiles() {
-    const tilesToSave: Tiles = {}
-    this.tileEntries.forEach(([id, tile]) => {
-      if (tile.type === HexType.route) {
-        tilesToSave[id] = tile
+    const tilesToSave: SavedTilesValue[] = []
+    this.tileEntries.forEach(([id, { hex, tile, type }]) => {
+      if (type === HexType.route) {
+        const arr: SavedTilesValue = [hex.q, hex.r]
+        if (tile !== undefined) {
+          arr.push(tile)
+        }
+        tilesToSave.push(arr)
       }
     })
     this.storage.set('tiles', tilesToSave)

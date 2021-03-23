@@ -10,6 +10,10 @@ export class Hex {
     }
   }
 
+  public get id() {
+    return `${this.q},${this.r}`
+  }
+
   public add(b: Hex): Hex {
     return new Hex(
       this.q + b.q,
@@ -43,7 +47,11 @@ export class Hex {
   }
 
   public rotateRight(): Hex {
-    return new Hex(-this.r, -this.s, -this.q)
+    return new Hex(
+      -this.r,
+      -this.s,
+      -this.q,
+    )
   }
 
   public static directions: Hex[] = [

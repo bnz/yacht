@@ -13,7 +13,7 @@ export type Values =
   | GamePhase
   | PlayerMove
   | Players
-  | Tiles
+  | SavedTilesValue[]
   | TileNames[]
 
 export enum PlayerId {
@@ -85,6 +85,12 @@ export enum GatewayTiles {
 
 export type Tiles = Record<string, Tile>
 
+type Q = number
+type R = number
+type TileId = number
+export type SavedTilesValue = [Q, R, TileId?]
+export type SavedTiles = Record<string, SavedTilesValue>
+
 export type TileNames =
   | 'Shuriken'
   | 'Crossroad'
@@ -151,7 +157,7 @@ export const AllTiles = {
 
 export type AllT = CornersTiles | TreasureT | LineEmptyTiles | GatewayTiles | RouteTiles
 
-export type TileItems<T> = [number, number, T][]
+export type TileItems<T> = [number, number, T?][]
 
 export interface Tile {
   hex: Hex

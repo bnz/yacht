@@ -1,4 +1,5 @@
-import React, { FC, Fragment } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { FC, Fragment, useCallback } from 'react'
 import { observer } from 'mobx-react'
 import { useStore } from '../Store/HexProvider'
 import { Sphere } from '../Sphere/Sphere'
@@ -7,6 +8,7 @@ import cx from 'classnames'
 
 export const Seats: FC = observer(() => {
   const store = useStore()
+  const rotate = useCallback(store.rotateRight, [])
 
   return (
     <>
@@ -23,6 +25,7 @@ export const Seats: FC = observer(() => {
             <div
               className={cx(style.hex, playerClass, visible)}
               style={store.playerMoveRouteTile}
+              onClick={rotate}
             />
           </Fragment>
         )
