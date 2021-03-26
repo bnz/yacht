@@ -6,13 +6,13 @@
   width: 95%;
   height: 95%;
   transform: translate(2.5%, 2.5%);
-  box-shadow: 0 0 1em rgba(0, 0, 0, 1);
+  /*box-shadow: 0 0 1em rgba(0, 0, 0, 1);*/
   background-color: #daa520;
 }
 
 .wrapper.alt {
   --margin: 0;
-  box-shadow: 0 0 .5em rgba(0, 0, 0, 1);
+  /*box-shadow: 0 0 .5em rgba(0, 0, 0, 1);*/
 }
 
 .wrapper::before {
@@ -24,10 +24,12 @@
   bottom: var(--margin);
   right: var(--margin);
   border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, .2);
 }
 
 .wrapper.p-1::before {
-  background: radial-gradient(circle, rgba(202, 0, 203, 1) 0%, rgba(128, 0, 128, 1) 31%, rgba(18, 0, 115, 1) 100%);
+  /*background: radial-gradient(circle, rgba(202, 0, 203, 1) 0%, rgba(128, 0, 128, 1) 31%, rgba(18, 0, 115, 1) 100%);*/
+  background: rgba(128, 0, 128, 1);
 }
 
 .wrapper.p-2::before {
@@ -35,7 +37,8 @@
 }
 
 .wrapper.p-3::before {
-  background: radial-gradient(circle, rgba(255, 127, 80, 1) 0%, rgba(255, 80, 80, 1) 100%);
+  /*background: radial-gradient(circle, rgba(255, 127, 80, 1) 0%, rgba(255, 80, 80, 1) 100%);*/
+  background: rgba(255, 127, 80, 1);
 }
 
 .wrapper.p-4::before {
@@ -53,17 +56,17 @@
   border-radius: 50%;
   background-position: center;
   background-repeat: no-repeat;
-  box-shadow: inset 0 0 1em rgba(0, 0, 0, 1);
+  /*box-shadow: inset 0 0 1em rgba(0, 0, 0, 1);*/
 }
 
 @media (min-width: 600px) {
   .wrapper::after {
-    box-shadow: inset 0 0 3em rgba(0, 0, 0, 1);
+    /*box-shadow: inset 0 0 3em rgba(0, 0, 0, 1);*/
   }
 }
 
 .wrapper.alt::after {
-  box-shadow: none;
+  /*box-shadow: none;*/
 }
 
 .wrapper.p-1::after {

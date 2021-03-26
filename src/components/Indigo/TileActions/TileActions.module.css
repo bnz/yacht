@@ -11,6 +11,8 @@
   top: 0;
   left: 0;
   --s: calc(var(--R) * 2);
+  transition-duration: var(--duration);
+  transition-property: transform, width, height;
 }
 
 .button {

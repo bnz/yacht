@@ -8,7 +8,7 @@ import { useStore } from '../Store/HexProvider'
 export const GatewaySeats: FC = observer(() => {
   const store = useStore()
 
-  // console.log('GatewaySeats::render')
+  // console.log('GatewaySeats:::render')
 
   return (
     <>

@@ -10,23 +10,28 @@ export const Seats: FC = observer(() => {
   const store = useStore()
   const rotate = useCallback(store.rotateRight, [])
 
+  // console.log('Seats:::render')
+
   return (
     <>
       {store.playersStore.entries.map(([, player], index) => {
         const playerClass = style[`p-${index + 1}`]
-        const visible = { [style.visible]: player.id === store.playerMove[0] }
 
         return (
           <Fragment key={player.id}>
-            <div className={cx(style.highlight, playerClass, visible)} />
+            {player.id === store.playerMove[0] && (
+              <>
+                <div className={cx(style.highlight, playerClass)} />
+                <div
+                  className={cx(style.hex, playerClass)}
+                  style={store.playerMoveRouteTile}
+                  onClick={rotate}
+                />
+              </>
+            )}
             <div className={cx(style.item, playerClass)}>
               <Sphere color={player.id} />
             </div>
-            <div
-              className={cx(style.hex, playerClass, visible)}
-              style={store.playerMoveRouteTile}
-              onClick={rotate}
-            />
           </Fragment>
         )
       })}

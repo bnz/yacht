@@ -9,6 +9,7 @@ export class Layout {
     public size: Point,
     public origin: Point,
   ) {
+    // console.log('Layout:::constructor')
   }
 
   public static pointy: Orientation = new Orientation(

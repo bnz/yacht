@@ -42,6 +42,8 @@ export const TileActions: FC = observer(() => {
 
   const { x, y } = store.hoveredPoints
 
+  // console.log('TileActions:::render')
+
   return (
     <div className={style.root}>
       <div

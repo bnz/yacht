@@ -7,6 +7,7 @@ import { Tile } from '../Tile/Tile'
 import { Seats } from '../Seats/Seats'
 import { GatewaySeats } from '../GatewaySeats/GatewaySeats'
 import { TileActions } from '../TileActions/TileActions'
+import { Stone } from '../Stone/Stone'
 
 export const Arena: FC = observer(() => {
   const store = useStore()
@@ -33,6 +34,9 @@ export const Arena: FC = observer(() => {
           ))}
           <Seats />
           <GatewaySeats />
+          {store.stonesEntries.map(([id]) => (
+            <Stone id={id} key={id} />
+          ))}
           {store.preSit && (
             <TileActions />
           )}

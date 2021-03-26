@@ -2,8 +2,10 @@ import React, { FC, useEffect } from 'react'
 import { Sphere } from '../Sphere/Sphere'
 import Typography from '@material-ui/core/Typography'
 import { Heading } from '../../Rules/Heading'
-import { PlayerId } from '../types'
+import { PlayerId, StoneIds } from '../types'
 import { rulesStyles } from '../rulesStyles'
+import { Stone } from '../Stone/Stone'
+import { StonesWrapper } from './StonesWrapper'
 
 export const Rules: FC = () => {
   useEffect(rulesStyles, [])
@@ -15,19 +17,31 @@ export const Rules: FC = () => {
         gridTemplateColumns: '1fr 1fr 1fr 1fr',
         marginBottom: 3 * 8,
       }}>
-        <div style={{}}>
+        <div>
           <Sphere color={PlayerId.Player1} />
         </div>
-        <div style={{}}>
+        <div>
           <Sphere color={PlayerId.Player2} />
         </div>
-        <div style={{}}>
+        <div>
           <Sphere color={PlayerId.Player3} />
         </div>
-        <div style={{}}>
+        <div>
           <Sphere color={PlayerId.Player4} />
         </div>
       </div>
+
+      <StonesWrapper>
+        <div>
+          <Stone id={StoneIds.sapphire} />
+        </div>
+        <div>
+          <Stone id={StoneIds.emerald0} />
+        </div>
+        <div>
+          <Stone id={StoneIds.amber0} />
+        </div>
+      </StonesWrapper>
 
       <Typography paragraph>
         Indigo
