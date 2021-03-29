@@ -7,7 +7,6 @@ export const KeyCode: FC = () => {
 
   useEffect(() => {
     const fn = (e: any) => {
-      console.log('fn')
       switch (e.keyCode) {
         case 27: // esc
           store.cancelPreSit()
