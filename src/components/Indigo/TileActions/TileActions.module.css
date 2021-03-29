@@ -22,7 +22,36 @@
   min-width: var(--size) !important;
   height: var(--size) !important;
   min-height: var(--size) !important;
-  background-color: rgba(51, 51, 51, .7) !important;
+  box-shadow: none !important;
+  position: relative;
+  background-color: transparent !important;
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-image: url("../hex.svg#_");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: drop-shadow(0 0 0.5em rgba(0, 0, 0, .7));
+  opacity: 0.5;
+}
+
+.button > span:first-of-type {
+  position: relative;
+}
+
+.button:hover {
+  filter: drop-shadow(0 0 1em rgba(0, 0, 0, .7));
+}
+
+.button:hover::before {
+  opacity: 1;
 }
 
 .button > span > svg {
@@ -37,7 +66,11 @@
 }
 
 .button.left svg {
-  color: #43a047;
+  color: #1b5e20;
+}
+
+.button:disabled svg {
+  opacity: 0.1;
 }
 
 .button.right {
@@ -67,7 +100,7 @@
 
 .button.top svg,
 .button.bottom svg {
-  color: #fdd835;
+  color: #1a237e;
 }
 
 :global(.flat) .container {

@@ -58,6 +58,7 @@ export interface iHexStore {
   preSit: boolean
   stones: Stones
   stonesEntries: StonesEntries
+  isRouteCrossroad: boolean
 
   dispose(): void
 
@@ -414,17 +415,19 @@ export class HexStore implements iHexStore {
     }
   }
 
-  getStoneCSS = (id: StoneIds): CSSProperties => {
-    const stone = this.stones[id]
-    const { x, y } = this.renderLayout.hexToPixel(this.toHex(stone.q, stone.r))
-    const [x1, y1, r = ''] = this.edgeToShiftMap(stone.type)[stone.edge]
-
+  private getTransformCSS(q: number, r: number, [x1 = '', y1 = '', r1 = ''] = []): CSSProperties {
+    const { x, y } = this.renderLayout.hexToPixel(this.toHex(q, r))
     return {
       transform: `translate(${[
         `calc(${x - 1} * var(--R)${x1})`,
         `calc(${y - this.ratio} * var(--R)${y1})`,
-      ].join(', ')})${r}`,
+      ].join(', ')})${r1}`,
     }
+  }
+
+  getStoneCSS = (id: StoneIds): CSSProperties => {
+    const stone = this.stones[id]
+    return this.getTransformCSS(stone.q, stone.r, this.edgeToShiftMap(stone.type)[stone.edge])
   }
 
   private cssBgUrl = (url: string): CSSProperties => ({
@@ -433,11 +436,15 @@ export class HexStore implements iHexStore {
 
   getBackgroundUrl(id: string): CSSProperties {
     const tile = this.tiles[id].tile
-    return this.cssBgUrl([
-      svg,
-      '#',
-      (tile !== undefined && AllTiles[tile] && AllTiles[tile]) || '_',
-    ].join(''))
+
+    return {
+      // ...this.getTransformCSS(this.tiles[id].hex.q, this.tiles[id].hex.r),
+      ...this.cssBgUrl([
+        svg,
+        '#',
+        (tile !== undefined && AllTiles[tile] && AllTiles[tile]) || '_',
+      ].join('')),
+    }
   }
 
   get playerMoveRouteTile(): CSSProperties | undefined {
@@ -541,7 +548,7 @@ export class HexStore implements iHexStore {
   }
 
   rotateLeft = () => {
-    if (this.playerMove[1]) {
+    if (this.playerMove[1] && !this.isRouteCrossroad) {
       const [tile, angle] = this.playerMove[1].split('-') as [TileNames, string]
       const angles = this.tileNameToAngle[tile]
       const index = this.tileNameToAngle[tile].findIndex((a) => a === parseInt(angle, 10) as Angle)
@@ -559,7 +566,7 @@ export class HexStore implements iHexStore {
   }
 
   rotateRight = () => {
-    if (this.playerMove[1]) {
+    if (this.playerMove[1] && !this.isRouteCrossroad) {
       const [tile, angle] = this.playerMove[1].split('-') as [TileNames, string]
       const angles = this.tileNameToAngle[tile]
       const index = this.tileNameToAngle[tile].findIndex((a) => a === parseInt(angle, 10) as Angle)
@@ -571,6 +578,10 @@ export class HexStore implements iHexStore {
         this.tiles[this.hoveredTile].tile = RouteTiles[[this.playerMoveTile, '_'].join('')]
       }
     }
+  }
+
+  get isRouteCrossroad() {
+    return this.playerMove[1] === 'c'
   }
 
   private toHex = (q: number, r: number) => new Hex(q, r, (q + r) * -1)
@@ -707,8 +718,8 @@ export class HexStore implements iHexStore {
   private _stones: Stones = {
     [StoneIds.sapphire]: { q: 0, r: 0, type: StoneType.sapphire, edge: 0 },
     [StoneIds.emerald0]: { q: 0, r: 0, type: StoneType.emerald, edge: 5 },
-    // [StoneIds.emerald1]: { q: 0, r: 0, type: StoneType.emerald, edge: 1 },
-    [StoneIds.emerald1]: { q: 2, r: 1, type: StoneType.emerald, edge: 0 },
+    [StoneIds.emerald1]: { q: 0, r: 0, type: StoneType.emerald, edge: 1 },
+    // [StoneIds.emerald1]: { q: 2, r: 1, type: StoneType.emerald, edge: 0 },
     [StoneIds.emerald2]: { q: 0, r: 0, type: StoneType.emerald, edge: 2 },
     [StoneIds.emerald3]: { q: 0, r: 0, type: StoneType.emerald, edge: 3 },
     [StoneIds.emerald4]: { q: 0, r: 0, type: StoneType.emerald, edge: 4 },

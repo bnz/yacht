@@ -36,9 +36,7 @@ export const Actions: FC = observer(() => {
     setValue(newValue)
   }, [])
 
-  if (phase === GamePhase.PRE_GAME
-    || phase === GamePhase.PLAYERS_SELECTION
-  ) {
+  if (phase === GamePhase.PRE_GAME || phase === GamePhase.PLAYERS_SELECTION) {
     return null
   }
 

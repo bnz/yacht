@@ -20,12 +20,12 @@ export const Stone: FC<StoneProps> = observer(({ id }) => {
       className={cx(style.root, style[StoneType[stone.type]])}
       style={store.getStoneCSS(id)}
     >
-      <span style={{
-        position: 'absolute', inset: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>{id}</span>
+      {/*<span style={{*/}
+      {/*  position: 'absolute', inset: 0,*/}
+      {/*  display: 'flex',*/}
+      {/*  alignItems: 'center',*/}
+      {/*  justifyContent: 'center',*/}
+      {/*}}>{id}</span>*/}
     </div>
   )
 })

@@ -1,65 +1,46 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { FC, useCallback, useEffect } from 'react'
+import React, { FC, useCallback } from 'react'
 import { observer } from 'mobx-react'
 import style from './TileActions.module.css'
 import { useStore } from '../Store/HexProvider'
-import DoneIcon from '@material-ui/icons/Done'
-import CloseIcon from '@material-ui/icons/Close'
+import CheckCircleIcon from '@material-ui/icons/CheckCircle'
+import CancelIcon from '@material-ui/icons/Cancel'
 import RotateLeftIcon from '@material-ui/icons/RotateLeft'
 import RotateRightIcon from '@material-ui/icons/RotateRight'
 import Fab from '@material-ui/core/Fab'
 import cx from 'classnames'
+import { KeyCode } from './KeyCode'
 
 export const TileActions: FC = observer(() => {
   const store = useStore()
-  const ok = useCallback(store.applySitButton, [])
-  const cancel = useCallback(store.cancelPreSitButton, [])
   const rotateLeft = useCallback(store.rotateLeftButton, [])
   const rotateRight = useCallback(store.rotateRightButton, [])
-
-  useEffect(() => {
-    const fn = (e: any) => {
-      switch (e.keyCode) {
-        case 27: // esc
-          store.cancelPreSit()
-          break
-        case 13: // enter
-          store.applySit()
-          break
-        case 37: // left
-          store.rotateLeft()
-          break
-        case 39: // right
-          store.rotateRight()
-          break
-      }
-    }
-    document.addEventListener('keydown', fn, false)
-    return () => {
-      document.removeEventListener('keydown', fn, false)
-    }
-  }, [])
-
   const { x, y } = store.hoveredPoints
 
   // console.log('TileActions:::render')
 
   return (
     <div className={style.root}>
+      <KeyCode />
       <div
         className={style.container}
         style={{ transform: `translate(-50%, -50%) translate(${x}px, ${y}px)` }}
       >
-        <Fab className={cx(style.button, style.left)} onClick={ok}>
-          <DoneIcon />
+        <Fab
+          className={cx(style.button, style.left)}
+          onClick={useCallback(store.applySitButton, [])}
+          children={<CheckCircleIcon />}
+        />
+        <Fab
+          className={cx(style.button, style.right)}
+          onClick={useCallback(store.cancelPreSitButton, [])}
+        >
+          <CancelIcon />
         </Fab>
-        <Fab className={cx(style.button, style.right)} onClick={cancel}>
-          <CloseIcon />
-        </Fab>
-        <Fab className={cx(style.button, style.top)} onClick={rotateLeft}>
+        <Fab className={cx(style.button, style.top)} onClick={rotateRight} disabled={store.isRouteCrossroad}>
           <RotateLeftIcon />
         </Fab>
-        <Fab className={cx(style.button, style.bottom)} onClick={rotateRight}>
+        <Fab className={cx(style.button, style.bottom)} onClick={rotateLeft} disabled={store.isRouteCrossroad}>
           <RotateRightIcon />
         </Fab>
       </div>
