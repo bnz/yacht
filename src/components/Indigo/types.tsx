@@ -5,7 +5,8 @@ export type Keys =
   | 'phase'
   | 'player-move'
   | 'players'
-  | 'tiles'
+  | 'route-tiles'
+  | 'treasure-tiles'
   | 'tiles-left'
 
 export type Values =
@@ -85,10 +86,12 @@ export enum GatewayTiles {
 
 export type Tiles = Record<string, Tile>
 
+type StoneWithEdge = [StoneIds, Edge][]
+
 type Q = number
 type R = number
 type TileId = number
-export type SavedTilesValue = [Q, R, TileId?]
+export type SavedTilesValue = [Q, R, TileId?, StoneWithEdge?]
 export type SavedTiles = Record<string, SavedTilesValue>
 
 export type TileNames =
@@ -147,12 +150,13 @@ export const AllTiles = {
 
 export type AllT = CornersTiles | TreasureT | LineEmptyTiles | GatewayTiles | RouteTiles
 
-export type TileItems<T> = [number, number, T?][]
+export type TileItems<T> = [number, number, T?, StoneWithEdge?][]
 
 export interface Tile {
   hex: Hex
   type: HexType
   tile?: AllT
+  stones?: StoneWithEdge
   hovered?: boolean
 }
 
@@ -179,11 +183,13 @@ export enum StoneType {
 
 export type Edge = 0 | 1 | 2 | 3 | 4 | 5
 
-export type Stones = Record<StoneIds, {
+export interface Stone {
   q: number
   r: number
   type: StoneType
   edge: Edge
-}>
+}
+
+export type Stones = Record<StoneIds, Stone>
 
 export type StonesEntries = [StoneIds, any][]

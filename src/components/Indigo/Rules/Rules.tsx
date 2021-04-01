@@ -33,10 +33,10 @@ export const Rules: FC = () => {
 
       <StonesWrapper>
         <div>
-          <Stone id={StoneIds.sapphire} />
+          <Stone id={StoneIds.emerald0} />
         </div>
         <div>
-          <Stone id={StoneIds.emerald0} />
+          <Stone id={StoneIds.sapphire} />
         </div>
         <div>
           <Stone id={StoneIds.amber0} />

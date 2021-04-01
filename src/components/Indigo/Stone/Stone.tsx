@@ -17,6 +17,7 @@ export const Stone: FC<StoneProps> = observer(({ id }) => {
 
   return (
     <div
+      data-id={id}
       className={cx(style.root, style[StoneType[stone.type]])}
       style={store.getStoneCSS(id)}
     >

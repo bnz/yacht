@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { FC, useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { useStore } from '../Store/HexProvider'
 
 export const KeyCode: FC = () => {
@@ -28,5 +28,5 @@ export const KeyCode: FC = () => {
     return () => document.removeEventListener('keydown', fn, false)
   }, [])
 
-  return <></>
+  return null
 }
