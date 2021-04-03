@@ -15,10 +15,10 @@ export const KeyCode: FC = () => {
           store.applySit()
           break
         case 37: // left
-          store.rotateLeft()
+          store.rotateRight()
           break
         case 39: // right
-          store.rotateRight()
+          store.rotateLeft()
           break
       }
     }

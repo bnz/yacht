@@ -3,10 +3,10 @@ import React, { FC, useCallback } from 'react'
 import { observer } from 'mobx-react'
 import style from './TileActions.module.css'
 import { useStore } from '../Store/HexProvider'
-import CheckCircleIcon from '@material-ui/icons/CheckCircle'
-import CancelIcon from '@material-ui/icons/Cancel'
-import RotateLeftIcon from '@material-ui/icons/RotateLeft'
-import RotateRightIcon from '@material-ui/icons/RotateRight'
+import CheckRoundedIcon from '@material-ui/icons/CheckRounded'
+import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
+import RotateLeftRoundedIcon from '@material-ui/icons/RotateLeftRounded'
+import RotateRightRoundedIcon from '@material-ui/icons/RotateRightRounded'
 import Fab from '@material-ui/core/Fab'
 import cx from 'classnames'
 import { KeyCode } from './KeyCode'
@@ -15,34 +15,35 @@ export const TileActions: FC = observer(() => {
   const store = useStore()
   const rotateLeft = useCallback(store.rotateLeftButton, [])
   const rotateRight = useCallback(store.rotateRightButton, [])
+  const cancel = useCallback(store.cancelPreSitButton, [])
+  const apply = useCallback(store.applySitButton, [])
   const { x, y } = store.hoveredPoints
 
   // console.log('TileActions:::render')
 
   return (
-    <div className={style.root}>
+    <div className={style.root} onClick={cancel}>
       <KeyCode />
       <div
         className={style.container}
         style={{ transform: `translate(-50%, -50%) translate(${x}px, ${y}px)` }}
       >
-        <Fab
-          className={cx(style.button, style.left)}
-          onClick={useCallback(store.applySitButton, [])}
-          children={<CheckCircleIcon />}
-        />
-        <Fab
-          className={cx(style.button, style.right)}
-          onClick={useCallback(store.cancelPreSitButton, [])}
-        >
-          <CancelIcon />
+        <Fab className={cx(style.button, style.left)} onClick={apply}>
+          <CheckRoundedIcon />
         </Fab>
-        <Fab className={cx(style.button, style.top)} onClick={rotateRight} disabled={store.isRouteCrossroad}>
-          <RotateLeftIcon />
+        <Fab className={cx(style.button, style.right)} onClick={cancel}>
+          <CloseRoundedIcon />
         </Fab>
-        <Fab className={cx(style.button, style.bottom)} onClick={rotateLeft} disabled={store.isRouteCrossroad}>
-          <RotateRightIcon />
-        </Fab>
+        {!store.isRouteCrossroad && (
+          <Fab className={cx(style.button, style.top)} onClick={rotateRight}>
+            <RotateLeftRoundedIcon />
+          </Fab>
+        )}
+        {!store.isRouteCrossroad && (
+          <Fab className={cx(style.button, style.bottom)} onClick={rotateLeft}>
+            <RotateRightRoundedIcon />
+          </Fab>
+        )}
       </div>
     </div>
   )

@@ -1,5 +1,5 @@
 import { iLocalStorageMgmnt } from './LocalStorageMgmnt'
-import { GamePhase } from '../types'
+import { GamePhase, Keys, Values } from '../types'
 import { makeAutoObservable } from 'mobx'
 
 export interface iGamePhaseStore {
@@ -15,7 +15,7 @@ export interface iGamePhaseStore {
 export class GamePhaseStore implements iGamePhaseStore {
 
   constructor(
-    private storage: iLocalStorageMgmnt,
+    private storage: iLocalStorageMgmnt<Keys, Values>,
   ) {
     makeAutoObservable(this)
   }

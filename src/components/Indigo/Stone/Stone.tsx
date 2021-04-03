@@ -11,22 +11,15 @@ interface StoneProps {
 
 export const Stone: FC<StoneProps> = observer(({ id }) => {
   const store = useStore()
-  const stone = store.stones[id]
+  const type = store.stones[id][0]
 
   // console.log('Stone:::render')
 
   return (
     <div
       data-id={id}
-      className={cx(style.root, style[StoneType[stone.type]])}
+      className={cx(style.root, style[StoneType[type]])}
       style={store.getStoneCSS(id)}
-    >
-      {/*<span style={{*/}
-      {/*  position: 'absolute', inset: 0,*/}
-      {/*  display: 'flex',*/}
-      {/*  alignItems: 'center',*/}
-      {/*  justifyContent: 'center',*/}
-      {/*}}>{id}</span>*/}
-    </div>
+    />
   )
 })

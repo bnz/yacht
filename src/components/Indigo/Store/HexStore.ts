@@ -71,7 +71,7 @@ export interface iHexStore {
 
   onClick(): void
 
-  cancelPreSitButton(e: MouseEvent<HTMLButtonElement>): void
+  cancelPreSitButton(e: MouseEvent<HTMLButtonElement | HTMLDivElement>): void
 
   cancelPreSit(): void
 
@@ -125,7 +125,8 @@ export class HexStore implements iHexStore {
       | 'storage'
       | '_gates'
       | 'tileNameToAngle'
-      | 'stoneAngleMap'>(this, {
+      | 'stoneAngleMap'
+      | 'routeTileIdToEdgeMap'>(this, {
       ratio: false,
       corners: false,
       emptyLines: false,
@@ -140,13 +141,16 @@ export class HexStore implements iHexStore {
       _gates: false,
       tileNameToAngle: false,
       stoneAngleMap: false,
+      routeTileIdToEdgeMap: false,
     })
 
     // if (process.env.NODE_ENV === 'development') {
     //   new __DEV__appendStyles(this.smallSide, this.largeSide, this.ratio, this.tiles)
     // }
 
-    console.log(toJS(this.tiles))
+    // Record<RouteTiles, Edge[]>
+
+    // console.log(this.routeTileIdToEdgeMap)
   }
 
   private storage: iLocalStorageMgmnt<Keys, Values> = new LocalStorageMgmnt<Keys, Values>('indigo')
@@ -391,6 +395,41 @@ export class HexStore implements iHexStore {
     },
   }
 
+  private routeTileIdToEdgeMap: Record<keyof typeof RouteTiles, [Edge, Edge, Edge, Edge, Edge, Edge]> = {
+    'l-0': [4, 3, 5, 1, 0, 2],
+    'l-60': [2, 4, 0, 5, 1, 3],
+    'l-120': [3, 5, 4, 0, 2, 1],
+    'h-0': [4, 5, 3, 2, 0, 1],
+    'h-60': [4, 2, 1, 5, 0, 3],
+    'h-120': [1, 0, 4, 5, 2, 3],
+    'h-180': [5, 3, 4, 1, 2, 0],
+    'h-240': [2, 3, 0, 1, 5, 4],
+    'h-300': [2, 5, 0, 4, 3, 1],
+    't-0': [1, 0, 5, 4, 3, 2],
+    't-60': [5, 4, 3, 2, 1, 0],
+    't-120': [3, 2, 1, 0, 5, 4],
+    's-0': [5, 2, 1, 4, 3, 0],
+    's-60': [1, 0, 3, 2, 5, 4],
+    c: [3, 4, 5, 0, 1, 2],
+
+    'l-0_': [0, 0, 0, 0, 0, 0],
+    'l-60_': [0, 0, 0, 0, 0, 0],
+    'l-120_': [0, 0, 0, 0, 0, 0],
+    'h-0_': [0, 0, 0, 0, 0, 0],
+    'h-60_': [0, 0, 0, 0, 0, 0],
+    'h-120_': [0, 0, 0, 0, 0, 0],
+    'h-180_': [0, 0, 0, 0, 0, 0],
+    'h-240_': [0, 0, 0, 0, 0, 0],
+    'h-300_': [0, 0, 0, 0, 0, 0],
+    't-0_': [0, 0, 0, 0, 0, 0],
+    't-60_': [0, 0, 0, 0, 0, 0],
+    't-120_': [0, 0, 0, 0, 0, 0],
+    's-0_': [0, 0, 0, 0, 0, 0],
+    's-60_': [0, 0, 0, 0, 0, 0],
+    c_: [0, 0, 0, 0, 0, 0],
+  }
+
+
   private getRotate = (type: StoneType) => (edge: Edge): string | undefined => {
     const rotate = this.stoneAngleMap[this.orientationType][type]
     return rotate[edge] !== undefined ? ` rotate(${rotate[edge]}deg)` : undefined
@@ -429,8 +468,8 @@ export class HexStore implements iHexStore {
   }
 
   getStoneCSS = (id: StoneIds): CSSProperties => {
-    const stone = this.stones[id]
-    return this.getTransformCSS(stone.q, stone.r, this.edgeToShiftMap(stone.type)[stone.edge])
+    const [type, q, r, edge] = this.stones[id]
+    return this.getTransformCSS(q, r, this.edgeToShiftMap(type)[edge])
   }
 
   private cssBgUrl = (url: string): CSSProperties => ({
@@ -497,15 +536,15 @@ export class HexStore implements iHexStore {
   }
 
   onClick = () => {
-    if (this.preSit || !this.isRouteTile || !this.tiles[this.hoveredTile].hovered) {
+    const tile = this.tiles[this.hoveredTile]
+
+    if (this.preSit || !this.isRouteTile || !tile.hovered) {
       return
     }
 
-    const hex = this.objToHex(this.tiles[this.hoveredTile].hex)
-
+    const hex = tile.hex
     const directions = [...Array(6).keys()]
-
-    const a = directions.filter((direction) => {
+    const directionsWithStones = directions.filter((direction) => {
       const { type, tile, stones } = this.tiles[hex.neighbor(direction).id]
       return [HexType.route, HexType.treasure].indexOf(type) !== -1
         && tile !== undefined
@@ -514,13 +553,41 @@ export class HexStore implements iHexStore {
         && stones.some(([, e]) => (direction + 3) % 6 === e)
     })
 
-    const b = a.map((i) => {
-      const neighbor = this.tiles[hex.neighbor(i).id]
+    directionsWithStones.forEach((direction) => {
+      const neighbor = this.tiles[hex.neighbor(direction).id]
 
-      return toJS(neighbor)
+      console.log(toJS(neighbor))
+
+      if (neighbor.stones !== undefined && neighbor.stones.length) {
+        const index = neighbor.stones.findIndex(([, e]) => (direction + 3) % 6 === e)
+        const stone = neighbor.stones[index]
+        const stoneId = stone[0]
+        const stoneEdge = stone[1]
+
+        if (tile.tile) {
+          const routeTile = RouteTiles[tile.tile].slice(0, -1) as keyof typeof RouteTiles
+          const newEdge = this.routeTileIdToEdgeMap[routeTile][(stoneEdge + 3) % 6]
+
+          if (tile.stones === undefined) {
+            tile.stones = []
+          }
+
+          tile.stones.push([stoneId, newEdge])
+
+          this.stones[stoneId][1] = hex.q
+          this.stones[stoneId][2] = hex.r
+          this.stones[stoneId][3] = newEdge
+
+          neighbor.stones.splice(index, 1)
+          if (neighbor.stones.length === 0) {
+            delete neighbor.stones
+          }
+        }
+      }
     })
 
-    console.log(JSON.stringify(b, null, 4))
+    this.saveTiles()
+    this.storage.set('stones', this.stones)
 
     this.preSit = true
   }
@@ -738,30 +805,28 @@ export class HexStore implements iHexStore {
 
   // *- Stones - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  private getStoneProps(treasureIndex: number): Pick<Stone, 'q' | 'r' | 'edge'> {
+  private getStoneProps(treasureIndex: number, type: StoneType): Stone {
     const [q, r, , [[, edge]]] = this.treasures[treasureIndex]
-    return { q, r, edge }
+    return [type, q, r, edge]
   }
 
   private _stones: Stones = {
-    [StoneIds.sapphire]: { type: StoneType.sapphire, q: 0, r: 0, edge: 0 },
-    [StoneIds.emerald0]: { type: StoneType.emerald, q: 0, r: 0, edge: 5 },
-    [StoneIds.emerald1]: { type: StoneType.emerald, q: 0, r: 0, edge: 1 },
-    [StoneIds.emerald2]: { type: StoneType.emerald, q: 0, r: 0, edge: 2 },
-    [StoneIds.emerald3]: { type: StoneType.emerald, q: 0, r: 0, edge: 3 },
-    [StoneIds.emerald4]: { type: StoneType.emerald, q: 0, r: 0, edge: 4 },
+    [StoneIds.sapphire]: [StoneType.sapphire, 0, 0, 0],
+    [StoneIds.emerald0]: [StoneType.emerald, 0, 0, 5],
+    [StoneIds.emerald1]: [StoneType.emerald, 0, 0, 1],
+    [StoneIds.emerald2]: [StoneType.emerald, 0, 0, 2],
+    [StoneIds.emerald3]: [StoneType.emerald, 0, 0, 3],
+    [StoneIds.emerald4]: [StoneType.emerald, 0, 0, 4],
 
-    [StoneIds.amber0]: { type: StoneType.amber, ...this.getStoneProps(0) },
-    [StoneIds.amber1]: { type: StoneType.amber, ...this.getStoneProps(1) },
-    [StoneIds.amber2]: { type: StoneType.amber, ...this.getStoneProps(2) },
-    [StoneIds.amber3]: { type: StoneType.amber, ...this.getStoneProps(3) },
-    [StoneIds.amber4]: { type: StoneType.amber, ...this.getStoneProps(4) },
-    [StoneIds.amber5]: { type: StoneType.amber, ...this.getStoneProps(5) },
+    [StoneIds.amber0]: this.getStoneProps(0, StoneType.amber),
+    [StoneIds.amber1]: this.getStoneProps(1, StoneType.amber),
+    [StoneIds.amber2]: this.getStoneProps(2, StoneType.amber),
+    [StoneIds.amber3]: this.getStoneProps(3, StoneType.amber),
+    [StoneIds.amber4]: this.getStoneProps(4, StoneType.amber),
+    [StoneIds.amber5]: this.getStoneProps(5, StoneType.amber),
   }
 
-  get stones(): Stones {
-    return this._stones
-  }
+  stones: Stones = this.storage.getOrApply<Stones>('stones', () => this._stones)
 
   get stonesEntries(): StonesEntries {
     // @ts-ignore FIXME

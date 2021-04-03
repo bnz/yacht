@@ -8,6 +8,7 @@ export type Keys =
   | 'route-tiles'
   | 'treasure-tiles'
   | 'tiles-left'
+  | 'stones'
 
 export type Values =
   | OrientationType
@@ -16,6 +17,7 @@ export type Values =
   | Players
   | SavedTilesValue[]
   | TileNames[]
+  | Stones
 
 export enum PlayerId {
   Player1 = 'p-1',
@@ -183,12 +185,7 @@ export enum StoneType {
 
 export type Edge = 0 | 1 | 2 | 3 | 4 | 5
 
-export interface Stone {
-  q: number
-  r: number
-  type: StoneType
-  edge: Edge
-}
+export type Stone = [StoneType, Q, R, Edge]
 
 export type Stones = Record<StoneIds, Stone>
 

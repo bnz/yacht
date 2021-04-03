@@ -43,132 +43,27 @@ export const Rules: FC = () => {
         </div>
       </StonesWrapper>
 
+      <Typography paragraph style={{ fontStyle: 'italic' }}>
+        Извилистые дорожки – удивительные повороты – настоящее волшебство!
+      </Typography>
+
       <Typography paragraph>
-        Indigo
+        Индиго – это тёмно-синий цвет, впервые добытый в древние времена из индийского растения индигоноски. Его
+        глубокий синий оттенок использовали во многих культурах и религиях в качестве символа бесконечности и
+        бессмертия. Этот цвет оказывает успокаивающее действие на организм человека, позволяя сохранять трезвый ум,
+        который понадобится участникам этой игры для добычи наиболее дорогих драгоценных камней.
       </Typography>
 
       <Heading>
-        Indigo
+        Замысел и цель игры
       </Heading>
 
       <Typography component="p">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium amet assumenda autem delectus
-        deleniti
-        dolor, hic incidunt maxime minima molestiae mollitia nemo nulla odio officiis, perferendis reprehenderit
-        saepe
-        sequi.
-      </Typography>
-      <Typography component="p">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium amet assumenda autem delectus
-        deleniti
-        dolor, hic incidunt maxime minima molestiae mollitia nemo nulla odio officiis, perferendis reprehenderit
-        saepe
-        sequi.
-      </Typography>
-      <Typography component="p">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium amet assumenda autem delectus
-        deleniti
-        dolor, hic incidunt maxime minima molestiae mollitia nemo nulla odio officiis, perferendis reprehenderit
-        saepe
-        sequi.
-      </Typography>
-      <Typography component="p">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium amet assumenda autem delectus
-        deleniti
-        dolor, hic incidunt maxime minima molestiae mollitia nemo nulla odio officiis, perferendis reprehenderit
-        saepe
-        sequi.
-      </Typography>
-      <Typography component="p">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium amet assumenda autem delectus
-        deleniti
-        dolor, hic incidunt maxime minima molestiae mollitia nemo nulla odio officiis, perferendis reprehenderit
-        saepe
-        sequi.
-      </Typography>
-      <Typography component="p">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium amet assumenda autem delectus
-        deleniti
-        dolor, hic incidunt maxime minima molestiae mollitia nemo nulla odio officiis, perferendis reprehenderit
-        saepe
-        sequi.
-      </Typography>
-      <Typography component="p">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium amet assumenda autem delectus
-        deleniti
-        dolor, hic incidunt maxime minima molestiae mollitia nemo nulla odio officiis, perferendis reprehenderit
-        saepe
-        sequi.
-      </Typography>
-      <Typography component="p">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium amet assumenda autem delectus
-        deleniti
-        dolor, hic incidunt maxime minima molestiae mollitia nemo nulla odio officiis, perferendis reprehenderit
-        saepe
-        sequi.
-      </Typography>
-      <Typography component="p">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium amet assumenda autem delectus
-        deleniti
-        dolor, hic incidunt maxime minima molestiae mollitia nemo nulla odio officiis, perferendis reprehenderit
-        saepe
-        sequi.
-      </Typography>
-      <Typography component="p">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium amet assumenda autem delectus
-        deleniti
-        dolor, hic incidunt maxime minima molestiae mollitia nemo nulla odio officiis, perferendis reprehenderit
-        saepe
-        sequi.
-      </Typography>
-      <Typography component="p">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium amet assumenda autem delectus
-        deleniti
-        dolor, hic incidunt maxime minima molestiae mollitia nemo nulla odio officiis, perferendis reprehenderit
-        saepe
-        sequi.
-      </Typography>
-      <Typography component="p">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium amet assumenda autem delectus
-        deleniti
-        dolor, hic incidunt maxime minima molestiae mollitia nemo nulla odio officiis, perferendis reprehenderit
-        saepe
-        sequi.
-      </Typography>
-      <Typography component="p">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium amet assumenda autem delectus
-        deleniti
-        dolor, hic incidunt maxime minima molestiae mollitia nemo nulla odio officiis, perferendis reprehenderit
-        saepe
-        sequi.
-      </Typography>
-      <Typography component="p">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium amet assumenda autem delectus
-        deleniti
-        dolor, hic incidunt maxime minima molestiae mollitia nemo nulla odio officiis, perferendis reprehenderit
-        saepe
-        sequi.
-      </Typography>
-      <Typography component="p">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium amet assumenda autem delectus
-        deleniti
-        dolor, hic incidunt maxime minima molestiae mollitia nemo nulla odio officiis, perferendis reprehenderit
-        saepe
-        sequi.
-      </Typography>
-      <Typography component="p">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium amet assumenda autem delectus
-        deleniti
-        dolor, hic incidunt maxime minima molestiae mollitia nemo nulla odio officiis, perferendis reprehenderit
-        saepe
-        sequi.
-      </Typography>
-      <Typography component="p">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium amet assumenda autem delectus
-        deleniti
-        dolor, hic incidunt maxime minima molestiae mollitia nemo nulla odio officiis, perferendis reprehenderit
-        saepe
-        sequi.
+        В игре «Индиго» задача игроков – собрать наиболее ценные камни. Для этого им предстоит прокладывать пути, по
+        которым камни будут двигаться к выходам, ведущим к воротам игроков, расположенным по краям игрового поля. Одни и
+        те же ворота могут принадлежать только одному или двум игрокам сразу. В первом случае только один игрок получит
+        добытый камень, а во втором – оба игрока будут вознаграждены, независимо от того, кто именно занес камень в
+        ворота!
       </Typography>
 
     </div>
