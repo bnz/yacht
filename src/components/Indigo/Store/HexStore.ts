@@ -781,6 +781,9 @@ export class HexStore implements iHexStore {
         if (tile !== undefined) {
           arr.push(tile)
         }
+        if (stones !== undefined) {
+          arr.push(stones)
+        }
         routeTiles.push(arr)
       }
       if (type === HexType.treasure) {
