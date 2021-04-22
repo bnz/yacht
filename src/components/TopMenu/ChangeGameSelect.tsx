@@ -6,7 +6,6 @@ import { i18n } from '../../helpers/i18n/i18n'
 import Select from '@material-ui/core/Select'
 import { StyledProps } from '@material-ui/core/styles'
 import { Themed } from '../../helpers/types'
-import { stretch } from '../../helpers/css'
 import { commonSettingsStorage } from '../../index'
 
 const ChangeGameSelect: FC<StyledProps> = ({ className }) => {
@@ -19,27 +18,46 @@ const ChangeGameSelect: FC<StyledProps> = ({ className }) => {
   }, [])
 
   return (
-    <div className={className}>
-      <Select
-        value={age}
-        onChange={handleChange}
-        disableUnderline
-      >
-        <MenuItem value="yacht">{i18n('yacht')}</MenuItem>
-        <MenuItem value="indigo">{i18n('indigo')}</MenuItem>
-      </Select>
-    </div>
+    <Select
+      value={age}
+      onChange={handleChange}
+      disableUnderline
+    >
+      <MenuItem value='yacht'>{i18n('yacht')}</MenuItem>
+      <MenuItem value='indigo'>{i18n('indigo')}</MenuItem>
+    </Select>
   )
 }
 
 export const ChangeGameSelectStyled = styled(ChangeGameSelect)(({
-  theme: { breakpoints: { down } },
-}: Themed) => ({
-  flex: 1,
-  [down('xs')]: {
-    ...stretch(),
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
+  theme: {
+    spacing,
+    mixins: { toolbar },
+    breakpoints: { down },
+    zIndex: { modal },
   },
+}: Themed) => ({
+
+
+  // display: 'flex',
+  // zIndex: modal,
+
+  // ...stretch(0, 'auto', 'auto', 0),
+
+  // ...replaceKeysInObject(
+  //   toolbar,
+  //   'minHeight',
+  //   'marginLeft',
+  //   (value: number): number => spacing(value / 6),
+  // ),
+
+  // backgroundColor: '#f00',
+
+  // flex: 1,
+  // [down('xs')]: {
+  //   ...stretch(),
+  //   display: 'flex',
+  //   flexDirection: 'row',
+  //   justifyContent: 'center',
+  // },
 }))

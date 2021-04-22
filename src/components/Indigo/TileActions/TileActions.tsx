@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { FC, useCallback } from 'react'
+import React, { FC } from 'react'
 import { observer } from 'mobx-react'
 import style from './TileActions.module.css'
 import { useStore } from '../Store/HexProvider'
@@ -13,10 +13,10 @@ import { KeyCode } from './KeyCode'
 
 export const TileActions: FC = observer(() => {
   const store = useStore()
-  const rotateLeft = useCallback(store.rotateLeftButton, [])
-  const rotateRight = useCallback(store.rotateRightButton, [])
-  const cancel = useCallback(store.cancelPreSitButton, [])
-  const apply = useCallback(store.applySitButton, [])
+  const rotateLeft = store.rotateLeftButton
+  const rotateRight = store.rotateRightButton
+  const cancel = store.cancelPreSitButton
+  const apply = store.applySitButton
   const { x, y } = store.hoveredPoints
 
   // console.log('TileActions:::render')

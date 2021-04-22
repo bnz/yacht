@@ -17,6 +17,8 @@ export interface iPlayersStore {
   addPlayer(): void
 
   removePlayerById(playerId: PlayerId): () => void
+
+  reset(): void
 }
 
 export class PlayersStore implements iPlayersStore {
@@ -85,6 +87,11 @@ export class PlayersStore implements iPlayersStore {
       )
       this.save()
     })
+  }
+
+  reset() {
+    this.players = this.generateFirstTwoPlayers()
+    this.save()
   }
 
 }

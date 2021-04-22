@@ -3,22 +3,16 @@ import { Themed } from '../../../helpers/types'
 import { diceSizeDefaultState, DiceSizeState } from '../../../redux/reducers/diceSize'
 import { cwp } from '../../../helpers/cwp'
 
-interface iDicesWrapper extends Partial<DiceSizeState> {
-}
+type iDicesWrapper = Partial<DiceSizeState>
 
 export const DicesWrapper = styled(
   cwp()<iDicesWrapper>('diceSize'),
-)(({ theme: { spacing, breakpoints: { down } }, diceSize }: Themed<iDicesWrapper>) => {
-  const size = diceSize ? diceSize : diceSizeDefaultState
-
-  return {
-    display: 'flex',
-    flexWrap: 'nowrap',
-    fontSize: spacing(size),
-    paddingBottom: spacing(size / 3),
-
-    [down('xs')]: {
-      justifyContent: 'center',
-    },
-  }
-})
+)(({ theme: { spacing }, diceSize = diceSizeDefaultState }: Themed<iDicesWrapper>) => ({
+  display: 'flex',
+  flexWrap: 'nowrap',
+  fontSize: spacing(diceSize),
+  paddingBottom: spacing(diceSize / 3),
+  justifyContent: 'center',
+  overflow: 'hidden',
+  margin: spacing(1, 0, 2),
+}))

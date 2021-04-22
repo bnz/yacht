@@ -6,13 +6,13 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogActions from '@material-ui/core/DialogActions'
 import { DialogContentStyled } from './DialogContentStyled'
 import { WarningIconStyled } from './WarningIconStyled'
-import { ListItem } from '../ListParts/ListItem'
-import { ListDivider } from '../ListParts/ListDivider'
 import { ReplayIconStyled } from './ReplayIconStyled'
 import { useDispatch } from 'react-redux'
 import { restartGameThunk } from '../../../../../redux/actions/restartGameThunk'
+import useTheme from '@material-ui/core/styles/useTheme'
 
 export const RestartGameButton: FC = () => {
+  const { spacing } = useTheme()
   const [open, setOpen] = useState(false)
   const openModal = useCallback(() => setOpen(true), [])
   const closeModal = useCallback(() => setOpen(false), [])
@@ -28,10 +28,15 @@ export const RestartGameButton: FC = () => {
 
   return (
     <>
-      <ListDivider />
-      <ListItem icon={<ReplayIconStyled />} onClick={openModal}>
+      <Button
+        variant='contained'
+        color='secondary'
+        style={{ width: 'auto', margin: spacing(0, 'auto', 3, 3) }}
+        startIcon={<ReplayIconStyled />}
+        onClick={openModal}
+      >
         {i18n('button.restartGame')}
-      </ListItem>
+      </Button>
       <Dialog open={open} onClose={closeModal}>
         <DialogTitle>
           {i18n('button.restartGame')}?
@@ -44,7 +49,7 @@ export const RestartGameButton: FC = () => {
           <Button onClick={closeModal}>
             {i18n('button.cancel')}
           </Button>
-          <Button variant="contained" color="secondary" onClick={restartGame}>
+          <Button variant='contained' color='secondary' onClick={restartGame}>
             {i18n('button.restartGame')}
           </Button>
         </DialogActions>

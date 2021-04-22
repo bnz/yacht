@@ -1,10 +1,9 @@
 import React, { FC } from 'react'
-import { Inner, Push } from './MainLayoutParts'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import { TopMenu } from '../TopMenu/TopMenu'
-import { Footer, Wrapper } from './MainLayoutConnected'
+import { Wrapper } from './MainLayoutConnected'
 import { useGlobalStyles } from './useGlobalStyles'
 import { Drawer } from '../Drawer/Drawer'
+import { MenuButtonStyled } from '../TopMenu/MenuButton'
 
 export const MainLayout: FC = ({ children }) => {
   useGlobalStyles()
@@ -12,15 +11,11 @@ export const MainLayout: FC = ({ children }) => {
   return (
     <>
       <CssBaseline />
-      <TopMenu />
       <Drawer />
       <Wrapper>
-        <Inner>
-          {children}
-        </Inner>
-        <Push />
+        {children}
       </Wrapper>
-      <Footer>bonez &copy; 2019 - {new Date().getFullYear()}</Footer>
+      <MenuButtonStyled />
     </>
   )
 }

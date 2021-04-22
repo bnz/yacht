@@ -20,6 +20,8 @@ export const Stone: FC<StoneProps> = observer(({ id }) => {
       data-id={id}
       className={cx(style.root, style[StoneType[type]])}
       style={store.getStoneCSS(id)}
-    />
+    >
+      <div style={{ position: 'absolute', color: '#333' }}>{id}</div>
+    </div>
   )
 })

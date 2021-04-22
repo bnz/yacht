@@ -1,43 +1,22 @@
-import React, { ComponentType } from 'react'
+import React, { FC } from 'react'
 import styled from '@material-ui/styles/styled'
 import MaterialTable from '@material-ui/core/Table'
-import MaterialTableBody from '@material-ui/core/TableBody'
-import MaterialTableRow from '@material-ui/core/TableRow'
-import MaterialTableHead from '@material-ui/core/TableHead'
-import MaterialTableFooter from '@material-ui/core/TableFooter'
-import { Themed } from '../../../helpers/types'
 
-const AsDiv = (Component: ComponentType) => styled((props) => (
-  <Component component="div" {...props} />
-))({
-  display: 'block',
+export const Table = styled((props) => <MaterialTable component='div' {...props} />)({
+  overflowX: 'auto',
+  overflowY: 'hidden',
+  maxWidth: '100%',
+  width: 'unset',
+  margin: '0 auto',
+  display: 'inline-grid',
+  gridTemplateRows: 'auto 1fr auto',
 })
 
-export const Table = styled(AsDiv(MaterialTable))(({
-  theme: { breakpoints: { down } },
-}: Themed) => ({
-  [down('xs')]: {
-    overflowX: 'auto',
-    overflowY: 'hidden',
-    maxWidth: '100%',
-  },
-}))
+const Row: FC = (props) => <div {...props} />
 
-export const TableHead = AsDiv(MaterialTableHead)
+Row.displayName = 'Row'
 
-export const TableBody = AsDiv(MaterialTableBody)
-
-export const TableFooter = styled(AsDiv(MaterialTableFooter))(({
-  theme: { palette: { type, grey, background: { paper } } },
-}: Themed) => ({
-  '& div div': {
-    borderTop: `2px solid ${type === 'dark' ? paper : grey['300']}`,
-    borderBottom: 0,
-    lineHeight: 'inherit',
-    // TODO
-    fontSize: 'inherit',
-    fontWeight: 'bold',
-  },
-}))
-
-export const TableRow = AsDiv(MaterialTableRow)
+export const TableRow = styled(Row)({
+  // display: 'inline-block',
+  // margin: '0 auto',
+})

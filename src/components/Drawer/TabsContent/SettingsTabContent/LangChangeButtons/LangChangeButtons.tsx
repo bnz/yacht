@@ -1,5 +1,4 @@
 import React, { FC } from 'react'
-import { ListDivider } from '../ListParts/ListDivider'
 import { ListItem } from '../ListParts/ListItem'
 import { ButtonGroup } from '../DiceSizeChanger/ButtonGroup'
 import Button from '@material-ui/core/Button'
@@ -16,23 +15,20 @@ export const LangChangeButtons: FC = () => {
   const onClick = useDispatchedCallback(changeLanguageThunk())
 
   return (
-    <>
-      <ListDivider />
-      <ListItem
-        button={false}
-        icon={
-          <ButtonGroup>
-            <Button disabled={language === 'rus'} onClick={onClick}>
-              рус
-            </Button>
-            <Button disabled={language === 'eng'} onClick={onClick}>
-              eng
-            </Button>
-          </ButtonGroup>
-        }
-      >
-        {i18n('language')}
-      </ListItem>
-    </>
+    <ListItem
+      button={false}
+      icon={
+        <ButtonGroup>
+          <Button disabled={language === 'rus'} onClick={onClick}>
+            рус
+          </Button>
+          <Button disabled={language === 'eng'} onClick={onClick}>
+            eng
+          </Button>
+        </ButtonGroup>
+      }
+    >
+      {i18n('language')}
+    </ListItem>
   )
 }

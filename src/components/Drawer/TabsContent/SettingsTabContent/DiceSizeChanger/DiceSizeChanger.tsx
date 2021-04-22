@@ -1,7 +1,6 @@
 import React, { FC } from 'react'
 import { i18n } from '../../../../../helpers/i18n/i18n'
 import { ListItem } from '../ListParts/ListItem'
-import { ListDivider } from '../ListParts/ListDivider'
 import { ButtonGroup } from './ButtonGroup'
 import { makeDiceSizeSelector } from '../../../../../redux/selectors/makeDiceSizeSelector'
 import { useSelector } from 'react-redux'
@@ -19,23 +18,20 @@ export const DiceSizeChanger: FC = () => {
   const decrease = useDispatchedCallback(decreaseDiceSize())
 
   return (
-    <>
-      <ListDivider />
-      <ListItem
-        button={false}
-        icon={
-          <ButtonGroup>
-            <Button onClick={increase} disabled={diceSize === maxDiceSize}>
-              <AddIcon />
-            </Button>
-            <Button onClick={decrease} disabled={diceSize === minDiceSize}>
-              <RemoveIcon />
-            </Button>
-          </ButtonGroup>
-        }
-      >
-        {i18n('diceSize')}
-      </ListItem>
-    </>
+    <ListItem
+      button={false}
+      icon={
+        <ButtonGroup>
+          <Button onClick={increase} disabled={diceSize === maxDiceSize}>
+            <AddIcon />
+          </Button>
+          <Button onClick={decrease} disabled={diceSize === minDiceSize}>
+            <RemoveIcon />
+          </Button>
+        </ButtonGroup>
+      }
+    >
+      {i18n('diceSize')}
+    </ListItem>
   )
 }

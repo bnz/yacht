@@ -3,7 +3,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 import { TableCellStyled } from './TablePartsStyled/TableCellStyled'
 import { CombinationConnected } from './Combination/CombinationConnected'
 import { isBonus, makeCombinationsSelector } from '../../redux/reducers/combinations'
-import { Table, TableBody, TableRow } from './TablePartsStyled/Table'
+import { Table, TableRow } from './TablePartsStyled/Table'
 import { TableHeader } from './TableHeader'
 import { TableFooter } from './TableFooter'
 import { useSelector } from 'react-redux'
@@ -28,13 +28,13 @@ export const CombinationsContainer: FC = () => {
   const large = tableSize === 'medium'
 
   return (
-    <Table size={tableSize}>
-      <TableHeader />
-      <TableBody>
+    <div style={{ display: 'flex' }}>
+      <Table size={tableSize}>
+        <TableHeader />
         {combinations.map(({ name, title, combination }) => (
           <TableRow key={name}>
             <TableCellStyled firstColumn selected={isBonus(combination)} large={large}>
-              <Tooltip title={title} placement="top-start" enterDelay={300} disableFocusListener>
+              <Tooltip title={title} placement='top-start' enterDelay={300} disableFocusListener>
                 <span>{name}</span>
               </Tooltip>
             </TableCellStyled>
@@ -61,8 +61,8 @@ export const CombinationsContainer: FC = () => {
             />
           </TableRow>
         ))}
-      </TableBody>
-      <TableFooter />
-    </Table>
+        <TableFooter />
+      </Table>
+    </div>
   )
 }

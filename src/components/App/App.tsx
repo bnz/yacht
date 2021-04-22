@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { FC } from 'react'
 import { MainLayout } from '../MainLayout/MainLayout'
 import { commonSettingsStorage } from '../../index'
@@ -10,15 +11,19 @@ export const App: FC = () => {
   const game = commonSettingsStorage.get('game', 'yacht')
 
   return (
-    <MainLayout>
+    <>
       {(!game || game === 'yacht') && (
-        <Yacht />
+        <MainLayout>
+          <Yacht />
+        </MainLayout>
       )}
       {game === 'indigo' && (
         <HexProvider store={new HexStore()}>
-          <Indigo />
+          <MainLayout>
+            <Indigo />
+          </MainLayout>
         </HexProvider>
       )}
-    </MainLayout>
+    </>
   )
 }

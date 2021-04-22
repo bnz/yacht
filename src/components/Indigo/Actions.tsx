@@ -1,76 +1,72 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { ChangeEvent, FC, useCallback, useState } from 'react'
+import React, { FC, useCallback, useState } from 'react'
 import { useStore } from './Store/HexProvider'
 import { observer } from 'mobx-react'
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
-import PeopleAltIcon from '@material-ui/icons/PeopleAlt'
-import SportsEsportsIcon from '@material-ui/icons/SportsEsports'
-import InfoIcon from '@material-ui/icons/Info'
-import RotateRightIcon from '@material-ui/icons/RotateRight'
-import RotateLeftIcon from '@material-ui/icons/RotateLeft'
-import ReplayIcon from '@material-ui/icons/Replay'
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import { GamePhase } from './types'
 import { BottomNavigationStyled } from './BottomNavigationStyled'
-import { SvgIconTypeMap } from '@material-ui/core/SvgIcon/SvgIcon'
-import { OverridableComponent } from '@material-ui/core/OverridableComponent'
-
-const props = (Icon: OverridableComponent<SvgIconTypeMap>) => ({
-  style: {
-    minWidth: 60,
-    maxWidth: 100,
-  },
-  icon: <Icon fontSize="default" />,
-})
+import Button from '@material-ui/core/Button'
+import { ReplayIconStyled } from '../Drawer/TabsContent/SettingsTabContent/RestartGameButton/ReplayIconStyled'
+import { i18n } from '../../helpers/i18n/i18n'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import { DialogContentStyled } from '../Drawer/TabsContent/SettingsTabContent/RestartGameButton/DialogContentStyled'
+import { WarningIconStyled } from '../Drawer/TabsContent/SettingsTabContent/RestartGameButton/WarningIconStyled'
+import DialogActions from '@material-ui/core/DialogActions'
+import Dialog from '@material-ui/core/Dialog'
+import RotateRightIcon from '@material-ui/icons/RotateRight'
+import RotateLeftIcon from '@material-ui/icons/RotateLeft'
 
 export const Actions: FC = observer(() => {
   const hexStore = useStore()
   const phase = hexStore.gamePhase.phase
   const rotate = useCallback(hexStore.toggleOrientation, [])
-  const restart = useCallback(hexStore.restart, [])
-  const startGame = useCallback(hexStore.startGame, [])
-  const goToPreGame = useCallback(hexStore.gamePhase.goToPreGame, [])
-  const goToPlayersSelection = useCallback(hexStore.gamePhase.goToPlayersSelection, [])
-  const [value, setValue] = useState(phase)
-  const handleChange = useCallback((event: ChangeEvent<{}>, newValue: number) => {
-    setValue(newValue)
-  }, [])
+  const goToPreGame = useCallback(hexStore.restart, [])
+  const [open, setOpen] = useState(false)
+  const openModal = useCallback(() => setOpen(true), [])
+  const closeModal = useCallback(() => setOpen(false), [])
 
-  if (phase === GamePhase.PRE_GAME || phase === GamePhase.PLAYERS_SELECTION) {
+  if (phase !== GamePhase.IN_PLAY) {
     return null
   }
 
   return (
-    <BottomNavigationStyled showLabels value={value} onChange={handleChange}>
-      <BottomNavigationAction
-        label="Intro"
-        value={0}
-        {...props(InfoIcon)}
-        onClick={goToPreGame}
-      />
-      <BottomNavigationAction
-        label="Players"
-        value={1}
-        {...props(PeopleAltIcon)}
-        // disabled={phase === GamePhase.PLAYERS_SELECTION}
-        onClick={goToPlayersSelection}
-      />
-      <BottomNavigationAction
-        label="Game"
-        value={2}
-        {...props(SportsEsportsIcon)}
-        disabled={phase === GamePhase.IN_PLAY}
-        onClick={startGame}
-      />
-      {phase === GamePhase.IN_PLAY && (
-        <BottomNavigationAction label="Rotate" {...props(hexStore.isPointy ? RotateRightIcon : RotateLeftIcon)} onClick={rotate} />
-      )}
-      {phase === GamePhase.IN_PLAY && (
-        <BottomNavigationAction label="Clear" {...props(DeleteForeverIcon)} onClick={restart} />
-      )}
-      {phase === GamePhase.IN_PLAY && (
-        <BottomNavigationAction label="Restart" {...props(ReplayIcon)} />
-      )}
+    <BottomNavigationStyled>
+      <div>
+        <Button
+          variant='contained'
+          color='secondary'
+          startIcon={<ReplayIconStyled />}
+          onClick={openModal}
+        >
+          {i18n('button.restartGame')}
+        </Button>
+      </div>
+      <Dialog open={open} onClose={closeModal}>
+        <DialogTitle>
+          {i18n('button.restartGame')}?
+        </DialogTitle>
+        <DialogContentStyled>
+          <WarningIconStyled />
+          {i18n('currentGameWillBeLost')}
+        </DialogContentStyled>
+        <DialogActions>
+          <Button onClick={closeModal}>
+            {i18n('button.cancel')}
+          </Button>
+          <Button variant='contained' color='secondary' onClick={goToPreGame}>
+            {i18n('button.restartGame')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <div>
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={rotate}
+          startIcon={hexStore.isPointy ? <RotateRightIcon /> : <RotateLeftIcon />}
+        >
+          {i18n('button.Rotate')}
+        </Button>
+      </div>
     </BottomNavigationStyled>
   )
 })

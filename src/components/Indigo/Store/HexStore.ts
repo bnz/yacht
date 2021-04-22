@@ -69,6 +69,8 @@ export interface iHexStore {
 
   onMouseMove(event: MouseEvent<HTMLDivElement>): void
 
+  debounce(...args: any[]): void
+
   onClick(): void
 
   cancelPreSitButton(e: MouseEvent<HTMLButtonElement | HTMLDivElement>): void
@@ -150,7 +152,7 @@ export class HexStore implements iHexStore {
 
     // Record<RouteTiles, Edge[]>
 
-    // console.log(this.routeTileIdToEdgeMap)
+    // console.log(toJS(this.stones))
   }
 
   private storage: iLocalStorageMgmnt<Keys, Values> = new LocalStorageMgmnt<Keys, Values>('indigo')
@@ -248,12 +250,18 @@ export class HexStore implements iHexStore {
   }
 
   restart = () => {
-    this.tiles = this._tiles
-    this.saveTiles()
+    this.gamePhase.goToPreGame()
+    // eslint-disable-next-line no-self-assign
+    window.location = window.location
 
-    this.leftTiles = this.generateLeftTiles()
-
-    console.log(toJS(this.tiles))
+    // TODO
+    // this.playersStore.reset()
+    // this.playerMove = [this.playersStore.players[0].id, this.randomTile]
+    // this.tiles = this._tiles
+    // this.saveTiles()
+    // this.stones = this._stones
+    // this.saveStones()
+    // this.leftTiles = this.generateLeftTiles()
   }
 
   private onWindowResize = () => {
@@ -282,7 +290,7 @@ export class HexStore implements iHexStore {
     this.updateLayout()
   }
 
-  private debounce = debounce(this.onWindowResize, 400)
+  debounce = debounce(this.onWindowResize, 400)
 
   private _hoveredTile = ''
 
@@ -536,58 +544,9 @@ export class HexStore implements iHexStore {
   }
 
   onClick = () => {
-    const tile = this.tiles[this.hoveredTile]
-
-    if (this.preSit || !this.isRouteTile || !tile.hovered) {
+    if (this.preSit || !this.isRouteTile || !this.tiles[this.hoveredTile].hovered) {
       return
     }
-
-    const hex = tile.hex
-    const directions = [...Array(6).keys()]
-    const directionsWithStones = directions.filter((direction) => {
-      const { type, tile, stones } = this.tiles[hex.neighbor(direction).id]
-      return [HexType.route, HexType.treasure].indexOf(type) !== -1
-        && tile !== undefined
-        && stones !== undefined
-        && stones.length
-        && stones.some(([, e]) => (direction + 3) % 6 === e)
-    })
-
-    directionsWithStones.forEach((direction) => {
-      const neighbor = this.tiles[hex.neighbor(direction).id]
-
-      console.log(toJS(neighbor))
-
-      if (neighbor.stones !== undefined && neighbor.stones.length) {
-        const index = neighbor.stones.findIndex(([, e]) => (direction + 3) % 6 === e)
-        const stone = neighbor.stones[index]
-        const stoneId = stone[0]
-        const stoneEdge = stone[1]
-
-        if (tile.tile) {
-          const routeTile = RouteTiles[tile.tile].slice(0, -1) as keyof typeof RouteTiles
-          const newEdge = this.routeTileIdToEdgeMap[routeTile][(stoneEdge + 3) % 6]
-
-          if (tile.stones === undefined) {
-            tile.stones = []
-          }
-
-          tile.stones.push([stoneId, newEdge])
-
-          this.stones[stoneId][1] = hex.q
-          this.stones[stoneId][2] = hex.r
-          this.stones[stoneId][3] = newEdge
-
-          neighbor.stones.splice(index, 1)
-          if (neighbor.stones.length === 0) {
-            delete neighbor.stones
-          }
-        }
-      }
-    })
-
-    this.saveTiles()
-    this.storage.set('stones', this.stones)
 
     this.preSit = true
   }
@@ -613,7 +572,7 @@ export class HexStore implements iHexStore {
     // @ts-ignore FIXME
     this.tiles[this.hoveredTile].tile = RouteTiles[this.playerMoveTile]
     delete this.tiles[this.hoveredTile].hovered
-    this.saveTiles()
+    this.moveStones()
     this.nextMove()
   }
 
@@ -653,6 +612,52 @@ export class HexStore implements iHexStore {
         this.tiles[this.hoveredTile].tile = RouteTiles[[this.playerMoveTile, '_'].join('')]
       }
     }
+  }
+
+  private moveStones() {
+    const toEdge = (d: number): number => (d + 3) % 6
+
+    const tile = this.tiles[this.hoveredTile]
+    const hex = tile.hex
+    const directions = [...Array(6).keys()]
+
+    const directionsWithStones = directions.filter((direction) => {
+      const { type, tile, stones } = this.tiles[hex.neighbor(direction).id]
+      return [HexType.route, HexType.treasure].indexOf(type) !== -1
+        && tile !== undefined
+        && stones !== undefined
+        && stones.length
+        && stones.some(([, e]) => toEdge(direction) === e)
+    })
+
+    directionsWithStones.forEach((direction) => {
+      const neighbor = this.tiles[hex.neighbor(direction).id]
+      const index = neighbor.stones!.findIndex(([, e]) => toEdge(direction) === e)
+      const [stoneId, stoneEdge] = neighbor.stones![index]
+      const routeTile = RouteTiles[tile.tile!]/*.slice(0, -1)*/ as keyof typeof RouteTiles
+      const newEdge = this.routeTileIdToEdgeMap[routeTile][toEdge(stoneEdge)]
+
+      console.log({ hex: neighbor.hex.id, stoneId, routeTile, stoneEdge, newEdge })
+
+      if (tile.stones === undefined) {
+        tile.stones = []
+      }
+
+      tile.stones.push([stoneId, newEdge])
+
+      this.stones[stoneId][1] = hex.q
+      this.stones[stoneId][2] = hex.r
+      this.stones[stoneId][3] = newEdge
+
+      neighbor.stones!.splice(index, 1)
+
+      if (neighbor.stones!.length === 0) {
+        delete neighbor.stones
+      }
+    })
+
+    this.saveStones()
+    this.saveTiles()
   }
 
   get isRouteCrossroad() {
@@ -752,12 +757,13 @@ export class HexStore implements iHexStore {
     ...this.generateTiles(this.emptyLines, HexType.decorator),
     ...this.generateTiles(this.gateways, HexType.gateway),
     ...this.generateTiles(
-      // this.storage.getOrApply<TileItems<TreasureT>>('treasure-tiles', () => this.treasures),
-      this.treasures,
+      this.storage.getOrApply<TileItems<TreasureT>>('treasure-tiles', () => this.treasures),
+      // this.treasures,
       HexType.treasure,
     ),
     ...this.generateTiles(
       this.storage.getOrApply<TileItems<RouteTiles>>('route-tiles', () => this.routes),
+      // this.routes,
       HexType.route,
     ),
   }
@@ -831,6 +837,10 @@ export class HexStore implements iHexStore {
   get stonesEntries(): StonesEntries {
     // @ts-ignore FIXME
     return Object.entries(this._stones) as StonesEntries
+  }
+
+  private saveStones() {
+    this.storage.set('stones', this.stones)
   }
 
 }
