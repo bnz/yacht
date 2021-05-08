@@ -45,7 +45,11 @@ export enum GamePhase {
   IN_PLAY,
 }
 
-export type PlayerMove = [PlayerId, string?]
+/**
+ *
+ */
+type RandomTile = string
+export type PlayerMove = [PlayerId, RandomTile?]
 
 export type OrientationType = 'flat' | 'pointy'
 

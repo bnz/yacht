@@ -13,34 +13,24 @@ import { KeyCode } from './KeyCode'
 
 export const TileActions: FC = observer(() => {
   const store = useStore()
-  const rotateLeft = store.rotateLeftButton
-  const rotateRight = store.rotateRightButton
-  const cancel = store.cancelPreSitButton
-  const apply = store.applySitButton
-  const { x, y } = store.hoveredPoints
-
-  // console.log('TileActions:::render')
 
   return (
-    <div className={style.root} onClick={cancel}>
+    <div className={style.root} onClick={store.cancelPreSitButton}>
       <KeyCode />
-      <div
-        className={style.container}
-        style={{ transform: `translate(-50%, -50%) translate(${x}px, ${y}px)` }}
-      >
-        <Fab className={cx(style.button, style.left)} onClick={apply}>
+      <div className={style.container} style={store.tileActionsPositionCSS}>
+        <Fab className={cx(style.button, style.left)} onClick={store.applySitButton}>
           <CheckRoundedIcon />
         </Fab>
-        <Fab className={cx(style.button, style.right)} onClick={cancel}>
+        <Fab className={cx(style.button, style.right)} onClick={store.cancelPreSitButton}>
           <CloseRoundedIcon />
         </Fab>
         {!store.isRouteCrossroad && (
-          <Fab className={cx(style.button, style.top)} onClick={rotateRight}>
+          <Fab className={cx(style.button, style.top)} onClick={store.rotateRightButton}>
             <RotateLeftRoundedIcon />
           </Fab>
         )}
         {!store.isRouteCrossroad && (
-          <Fab className={cx(style.button, style.bottom)} onClick={rotateLeft}>
+          <Fab className={cx(style.button, style.bottom)} onClick={store.rotateLeftButton}>
             <RotateRightRoundedIcon />
           </Fab>
         )}

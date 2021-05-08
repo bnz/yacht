@@ -18,7 +18,7 @@ export class __DEV__appendStyles {
       const head = document.getElementsByTagName('head')[0]
       if (head) {
         const style = document.createElement('style')
-        style.setAttribute('data-r-q', '')
+        style.setAttribute('data-qr', '')
         style.innerHTML = `${this.generateCoords('pointy')}\n${this.generateCoords('flat')}`
         head.appendChild(style)
         // console.log(style.innerHTML)
@@ -42,7 +42,7 @@ export class __DEV__appendStyles {
 
     Object.entries(this.tiles).forEach(([, { hex }]) => {
       const { x, y } = layout.hexToPixel(hex)
-      arr.push(`.${orientation} [data-q="${hex.q}"][data-r="${hex.r}"] { transform: translate(calc(${x - 1} * var(--R)), calc(${y - this.ratio} * var(--R))${isPointy ? `) rotate(-30deg)` : ')'}; }`)
+      arr.push(`.${orientation} [data-qr="${hex.id}"] { transform: translate(calc(${x - 1} * var(--R)), calc(${y - this.ratio} * var(--R))${isPointy ? `) rotate(-30deg)` : ')'}; }`)
     })
 
     return arr.join('\n')

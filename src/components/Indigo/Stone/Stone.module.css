@@ -30,6 +30,13 @@
   background-size: contain;
 }
 
+.root::after {
+  content: attr(data-id);
+  display: block;
+  position: absolute;
+  color: #333;
+}
+
 .sapphire::before {
   background-image: url("./assets/sapphire.svg");
 }

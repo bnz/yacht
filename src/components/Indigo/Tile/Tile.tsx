@@ -8,17 +8,9 @@ interface TileProps {
   id: string
 }
 
-export const Tile: FC<TileProps> = observer(({ id }) => {
-  const store = useStore()
-  const hex = store.tiles[id].hex
-
-  // console.log('Tile:::render')
-
-  return (
-    <div
-      data-q={hex.q}
-      data-r={hex.r}
-      style={store.getBackgroundUrl(id)}
-    />
-  )
-})
+export const Tile: FC<TileProps> = observer(({ id }) => (
+  <div
+    data-qr={useStore().tiles[id].hex.id}
+    style={useStore().getBackgroundUrlById(id)}
+  />
+))

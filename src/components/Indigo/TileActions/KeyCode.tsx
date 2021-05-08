@@ -17,6 +17,13 @@ export const KeyCode: FC = () => {
         case 37: // left
           store.rotateRight()
           break
+        case 32: // space
+          if (e.shiftKey) {
+            store.rotateRight()
+          } else {
+            store.rotateLeft()
+          }
+          break
         case 39: // right
           store.rotateLeft()
           break
