@@ -25,7 +25,7 @@ import {
   StoneType,
   Tile,
   TileItems,
-  TileNames,
+  TileName,
   Tiles,
   TreasureT,
   Values,
@@ -110,8 +110,8 @@ export class HexStore implements iHexStore {
     window.removeEventListener('resize', this.debounce)
   }
 
-  private generateLeftTiles = (): TileNames[] => {
-    return shuffle<TileNames>(
+  private generateLeftTiles = (): TileName[] => {
+    return shuffle<TileName>(
       [].concat.apply(
         [] as any,
         Object.entries<6 | 14>(this.leftTilesInitialSet).map(
@@ -121,7 +121,7 @@ export class HexStore implements iHexStore {
     )
   }
 
-  private leftTilesInitialSet: Record<TileNames, 6 | 14> = {
+  private leftTilesInitialSet: Record<TileName, 6 | 14> = {
     s: 6,
     c: 6,
     t: 14,
@@ -129,7 +129,7 @@ export class HexStore implements iHexStore {
     h: 14,
   }
 
-  private tileNameToAngle: Record<TileNames, Angle[]> = {
+  private tileNameToAngle: Record<TileName, Angle[]> = {
     s: [0, 60],
     c: [],
     t: [0, 60, 120],
@@ -137,32 +137,29 @@ export class HexStore implements iHexStore {
     h: [0, 60, 120, 180, 240, 300],
   }
 
-  private randAngle(tile: TileNames): number {
+  private randAngle(tile: TileName): number {
     return rand(0, this.tileNameToAngle[tile].length - 1)
   }
 
-  private leftTiles = this.storage.getOrApply<TileNames[]>('tiles-left', this.generateLeftTiles)
+  private leftTiles = this.storage.getOrApply<TileName[]>('tiles-left', this.generateLeftTiles)
 
-  get randomTile(): string | undefined {
+  private get randomTile(): [TileName, Angle] | [] {
     const tile = this.leftTiles.pop()
     this.storage.set('tiles-left', this.leftTiles)
 
     if (tile) {
-      if (this.tileNameToAngle[tile].length) {
-        return [
-          tile,
-          this.tileNameToAngle[tile][this.randAngle(tile)],
-        ].join('-')
-      }
-      return tile
+      return [tile, this.tileNameToAngle[tile][this.randAngle(tile)]]
     }
 
-    return undefined
+    return []
   }
 
   private _playerMove = this.storage.getOrApply<PlayerMove>(
     'player-move',
-    () => [this.playersStore.players[0].id, this.randomTile],
+    () => {
+      const [tile, angle] = this.randomTile
+      return [this.playersStore.players[0].id, tile, angle]
+    },
   )
 
   get playerMove() {
@@ -175,7 +172,10 @@ export class HexStore implements iHexStore {
   }
 
   private get playerMoveTile() {
-    return this.playerMove[1] ? this.playerMove[1] : undefined
+    if (this.isRouteCrossroad) {
+      return this.playerMove[1]
+    }
+    return this.playerMove[1] ? [this.playerMove[1], this.playerMove[2]].join('-') : undefined
   }
 
   private _arenaElement: HTMLDivElement | null = null
@@ -358,7 +358,6 @@ export class HexStore implements iHexStore {
     c_: [0, 0, 0, 0, 0, 0],
   }
 
-
   private getRotate = (type: StoneType) => (edge: Edge): string | undefined => {
     const rotate = this.stoneAngleMap[this.orientationType][type]
     return rotate[edge] !== undefined ? ` rotate(${rotate[edge]}deg)` : undefined
@@ -422,7 +421,8 @@ export class HexStore implements iHexStore {
     const index = this.playersStore.entries.findIndex(([, { id }]) => id === this.playerMove[0])
     const keys = Object.keys(this.playersStore.players)
     const nextKey = parseInt(keys[keys.length - 1 > index ? index + 1 : 0], 10)
-    this.playerMove = [this.playersStore.players[nextKey].id, this.randomTile]
+    const [tile, angle] = this.randomTile
+    this.playerMove = [this.playersStore.players[nextKey].id, tile, angle]
   }
 
   onMouseMove = (e: MouseEvent<HTMLDivElement>) => {
@@ -440,29 +440,20 @@ export class HexStore implements iHexStore {
     }
   }
 
-  private tmpTile: [string?, number?] | null = null
-
-  private changeTmpRotation(dec?: boolean) {
-    if (this.tmpTile !== null && this.tmpTile[1] !== undefined) {
-      dec ? this.tmpTile[1] -= 60 : this.tmpTile[1] += 60
-    }
-  }
-
   get getTmpCSS(): CSSProperties {
-    return this.tmpTile === null
-      ? this.cssBgUrl([svg, '#', this.playerMoveTile, '_'].join(''))
-      : {
-        ...this.cssBgUrl([svg, '#', this.tmpTile[0], '_'].join('')),
-        transform: `rotate(${this.tmpTile[1]}deg)`,
-        transitionProperty: 'transform',
-        transitionDuration: 'calc(var(--duration) * 3)',
-      }
+    return {
+      ...this.cssBgUrl([svg, '#', this.playerMoveTile].join('')),
+      ...(this.playerMove.length >= 4 && this.playerMove[3] !== undefined ? {
+        transform: `rotate(${this.playerMove[3]}deg)`,
+      } : {}),
+      transitionProperty: 'transform',
+      transitionDuration: 'calc(var(--duration) * 5)',
+    }
   }
 
   onClick = () => {
     if (this.hoveredId !== null) {
       this._preSit = true
-      this.tmpTile = [this.playerMove[1], 0]
     }
   }
 
@@ -473,7 +464,6 @@ export class HexStore implements iHexStore {
 
   cancelPreSit = () => {
     this._preSit = false
-    this.tmpTile = null
   }
 
   applySitButton = (e: MouseEvent<HTMLButtonElement>) => {
@@ -483,14 +473,57 @@ export class HexStore implements iHexStore {
 
   applySit = () => {
     this._preSit = false
-    this.tmpTile = null
     if (this.hoveredId !== null && this.playerMoveTile !== undefined) {
-      this.tiles[this.hoveredId].tile = RouteTiles[this.playerMoveTile as keyof typeof RouteTiles]
+      this.tiles[this.hoveredId].tile = RouteTiles[[
+        this.playerMove[1],
+        this.playerMove[4] !== undefined ? this.playerMove[4] : this.playerMove[2],
+      ].join('-') as keyof typeof RouteTiles]
       this.moveStones()
       this.nextMove()
       this.saveStones()
       this.saveTiles()
       this._hoveredId = null
+    }
+  }
+
+  private rotate(back = false) {
+    if (this.playerMove[1] && !this.isRouteCrossroad) {
+      const [playerId, tile, angle = 0, rotateAngle, savedNextAngle] = this.playerMove
+      const angles = this.tileNameToAngle[tile]
+
+      let nextAngle
+      let nextRotateAngle
+      let angl = angle
+
+      if (savedNextAngle !== undefined) {
+        nextAngle = savedNextAngle
+        angl = savedNextAngle
+      }
+
+      if (back) {
+        const firstAngle = angles[0]
+        const lastAngle = angles[angles.length - 1]
+        if (angl === firstAngle) {
+          nextAngle = lastAngle
+        } else {
+          nextAngle = angl - 60
+        }
+      } else {
+        const lastAngle = angles[angles.length - 1]
+        if (angl < lastAngle) {
+          nextAngle = angl + 60
+        } else if (angl === lastAngle) {
+          nextAngle = angles[0]
+        }
+      }
+
+      if (rotateAngle === undefined) {
+        nextRotateAngle = 60 * (back ? -1 : 1)
+      } else {
+        nextRotateAngle = rotateAngle + 60 * (back ? -1 : 1)
+      }
+
+      this.playerMove = [playerId, tile, angle, nextRotateAngle, nextAngle as Angle]
     }
   }
 
@@ -500,15 +533,7 @@ export class HexStore implements iHexStore {
   }
 
   rotateLeft = () => {
-    if (this.playerMove[1] && !this.isRouteCrossroad) {
-      const [tile, angle] = this.playerMove[1].split('-') as [TileNames, string]
-      const angles = this.tileNameToAngle[tile]
-      const index = this.tileNameToAngle[tile].findIndex((a) => a === parseInt(angle, 10) as Angle)
-      const nextAngle = angles[index === angles.length - 1 ? 0 : index + 1]
-      const nextTile = [tile, nextAngle].join('-')
-      this.playerMove = [this.playerMove[0], nextTile]
-      this.changeTmpRotation()
-    }
+    this.rotate()
   }
 
   rotateRightButton = (e: MouseEvent<HTMLButtonElement>) => {
@@ -517,15 +542,7 @@ export class HexStore implements iHexStore {
   }
 
   rotateRight = () => {
-    if (this.playerMove[1] && !this.isRouteCrossroad) {
-      const [tile, angle] = this.playerMove[1].split('-') as [TileNames, string]
-      const angles = this.tileNameToAngle[tile]
-      const index = this.tileNameToAngle[tile].findIndex((a) => a === parseInt(angle, 10) as Angle)
-      const nextAngle = angles[index === 0 ? angles.length - 1 : index - 1]
-      const nextTile = [tile, nextAngle].join('-')
-      this.playerMove = [this.playerMove[0], nextTile]
-      this.changeTmpRotation(true)
-    }
+    this.rotate(true)
   }
 
   private moveStones() {
@@ -660,7 +677,7 @@ export class HexStore implements iHexStore {
   ]
 
   private readonly _tiles: Tiles = {
-    ...this.generateTiles(this.corners, HexType.corner),
+    // ...this.generateTiles(this.corners, HexType.corner),
     ...this.generateTiles(this.emptyLines, HexType.decorator),
     ...this.generateTiles(this.gateways, HexType.gateway),
     ...this.generateTiles(this.treasures, HexType.treasure),
@@ -668,7 +685,7 @@ export class HexStore implements iHexStore {
   }
 
   tiles: Tiles = {
-    ...this.generateTiles(this.corners, HexType.corner),
+    // ...this.generateTiles(this.corners, HexType.corner),
     ...this.generateTiles(this.emptyLines, HexType.decorator),
     ...this.generateTiles(this.gateways, HexType.gateway),
     ...this.generateTiles(

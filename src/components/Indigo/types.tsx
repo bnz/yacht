@@ -16,7 +16,7 @@ export type Values =
   | PlayerMove
   | Players
   | SavedTilesValue[]
-  | TileNames[]
+  | TileName[]
   | Stones
 
 export enum PlayerId {
@@ -45,11 +45,10 @@ export enum GamePhase {
   IN_PLAY,
 }
 
-/**
- *
- */
-type RandomTile = string
-export type PlayerMove = [PlayerId, RandomTile?]
+type RotationAngle = number
+type NextAngle = Angle
+
+export type PlayerMove = [PlayerId, TileName?, Angle?, RotationAngle?, NextAngle?]
 
 export type OrientationType = 'flat' | 'pointy'
 
@@ -100,7 +99,15 @@ type TileId = number
 export type SavedTilesValue = [Q, R, TileId?, StoneWithEdge?]
 export type SavedTiles = Record<string, SavedTilesValue>
 
-export type TileNames =
+export enum TileName2 {
+  S,
+  C,
+  T,
+  L,
+  H,
+}
+
+export type TileName =
   | 's'
   | 'c'
   | 't'
