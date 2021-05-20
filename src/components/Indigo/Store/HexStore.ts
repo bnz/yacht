@@ -422,6 +422,9 @@ export class HexStore implements iHexStore {
     const keys = Object.keys(this.playersStore.players)
     const nextKey = parseInt(keys[keys.length - 1 > index ? index + 1 : 0], 10)
     const [tile, angle] = this.randomTile
+
+    console.log({ tile, angle })
+
     this.playerMove = [this.playersStore.players[nextKey].id, tile, angle]
   }
 
@@ -474,10 +477,16 @@ export class HexStore implements iHexStore {
   applySit = () => {
     this._preSit = false
     if (this.hoveredId !== null && this.playerMoveTile !== undefined) {
-      this.tiles[this.hoveredId].tile = RouteTiles[[
-        this.playerMove[1],
-        this.playerMove[4] !== undefined ? this.playerMove[4] : this.playerMove[2],
-      ].join('-') as keyof typeof RouteTiles]
+      const [, name, angle, , nextAngle] = this.playerMove
+      const newRouteTile: [TileName?, Angle?] = [name]
+
+      if (this.playerMove.length === 5 && nextAngle !== undefined) {
+        newRouteTile.push(nextAngle)
+      } else if (angle !== undefined) {
+        newRouteTile.push(angle)
+      }
+
+      this.tiles[this.hoveredId].tile = RouteTiles[newRouteTile.join('-') as keyof typeof RouteTiles]
       this.moveStones()
       this.nextMove()
       this.saveStones()
